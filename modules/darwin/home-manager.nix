@@ -2,7 +2,7 @@
 
 let 
     user = "iilak";
-    sharedFiles = import ../shared/files.nix { inherit config pkgs; };
+    sharedFiles = import ../shared/files.nix { inherit config pkgs lib; };
     additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
 {
@@ -31,7 +31,7 @@ in
         # $ mas search <app name>
         #
         masApps = {
-            "strongbox_pro" = 1481853033;
+            "strongbox" = 897283731;
             "reader" = 1529448980;
             "whatsapp" = 310633997;
         };
@@ -64,7 +64,7 @@ in
     local = {
         dock.enable = true;
         dock.entries = [
-            { path = "/System/Applications/Finder.app/"; }
+            { path = "/System/Applications/Safari.app/"; }
         ];
     };
 }

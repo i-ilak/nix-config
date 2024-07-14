@@ -1,0 +1,11 @@
+[
+  {
+    "name": "gcc",
+    "generator": "Ninja",
+    "compilers": {
+      "C": "gcc",
+      "CXX": "g++",
+    },
+    "linker": "ld.lld",
+  }
+]
