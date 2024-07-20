@@ -64,7 +64,7 @@ in
     local = {
         dock.enable = true;
         dock.entries = [
-            { path = "/System/Applications/Safari.app/"; }
+            { path = "/Applications/Safari.app/"; }
         ];
     };
 }
