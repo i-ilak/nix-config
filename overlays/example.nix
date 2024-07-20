@@ -1,2 +1,1 @@
-self: super: with super; {
-}
+self: super: with super; { }
