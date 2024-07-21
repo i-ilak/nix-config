@@ -13,6 +13,8 @@ with pkgs; [
   neovim
   cargo
   nodejs
+  pre-commit
+  nixpkgs-fmt
 
   # Encryption and security tools
   gnupg
