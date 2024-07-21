@@ -1,5 +1,5 @@
 { config, inputs, lib, pkgs, ... }:
-let 
+let
   user = "iilak";
   keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2CVn3MpTPf9D+Ljpst32oXI8OOcO2A0b3Fulobv9lt" ];
 in
@@ -21,10 +21,10 @@ in
       preLVM = true;
       allowDiscards = true;
     };
-  };  
+  };
 
   networking = {
-    networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
     hostName = "nix";
     firewall.allowedTCPPorts = [ 22022 ];
   };
@@ -46,7 +46,7 @@ in
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-   };
+  };
 
   # Manages keys and such
   programs = {
@@ -99,9 +99,9 @@ in
     enable = true;
     extraRules = [{
       commands = [
-       {
-         command = "${pkgs.systemd}/bin/reboot";
-         options = [ "NOPASSWD" ];
+        {
+          command = "${pkgs.systemd}/bin/reboot";
+          options = [ "NOPASSWD" ];
         }
       ];
       groups = [ "wheel" ];
@@ -128,5 +128,5 @@ in
     inetutils
   ];
 
-  system.stateVersion = "24.05"; 
+  system.stateVersion = "24.05";
 }

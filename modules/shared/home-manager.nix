@@ -13,32 +13,34 @@ in
   };
 
   zsh = lib.mkMerge [
-      (let
-         initExtraDarwin = ''
-           # source the nix profiles
-           if [[ -r "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]]; then
-             source "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
-           fi
-           source ~/.p10k.zsh
+    (
+      let
+        initExtraDarwin = ''
+          # source the nix profiles
+          if [[ -r "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]]; then
+            source "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
+          fi
+          source ~/.p10k.zsh
 
-           export PATH="$HOME/.cargo/bin:$PATH"
-           export PATH="/usr/local/bin:$PATH"
-           export VIRTUAL_ENV="$HOME/.pyenv/versions/default"
-           export maestral="python3 -m maestral"
-           export PATH="/Applications/ArmGNUToolchain/13.2.Rel1/aarch64-none-elf/bin:$PATH"
-           export PATH="/opt/homebrew/bin:$PATH"
-           export HDF5_DIR=$(brew --prefix hdf5)
-         '';
+          export PATH="$HOME/.cargo/bin:$PATH"
+          export PATH="/usr/local/bin:$PATH"
+          export VIRTUAL_ENV="$HOME/.pyenv/versions/default"
+          export maestral="python3 -m maestral"
+          export PATH="/Applications/ArmGNUToolchain/13.2.Rel1/aarch64-none-elf/bin:$PATH"
+          export PATH="/opt/homebrew/bin:$PATH"
+          export HDF5_DIR=$(brew --prefix hdf5)
+        '';
 
-         initExtraLinux = ''
-           source ~/.p10k.zsh
+        initExtraLinux = ''
+          source ~/.p10k.zsh
 
-           export maestral="python3 -m maestral"
-         '';
+          export maestral="python3 -m maestral"
+        '';
       in
       {
         initExtra = lib.optionalString pkgs.stdenv.isDarwin initExtraDarwin + lib.optionalString pkgs.stdenv.isLinux initExtraLinux;
-      })
+      }
+    )
     {
       autocd = true;
 
