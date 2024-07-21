@@ -8,4 +8,5 @@ in
   "${xdg_configHome}/alacritty".source = ../dotfiles/shared/alacritty;
   "${xdg_configHome}/nvim".source = ../dotfiles/shared/nvim;
   "${xdg_configHome}/cmake".source = ../dotfiles/shared/cmake;
+  "${xdg_configHome}/wallpapers".source = ../dotfiles/wallpapers;
 }

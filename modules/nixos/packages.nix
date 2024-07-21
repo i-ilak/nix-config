@@ -4,6 +4,12 @@ with pkgs;
 let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in
 shared-packages ++ [
 
+  # Window manager, bar, background
+  hyprland
+  xwayland
+  swaybg
+  waybar
+
   # Security and authentication
   keepassxc
 

@@ -26,7 +26,10 @@ in
   networking = {
     networkmanager.enable = true; # Easiest to use and most distros use this by default.
     hostName = "nix";
-    firewall.allowedTCPPorts = [ 22022 ];
+    firewall = {
+        enable = true;
+        allowedTCPPorts = [ 80 443 22022 ];
+    };
   };
 
   time.timeZone = "Europe/Amsterdam";
@@ -53,8 +56,13 @@ in
     gnupg.agent.enable = true;
     dconf.enable = true;
     zsh.enable = true;
+    hyprland = {
+      enable = true;
+      xwayland.enable = true;
+    };
   };
 
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Enable sound
   sound.enable = true;
@@ -126,6 +134,7 @@ in
     linuxPackages.v4l2loopback
     v4l-utils
     inetutils
+    bluez
   ];
 
   system.stateVersion = "24.05";
