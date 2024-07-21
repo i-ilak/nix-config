@@ -11,6 +11,8 @@ with pkgs; [
   wget
   zip
   neovim
+  cargo
+  nodejs
 
   # Encryption and security tools
   gnupg

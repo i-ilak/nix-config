@@ -6,6 +6,7 @@ let
 in
 {
   imports = [
+    ./hardware-configuration.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
@@ -264,8 +265,6 @@ in
   fonts.packages = with pkgs; [
     meslo-lgs-nf
     dejavu_fonts
-    emacs-all-the-icons-fonts
-    feather-font # from overlay
     jetbrains-mono
     font-awesome
     noto-fonts
