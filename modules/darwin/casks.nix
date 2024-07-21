@@ -8,6 +8,7 @@ _:
   # Development Tools
   "homebrew/cask/docker"
   "visual-studio-code"
+  "iterm2"
 
   # Communication Tools
   "discord"
