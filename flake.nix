@@ -22,8 +22,12 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, disko, nixpkgs } @inputs:
     let
       user = "iilak";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];

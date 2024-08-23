@@ -5,7 +5,8 @@ let
 in
 {
   imports = [
-    ./hardware-configuration.nix
+    inputs.disko.nixosModules.disko
+    ./disk-config.nix
     ./services.nix
     ../../modules/shared
     ../../modules/shared/cachix
@@ -15,11 +16,6 @@ in
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
-    };
-    initrd.luks.devices.luksroot = {
-      device = "/dev/disk/by-uuid/3619778a-c8b1-475b-a785-34c0761c65bf";
-      preLVM = true;
-      allowDiscards = true;
     };
   };
 
