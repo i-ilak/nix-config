@@ -71,6 +71,11 @@ in
       driSupport32Bit = true;
       driSupport = true;
     };
+
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
   };
 
   # Add docker daemon
