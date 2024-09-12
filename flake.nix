@@ -26,50 +26,66 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:i-ilak/nixvim-config";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, disko, nixpkgs } @inputs:
-    let
-      user = "iilak";
-      linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
-      darwinSystems = [ "x86_64-darwin" "aarch64-darwin" ];
-      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
-      devShell = system:
-        let pkgs = nixpkgs.legacyPackages.${system}; in {
-          default = with pkgs; mkShell {
-            nativeBuildInputs = with pkgs; [ bashInteractive git ];
-            shellHook = with pkgs; ''
-              export EDITOR=vim
-            '';
-          };
+  outputs = {
+    self,
+    darwin,
+    nix-homebrew,
+    homebrew-bundle,
+    homebrew-core,
+    homebrew-cask,
+    home-manager,
+    disko,
+    nixpkgs,
+    nixvim,
+  } @ inputs: let
+    user = "iilak";
+    linuxSystems = ["x86_64-linux" "aarch64-linux"];
+    darwinSystems = ["x86_64-darwin" "aarch64-darwin"];
+    forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+    devShell = system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      default = with pkgs;
+        mkShell {
+          nativeBuildInputs = with pkgs; [bashInteractive git];
+          shellHook = with pkgs; ''
+            export EDITOR=vim
+          '';
         };
-      mkApp = scriptName: system: {
-        type = "app";
-        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
-                #!/usr/bin/env bash
-                PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-                echo "Running ${scriptName} for ${system}"
-                exec ${self}/apps/${system}/${scriptName}
-            '')}/bin/${scriptName}";
-      };
-      mkLinuxApps = system: {
-        "apply" = mkApp "apply" system;
-        "build-switch" = mkApp "build-switch" system;
-        "install" = mkApp "install" system;
-      };
-      mkDarwinApps = system: {
-        "apply" = mkApp "apply" system;
-        "build" = mkApp "build" system;
-        "build-switch" = mkApp "build-switch" system;
-        "rollback" = mkApp "rollback" system;
-      };
-    in
-    {
-      devShells = forAllSystems devShell;
-      apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
-      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system:
+    };
+    mkApp = scriptName: system: {
+      type = "app";
+      program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
+        #!/usr/bin/env bash
+        PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
+        echo "Running ${scriptName} for ${system}"
+        exec ${self}/apps/${system}/${scriptName}
+      '')}/bin/${scriptName}";
+    };
+    mkLinuxApps = system: {
+      "apply" = mkApp "apply" system;
+      "build-switch" = mkApp "build-switch" system;
+      "install" = mkApp "install" system;
+    };
+    mkDarwinApps = system: {
+      "apply" = mkApp "apply" system;
+      "build" = mkApp "build" system;
+      "build-switch" = mkApp "build-switch" system;
+      "rollback" = mkApp "rollback" system;
+    };
+  in {
+    devShells = forAllSystems devShell;
+    apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+    darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
+      system:
         darwin.lib.darwinSystem {
           inherit system;
-          specialArgs = inputs;
+          specialArgs = {inherit inputs;};
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
@@ -89,11 +105,12 @@
             ./hosts/darwin
           ];
         }
-      );
-      nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system:
+    );
+    nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
+      system:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = inputs;
+          specialArgs = {inherit inputs;};
           modules = [
             home-manager.nixosModules.home-manager
             {
@@ -106,6 +123,6 @@
             ./hosts/nixos
           ];
         }
-      );
-    };
+    );
+  };
 }

@@ -1,12 +1,18 @@
-{ config, pkgs, ... }:
-
-let user = "iilak"; in
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: let
+  user = "iilak";
+in {
   imports = [
     ../../modules/darwin/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
+
+  home-manager.users.iilak.home.packages = [inputs.nixvim.packages.${pkgs.system}.default];
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
@@ -14,12 +20,16 @@ let user = "iilak"; in
   # Setup user, packages, programs
   nix = {
     package = pkgs.nix;
-    settings.trusted-users = [ "@admin" "${user}" ];
+    settings.trusted-users = ["@admin" "${user}"];
 
     gc = {
       user = "root";
       automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      interval = {
+        Weekday = 0;
+        Hour = 2;
+        Minute = 0;
+      };
       options = "--delete-older-than 30d";
     };
 
@@ -33,7 +43,7 @@ let user = "iilak"; in
   system.checks.verifyNixPath = false;
 
   # Load configuration that is shared across systems
-  environment.systemPackages = with pkgs; (import ../../modules/shared/packages.nix { inherit pkgs; });
+  environment.systemPackages = with pkgs; (import ../../modules/shared/packages.nix {inherit pkgs;});
 
   system = {
     stateVersion = 4;

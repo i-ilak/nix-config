@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-
+{pkgs, ...}:
 with pkgs; [
   # General packages for development and system management
   alacritty
@@ -10,11 +9,11 @@ with pkgs; [
   openssh
   wget
   zip
-  neovim
   cargo
   nodejs
   pre-commit
   nixpkgs-fmt
+  conan
 
   # Encryption and security tools
   gnupg
