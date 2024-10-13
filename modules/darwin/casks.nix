@@ -1,9 +1,8 @@
-_:
-
-[
+_: [
   # Utility
   "rectangle"
   "scroll-reverser"
+  "homebrew/cask/brave-browser"
 
   # Development Tools
   "homebrew/cask/docker"
@@ -16,4 +15,6 @@ _:
 
   # Entertainment Tools
   "vlc"
+  "homebrew/cask/calibre"
+  "homebrew/cask/qbittorrent"
 ]

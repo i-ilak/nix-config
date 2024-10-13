@@ -1,11 +1,13 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   name = "Ivan Ilak";
   user = "iilak";
   email = "ivan.ilak@hotmail.com";
-in
-{
+in {
   direnv = {
     enable = true;
     enableZshIntegration = true;
@@ -36,8 +38,7 @@ in
 
           export maestral="python3 -m maestral"
         '';
-      in
-      {
+      in {
         initExtra = lib.optionalString pkgs.stdenv.isDarwin initExtraDarwin + lib.optionalString pkgs.stdenv.isLinux initExtraLinux;
       }
     )
@@ -52,6 +53,12 @@ in
         vim = "nvim";
         cmake_format = "$HOME/.pyenv/versions/default/bin/cmake-format -i";
         ip = "ip --color=auto";
+        ll = "ls -lFha --color=auto";
+        mkdir = "mkdir -p";
+        diff = "colordiff";
+        df = "df -Tha --total";
+        du = "du -ach | sort -h";
+        ps = "ps auxf";
       };
 
       plugins = [
@@ -62,7 +69,8 @@ in
         }
         {
           name = "zsh-syntax-highlighting";
-          src = pkgs.fetchFromGitHub
+          src =
+            pkgs.fetchFromGitHub
             {
               owner = "zsh-users";
               repo = "zsh-syntax-highlighting";
@@ -72,7 +80,8 @@ in
         }
         {
           name = "nix-shell";
-          src = pkgs.fetchFromGitHub
+          src =
+            pkgs.fetchFromGitHub
             {
               owner = "chisui";
               repo = "zsh-nix-shell";
@@ -80,14 +89,13 @@ in
               sha256 = "1avnmkjh0zh6wmm87njprna1zy4fb7cpzcp8q7y03nw3aq22q4ms";
             };
         }
-
       ];
     }
   ];
 
   git = {
     enable = true;
-    ignores = [ "*.swp" ];
+    ignores = ["*.swp"];
     userName = name;
     userEmail = email;
     lfs = {

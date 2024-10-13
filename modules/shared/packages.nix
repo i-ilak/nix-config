@@ -14,6 +14,7 @@ with pkgs; [
   pre-commit
   nixpkgs-fmt
   conan
+  colordiff
 
   # Encryption and security tools
   gnupg
