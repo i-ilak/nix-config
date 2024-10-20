@@ -26,7 +26,6 @@ in {
 
           export PATH="$HOME/.cargo/bin:$PATH"
           export PATH="/usr/local/bin:$PATH"
-          export VIRTUAL_ENV="$HOME/.pyenv/versions/default"
           export maestral="python3 -m maestral"
           export PATH="/Applications/ArmGNUToolchain/13.2.Rel1/aarch64-none-elf/bin:$PATH"
           export PATH="/opt/homebrew/bin:$PATH"
@@ -51,7 +50,6 @@ in {
 
       shellAliases = {
         vim = "nvim";
-        cmake_format = "$HOME/.pyenv/versions/default/bin/cmake-format -i";
         ip = "ip --color=auto";
         ll = "ls -lFha --color=auto";
         mkdir = "mkdir -p";
