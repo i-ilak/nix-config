@@ -1,7 +1,6 @@
 {pkgs, ...}:
 with pkgs; [
   # General packages for development and system management
-  alacritty
   bash-completion
   coreutils
   killall
@@ -9,7 +8,6 @@ with pkgs; [
   openssh
   wget
   zip
-  cargo
   nodejs
   pre-commit
   nixpkgs-fmt
@@ -19,6 +17,7 @@ with pkgs; [
   # Encryption and security tools
   gnupg
   libfido2
+  libiconv
 
   # Cloud-related tools and SDKs
   docker
