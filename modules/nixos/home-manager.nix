@@ -1,11 +1,13 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   user = "iilak";
   xdg_configHome = "/home/${user}/.config";
-  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; };
-  shared-files = import ../shared/files.nix { inherit config pkgs lib; };
-
+  shared-programs = import ../shared/home-manager.nix {inherit config pkgs lib;};
+  shared-files = import ../shared/files.nix {inherit config pkgs lib;};
   #polybar-user_modules = builtins.readFile (pkgs.substituteAll {
   #  src = ./config/polybar/user_modules.ini;
   #  packages = "${xdg_configHome}/polybar/bin/check-nixos-updates.sh";
@@ -14,30 +16,26 @@ let
   #  powermenu = "${xdg_configHome}/rofi/bin/powermenu.sh";
   #  calendar = "${xdg_configHome}/polybar/bin/popup-calendar.sh";
   #});
-
   #polybar-config = pkgs.substituteAll {
   #  src = ./config/polybar/config.ini;
   #  font0 = "DejaVu Sans:size=12;3";
   #  font1 = "feather:size=12;3"; # from overlay
   #};
-
   #polybar-modules = builtins.readFile ./config/polybar/modules.ini;
   #polybar-bars = builtins.readFile ./config/polybar/bars.ini;
   #polybar-colors = builtins.readFile ./config/polybar/colors.ini;
-
   # These files are generated when secrets are decrypted at build time
   #gpgKeys = [
   #  "/home/${user}/.ssh/pgp_github.key"
   #  "/home/${user}/.ssh/pgp_github.pub"
   #];
-in
-{
+in {
   home = {
     enableNixpkgsReleaseCheck = false;
     username = "${user}";
     homeDirectory = "/home/${user}";
-    packages = pkgs.callPackage ./packages.nix { };
-    file = shared-files // import ./files.nix { inherit user pkgs; };
+    packages = pkgs.callPackage ./packages.nix {};
+    file = shared-files // import ./files.nix {inherit user pkgs;};
     stateVersion = "24.05";
   };
 
@@ -121,7 +119,10 @@ in
   #  };
   #};
 
-  programs = shared-programs // { gpg.enable = true; };
+  programs =
+    shared-programs
+    // {gpg.enable = true;}
+    // import "./packages_config/waybar.nix";
 
   # This installs my GPG signing keys for Github
   #systemd.user.services.gpg-import-keys = {
@@ -142,5 +143,4 @@ in
   #
   #  Install = { WantedBy = [ "default.target" ]; };
   #};
-
 }
