@@ -1,9 +1,13 @@
-{ config, inputs, lib, pkgs, ... }:
-let
-  user = "iilak";
-  keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2CVn3MpTPf9D+Ljpst32oXI8OOcO2A0b3Fulobv9lt" ];
-in
 {
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}: let
+  user = "iilak";
+  keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2CVn3MpTPf9D+Ljpst32oXI8OOcO2A0b3Fulobv9lt"];
+in {
   imports = [
     inputs.disko.nixosModules.disko
     ./disk-config.nix
@@ -23,8 +27,8 @@ in
     networkmanager.enable = true; # Easiest to use and most distros use this by default.
     hostName = "nix";
     firewall = {
-        enable = true;
-        allowedTCPPorts = [ 80 443 22022 ];
+      enable = true;
+      allowedTCPPorts = [80 443 22022];
     };
   };
 
@@ -39,8 +43,8 @@ in
   # };
 
   nix = {
-    nixPath = [ "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos" ];
-    settings.allowed-users = [ "${user}" ];
+    nixPath = ["nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos"];
+    settings.allowed-users = ["${user}"];
     package = pkgs.nix;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -106,15 +110,17 @@ in
   # Don't require password for users in `wheel` group for these commands
   security.sudo = {
     enable = true;
-    extraRules = [{
-      commands = [
-        {
-          command = "${pkgs.systemd}/bin/reboot";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-      groups = [ "wheel" ];
-    }];
+    extraRules = [
+      {
+        commands = [
+          {
+            command = "${pkgs.systemd}/bin/reboot";
+            options = ["NOPASSWD"];
+          }
+        ];
+        groups = ["wheel"];
+      }
+    ];
   };
 
   fonts = {
