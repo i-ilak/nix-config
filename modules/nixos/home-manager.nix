@@ -28,9 +28,7 @@ in {
   programs =
     shared-programs
     // {gpg.enable = true;}
-    // import "./programs/dunst.nix"
-    // import "./programs/udiskie.nix"
-    // import "./programs/waybar.nix";
+    // import "${toString ./.}/programs/waybar.nix";
 
   # This installs my GPG signing keys for Github
   #systemd.user.services.gpg-import-keys = {

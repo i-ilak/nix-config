@@ -30,6 +30,13 @@
       url = "github:i-ilak/nixvim-config";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
   };
   outputs = {
     self,
@@ -42,20 +49,23 @@
     disko,
     nixpkgs,
     nixvim,
+    flake-utils,
+    pre-commit-hooks,
   } @ inputs: let
     user = "iilak";
     linuxSystems = ["x86_64-linux" "aarch64-linux"];
     darwinSystems = ["x86_64-darwin" "aarch64-darwin"];
+
     forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
     devShell = system: let
       pkgs = nixpkgs.legacyPackages.${system};
+      preCommitCheck = self.checks.${system}.pre-commit-check;
     in {
       default = with pkgs;
         mkShell {
+          inherit (preCommitCheck) shellHook;
+          buildInputs = preCommitCheck.enabledPackages;
           nativeBuildInputs = with pkgs; [bashInteractive git];
-          shellHook = ''
-            export EDITOR=vim
-          '';
         };
     };
     mkApp = scriptName: system: {
@@ -79,6 +89,15 @@
       "rollback" = mkApp "rollback" system;
     };
   in {
+    checks = forAllSystems (system: {
+      pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          nixpkgs-fmt.enable = true;
+        };
+      };
+    });
+
     devShells = forAllSystems devShell;
     apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
     darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (

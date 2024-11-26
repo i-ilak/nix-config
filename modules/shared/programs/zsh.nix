@@ -15,6 +15,7 @@
           source ~/.p10k.zsh
 
           export PATH="$HOME/.cargo/bin:$PATH"
+          export EDITOR="vim"
           export PATH="/usr/local/bin:$PATH"
           export maestral="python3 -m maestral"
           export PATH="/Applications/ArmGNUToolchain/13.2.Rel1/aarch64-none-elf/bin:$PATH"

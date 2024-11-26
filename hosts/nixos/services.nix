@@ -10,7 +10,7 @@
       };
     };
 
-    udiskie.enable = true; # Auto-mount removable devices
+    # udiskie.enable = true; # Auto-mount removable devices
     gvfs.enable = true; # Mount, trash, and other functionalities
     tumbler.enable = true; # Thumbnail support for images
 
