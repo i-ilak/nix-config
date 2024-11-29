@@ -88,6 +88,33 @@
       "build-switch" = mkApp "build-switch" system;
       "rollback" = mkApp "rollback" system;
     };
+    nixosSystem = hostname: username: fullname: email: (
+      let
+        specialArgs =
+          inputs
+          // {
+            inherit hostname username fullname email;
+            isNixOS = true;
+            impurePaths = {
+              workingDir = "/home/${username}/.config/nix";
+              hardwareModule = /etc/nixos/hardware-configuration.nix;
+            };
+          };
+      in
+        nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          system = "x86_64-linux";
+          modules = [
+            ./nixos/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = specialArgs;
+            }
+          ];
+        }
+    );
   in {
     checks = forAllSystems (system: {
       pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
@@ -125,23 +152,43 @@
           ];
         }
     );
-    nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
-      system:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {inherit inputs;};
-          modules = [
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${user} = import ./modules/nixos/home-manager.nix;
-              };
-            }
-            ./hosts/nixos
-          ];
-        }
-    );
+    #nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
+    #  system:
+    #  nixpkgs.lib.nixosSystem {
+    #    inherit system;
+    #    specialArgs = { inherit inputs; };
+    #    modules = [
+    #      home-manager.nixosModules.home-manager
+    #      {
+    #        home-manager = {
+    #          useGlobalPkgs = true;
+    #          useUserPackages = true;
+    #          users.${user} = import ./modules/nixos/home-manager.nix;
+    #        };
+    #      }
+    #      ./hosts/nixos
+    #    ];
+    #  }
+    #);
+    nixosConfigurations = {
+      nuc = nixosSystem "nuc" "test" "test" "test.test@test.test";
+    };
+    homeConfigurations = {
+      utm = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.aarch64-linux;
+        modules = [
+          ./modules/work/home-manager.nix
+          ./modules/shared/home-manager.nix
+        ];
+        extraSpecialArgs =
+          {inherit inputs;}
+          // {
+            isNixOS = false;
+            impurePaths = {
+              workingDir = "/home/utm/.config/nix";
+            };
+          };
+      };
+    };
   };
 }

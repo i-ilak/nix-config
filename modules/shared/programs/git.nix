@@ -1,5 +1,5 @@
-{
-  git = let
+{...}: {
+  programs.git = let
     name = "Ivan Ilak";
     user = "iilak";
     email = "ivan.ilak@hotmail.com";

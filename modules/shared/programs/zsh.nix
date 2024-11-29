@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  zsh = lib.mkMerge [
+  programs.zsh = lib.mkMerge [
     (
       let
         initExtraDarwin = ''

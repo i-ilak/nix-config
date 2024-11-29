@@ -6,8 +6,8 @@
       position = "top";
       spacing = 5;
       height = 26;
-      modules-left = ["hyprland/workspaces" "idle_inhibitor"];
-      modules-center = ["clock"];
+      modules-left = [ "hyprland/workspaces" "idle_inhibitor" ];
+      modules-center = [ "clock" ];
       modules-right = [
         "custom/packages"
         "network"
@@ -22,11 +22,11 @@
         all-outputs = true;
         format = "{icon}";
         persistent-workspaces = {
-          "1" = [];
-          "2" = [];
-          "3" = [];
-          "4" = [];
-          "5" = [];
+          "1" = [ ];
+          "2" = [ ];
+          "3" = [ ];
+          "4" = [ ];
+          "5" = [ ];
         };
         format-icons = {
           "1" = "󰋜";
@@ -47,7 +47,7 @@
         format-plugged = "󰂄 {capacity}%";
         format-alt = "{time} {icon}";
         format-full = "󱈑 {capacity}%";
-        format-icons = ["󱊡" "󱊢" "󱊣"];
+        format-icons = [ "󱊡" "󱊢" "󱊣" ];
       };
 
       "custom/date" = {
@@ -80,7 +80,7 @@
 
       network = {
         format-wifi = "{icon}";
-        format-icons = ["󰤯" "󰤟" "󰤢" "󰤢" "󰤨"];
+        format-icons = [ "󰤯" "󰤟" "󰤢" "󰤢" "󰤨" ];
         format-ethernet = "{ipaddr}/{cidr}";
         format-disconnected = "󰤮";
         tooltip-format-wifi = "{essid}, Strength: {signalStrength}%";
@@ -92,14 +92,14 @@
       backlight = {
         device = "intel_backlight";
         format = "{percent}% {icon}";
-        format-icons = ["󰃚" "󰃛" "󰃜" "󰃝" "󰃞" "󰃟" "󰃠"];
+        format-icons = [ "󰃚" "󰃛" "󰃜" "󰃝" "󰃞" "󰃟" "󰃠" ];
         tooltip = false;
       };
 
       pulseaudio = {
         scroll-step = 5;
         format = "{volume}% {icon}";
-        format-icons = ["" "" ""];
+        format-icons = [ "" "" "" ];
         format-muted = "  󰝟";
         on-click = "wpctl set-mute @DEFAULT_SINK@ toggle";
         on-click-right = "pavucontrol";
