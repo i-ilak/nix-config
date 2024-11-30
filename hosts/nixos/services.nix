@@ -1,9 +1,8 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   services = {
-    # Let's be able to SSH into this machine
     openssh = {
       enable = true;
-      ports = [22022];
+      ports = [ 22022 ];
       settings = {
         X11Forwarding = false;
         PermitRootLogin = "no";
@@ -17,53 +16,52 @@
     screen-locker = {
       enable = true;
       inactiveInterval = 10;
-      # lockCmd = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 10 15";
       lockCmd = "${pkgs.swaylock}/bin/swaylock --color 0000ff";
     };
 
-    dunst = {
-      enable = true;
-      settings = {
-        global = {
-          monitor = 0;
-          follow = "mouse";
-          border = 0;
-          height = 400;
-          width = 320;
-          offset = "33x65";
-          indicate_hidden = "yes";
-          shrink = "no";
-          separator_height = 0;
-          padding = 32;
-          horizontal_padding = 32;
-          frame_width = 0;
-          sort = "no";
-          idle_threshold = 120;
-          font = "Noto Sans";
-          line_height = 4;
-          markup = "full";
-          format = "<b>%s</b>\n%b";
-          alignment = "left";
-          transparency = 10;
-          show_age_threshold = 60;
-          word_wrap = "yes";
-          ignore_newline = "no";
-          stack_duplicates = false;
-          hide_duplicate_count = "yes";
-          show_indicators = "no";
-          icon_position = "left";
-          icon_theme = "Adwaita-dark";
-          sticky_history = "yes";
-          history_length = 20;
-          history = "ctrl+grave";
-          browser = "google-chrome-stable";
-          always_run_script = true;
-          title = "Dunst";
-          class = "Dunst";
-          max_icon_size = 64;
-        };
-      };
-    };
+    # dunst = {
+    #   enable = true;
+    #   settings = {
+    #     global = {
+    #       monitor = 0;
+    #       follow = "mouse";
+    #       border = 0;
+    #       height = 400;
+    #       width = 320;
+    #       offset = "33x65";
+    #       indicate_hidden = "yes";
+    #       shrink = "no";
+    #       separator_height = 0;
+    #       padding = 32;
+    #       horizontal_padding = 32;
+    #       frame_width = 0;
+    #       sort = "no";
+    #       idle_threshold = 120;
+    #       font = "Noto Sans";
+    #       line_height = 4;
+    #       markup = "full";
+    #       format = "<b>%s</b>\n%b";
+    #       alignment = "left";
+    #       transparency = 10;
+    #       show_age_threshold = 60;
+    #       word_wrap = "yes";
+    #       ignore_newline = "no";
+    #       stack_duplicates = false;
+    #       hide_duplicate_count = "yes";
+    #       show_indicators = "no";
+    #       icon_position = "left";
+    #       icon_theme = "Adwaita-dark";
+    #       sticky_history = "yes";
+    #       history_length = 20;
+    #       history = "ctrl+grave";
+    #       browser = "google-chrome-stable";
+    #       always_run_script = true;
+    #       title = "Dunst";
+    #       class = "Dunst";
+    #       max_icon_size = 64;
+    #     };
+    #   };
+    # };
 
     #xserver = {
     #  enable = true;
@@ -129,8 +127,8 @@
           "class_g = 'i3lock'"
         ];
         round-borders = 3;
-        round-borders-exclude = [];
-        round-borders-rule = [];
+        round-borders-exclude = [ ];
+        round-borders-rule = [ ];
         shadow = true;
         shadow-radius = 8;
         shadow-opacity = 0.4;
@@ -192,10 +190,10 @@
             focus = true;
             full-shadow = false;
           };
-          dock = {shadow = false;};
-          dnd = {shadow = false;};
-          popup_menu = {opacity = 1.0;};
-          dropdown_menu = {opacity = 1.0;};
+          dock = { shadow = false; };
+          dnd = { shadow = false; };
+          popup_menu = { opacity = 1.0; };
+          dropdown_menu = { opacity = 1.0; };
         };
       };
     };

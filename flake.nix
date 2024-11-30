@@ -38,73 +38,78 @@
       url = "github:numtide/flake-utils";
     };
   };
-  outputs = {
-    self,
-    darwin,
-    nix-homebrew,
-    homebrew-bundle,
-    homebrew-core,
-    homebrew-cask,
-    home-manager,
-    disko,
-    nixpkgs,
-    nixvim,
-    flake-utils,
-    pre-commit-hooks,
-  } @ inputs: let
-    user = "iilak";
-    linuxSystems = ["x86_64-linux" "aarch64-linux"];
-    darwinSystems = ["x86_64-darwin" "aarch64-darwin"];
+  outputs =
+    { self
+    , darwin
+    , nix-homebrew
+    , homebrew-bundle
+    , homebrew-core
+    , homebrew-cask
+    , home-manager
+    , disko
+    , nixpkgs
+    , nixvim
+    , flake-utils
+    , pre-commit-hooks
+    ,
+    } @ inputs:
+    let
+      user = "iilak";
+      linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
+      darwinSystems = [ "x86_64-darwin" "aarch64-darwin" ];
 
-    forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
-    devShell = system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      preCommitCheck = self.checks.${system}.pre-commit-check;
-    in {
-      default = with pkgs;
-        mkShell {
-          inherit (preCommitCheck) shellHook;
-          buildInputs = preCommitCheck.enabledPackages;
-          nativeBuildInputs = with pkgs; [bashInteractive git];
+      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+      devShell = system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          preCommitCheck = self.checks.${system}.pre-commit-check;
+        in
+        {
+          default = with pkgs;
+            mkShell {
+              inherit (preCommitCheck) shellHook;
+              buildInputs = preCommitCheck.enabledPackages;
+              nativeBuildInputs = with pkgs; [ bashInteractive git ];
+            };
         };
-    };
-    mkApp = scriptName: system: {
-      type = "app";
-      program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
+      mkApp = scriptName: system: {
+        type = "app";
+        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
         #!/usr/bin/env bash
         PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
         echo "Running ${scriptName} for ${system}"
         exec ${self}/apps/${system}/${scriptName}
       '')}/bin/${scriptName}";
-    };
-    mkLinuxApps = system: {
-      "apply" = mkApp "apply" system;
-      "build-switch" = mkApp "build-switch" system;
-      "install" = mkApp "install" system;
-    };
-    mkDarwinApps = system: {
-      "apply" = mkApp "apply" system;
-      "build" = mkApp "build" system;
-      "build-switch" = mkApp "build-switch" system;
-      "rollback" = mkApp "rollback" system;
-    };
-  in {
-    checks = forAllSystems (system: {
-      pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = {
-          nixpkgs-fmt.enable = true;
-        };
       };
-    });
+      mkLinuxApps = system: {
+        "apply" = mkApp "apply" system;
+        "build-switch" = mkApp "build-switch" system;
+        "install" = mkApp "install" system;
+      };
+      mkDarwinApps = system: {
+        "apply" = mkApp "apply" system;
+        "build" = mkApp "build" system;
+        "build-switch" = mkApp "build-switch" system;
+        "rollback" = mkApp "rollback" system;
+      };
+    in
+    {
+      checks = forAllSystems (system: {
+        pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixpkgs-fmt.enable = true;
+          };
+        };
+      });
 
-    devShells = forAllSystems devShell;
-    apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
-    darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
-      system:
+      devShells = forAllSystems devShell;
+      apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
+        system:
         darwin.lib.darwinSystem {
           inherit system;
-          specialArgs = {inherit inputs;};
+          specialArgs = { inherit inputs; };
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
@@ -124,24 +129,44 @@
             ./hosts/darwin
           ];
         }
-    );
-    nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
-      system:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {inherit inputs;};
-          modules = [
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${user} = import ./modules/nixos/home-manager.nix;
+      );
+      # nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
+      #   system:
+      #     nixpkgs.lib.nixosSystem {
+      #       inherit system;
+      #       specialArgs = {inherit inputs;};
+      #       modules = [
+      #         home-manager.nixosModules.home-manager
+      #         {
+      #           home-manager = {
+      #             useGlobalPkgs = true;
+      #             useUserPackages = true;
+      #             users.${user} = import ./modules/nixos/home-manager.nix;
+      #           };
+      #         }
+      #         ./hosts/nixos
+      #       ];
+      #     }
+      # );
+      homeConfigurations = {
+        work = nixpkgs.lib.genAttrs linuxSystems (
+          system:
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.${system};
+            modules = [
+              ./modules/work/home-manager.nix
+              ./modules/shared/home-manager.nix
+            ];
+            extraSpecialArgs =
+              { inherit inputs; }
+              // {
+                isNixOS = false;
+                impurePaths = {
+                  workingDir = "/home/utm/.config/nix";
+                };
               };
-            }
-            ./hosts/nixos
-          ];
-        }
-    );
-  };
+          }
+        );
+      };
+    };
 }

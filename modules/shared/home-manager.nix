@@ -1,11 +1,16 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
-{}
-// import ../shared/programs/zsh.nix {inherit config pkgs lib;}
-// import ../shared/programs/alacritty.nix
-// import ../shared/programs/git.nix
-// import ../shared/programs/direnv.nix
+let
+  sharedModules = map
+    (
+      fileName:
+      import ./programs/${fileName} { inherit config pkgs lib; }
+    )
+    (lib.filter (name: lib.hasSuffix ".nix" name) (builtins.attrNames (builtins.readDir ./programs)));
+in
+{
+  imports = sharedModules;
+}
