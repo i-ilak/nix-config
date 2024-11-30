@@ -1,25 +1,26 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
   user = "iilak";
   xdg_configHome = "/home/${user}/.config";
-  shared-programs = import ../shared/home-manager.nix {inherit config pkgs lib;};
-  shared-files = import ../shared/files.nix {inherit config pkgs lib;};
+  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; };
+  shared-files = import ../shared/files.nix { inherit config pkgs lib; };
   # These files are generated when secrets are decrypted at build time
   #gpgKeys = [
   #  "/home/${user}/.ssh/pgp_github.key"
   #  "/home/${user}/.ssh/pgp_github.pub"
   #];
-in {
+in
+{
   home = {
     enableNixpkgsReleaseCheck = false;
     username = "${user}";
     homeDirectory = "/home/${user}";
-    packages = pkgs.callPackage ./packages.nix {};
-    file = shared-files // import ./files.nix {inherit user pkgs;};
+    packages = pkgs.callPackage ./packages.nix { };
+    file = shared-files // import ./files.nix { inherit user pkgs; };
     stateVersion = "24.05";
   };
 

@@ -1,8 +1,8 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   services = {
     openssh = {
       enable = true;
-      ports = [22022];
+      ports = [ 22022 ];
       settings = {
         X11Forwarding = false;
         PermitRootLogin = "no";
@@ -127,8 +127,8 @@
           "class_g = 'i3lock'"
         ];
         round-borders = 3;
-        round-borders-exclude = [];
-        round-borders-rule = [];
+        round-borders-exclude = [ ];
+        round-borders-rule = [ ];
         shadow = true;
         shadow-radius = 8;
         shadow-opacity = 0.4;
@@ -190,10 +190,10 @@
             focus = true;
             full-shadow = false;
           };
-          dock = {shadow = false;};
-          dnd = {shadow = false;};
-          popup_menu = {opacity = 1.0;};
-          dropdown_menu = {opacity = 1.0;};
+          dock = { shadow = false; };
+          dnd = { shadow = false; };
+          popup_menu = { opacity = 1.0; };
+          dropdown_menu = { opacity = 1.0; };
         };
       };
     };
