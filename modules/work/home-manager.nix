@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   inputs,
   ...
@@ -15,5 +14,5 @@ in {
 
   programs.home-manager.enable = true;
 
-  home.stateVersion = "24.11"; # Adjust according to your NixOS/Home Manager version
+  home.stateVersion = "24.11";
 }

@@ -1,18 +1,17 @@
-{ config
-, inputs
-, lib
-, pkgs
-, ...
-}:
-let
-  user = "iilak";
-  keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2CVn3MpTPf9D+Ljpst32oXI8OOcO2A0b3Fulobv9lt" ];
-in
 {
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}: let
+  user = "iilak";
+  keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2CVn3MpTPf9D+Ljpst32oXI8OOcO2A0b3Fulobv9lt"];
+in {
   imports = [
     inputs.disko.nixosModules.disko
     ./disk-config.nix
-    ./services.nix
+    # ./services.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
@@ -29,7 +28,7 @@ in
     hostName = "nix";
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 443 22022 ];
+      allowedTCPPorts = [80 443 22022];
     };
   };
 
@@ -44,8 +43,8 @@ in
   # };
 
   nix = {
-    nixPath = [ "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos" ];
-    settings.allowed-users = [ "${user}" ];
+    nixPath = ["nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos"];
+    settings.allowed-users = ["${user}"];
     package = pkgs.nix;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -116,10 +115,10 @@ in
         commands = [
           {
             command = "${pkgs.systemd}/bin/reboot";
-            options = [ "NOPASSWD" ];
+            options = ["NOPASSWD"];
           }
         ];
-        groups = [ "wheel" ];
+        groups = ["wheel"];
       }
     ];
   };
