@@ -6,7 +6,7 @@
 let
   user = "iilak";
   xdg_configHome = "/home/${user}/.config";
-  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; };
+  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib user; };
   shared-files = import ../shared/files.nix { inherit config pkgs lib; };
   # These files are generated when secrets are decrypted at build time
   #gpgKeys = [

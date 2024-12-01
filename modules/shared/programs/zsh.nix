@@ -1,15 +1,16 @@
 { config
 , lib
 , pkgs
+, user
 , ...
 }: {
-  programs.zsh = lib.mkMerge [
+  zsh = lib.mkMerge [
     (
       let
         initExtraDarwin = ''
           # source the nix profiles
-          if [[ -r "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]]; then
-            source "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
+          if [[ -r "${config.users.users.${user}.home}/.nix-profile/etc/profile.d/nix.sh" ]]; then
+            source "${config.users.users.${user}.home}/.nix-profile/etc/profile.d/nix.sh"
           fi
           source ~/.p10k.zsh
 

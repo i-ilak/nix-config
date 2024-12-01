@@ -6,6 +6,7 @@
 }:
 let
   user = "iilak";
+  sharedModules = import ../shared/home-manager.nix { inherit pkgs config lib user; };
   sharedFiles = import ../shared/files.nix { inherit config pkgs lib; };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
@@ -57,10 +58,10 @@ in
             sharedFiles
             additionalFiles
           ];
-          programs = { };
 
           stateVersion = "24.05";
         };
+        programs = { } // sharedModules;
 
         # Marked broken Oct 20, 2022 check later to remove this
         # https://github.com/nix-community/home-manager/issues/3344

@@ -1,7 +1,7 @@
 {
   description = "General Purpose Configuration for macOS and NixOS";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     home-manager.url = "github:nix-community/home-manager";
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -9,6 +9,7 @@
     };
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
@@ -28,7 +29,7 @@
     };
     nixvim = {
       url = "github:i-ilak/nixvim-config";
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
@@ -155,7 +156,7 @@
             pkgs = nixpkgs.legacyPackages.${system};
             modules = [
               ./modules/work/home-manager.nix
-              ./modules/shared/home-manager.nix
+              # ./modules/shared/home-manager.nix
             ];
             extraSpecialArgs =
               { inherit inputs; }
