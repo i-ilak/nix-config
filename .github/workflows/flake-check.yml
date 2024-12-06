@@ -1,3 +1,5 @@
+name: Run flake check
+
 on:
   pull_request:
   push:
