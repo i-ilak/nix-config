@@ -73,25 +73,20 @@
               nativeBuildInputs = with pkgs; [ bashInteractive git ];
             };
         };
-      mkApp = scriptName: system: {
+      mkApp = scriptName: targetSystem: system: {
         type = "app";
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
         #!/usr/bin/env bash
         PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-        echo "Running ${scriptName} for ${system}"
-        exec ${self}/apps/${system}/${scriptName}
+        echo "Running ${scriptName} for ${targetSystem}/${system}"
+        exec ${self}/apps/${scriptName} ${targetSystem} ${system}
       '')}/bin/${scriptName}";
       };
       mkLinuxApps = system: {
-        "apply" = mkApp "apply" system;
-        "build-switch" = mkApp "build-switch" system;
-        "install" = mkApp "install" system;
+        "work" = mkApp "build-switch" "work" system;
       };
       mkDarwinApps = system: {
-        "apply" = mkApp "apply" system;
-        "build" = mkApp "build" system;
-        "build-switch" = mkApp "build-switch" system;
-        "rollback" = mkApp "rollback" system;
+        "mac" = mkApp "build-switch" "mac" system;
       };
     in
     {
