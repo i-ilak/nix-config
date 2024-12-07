@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   git =
     let
       name = "Ivan Ilak";

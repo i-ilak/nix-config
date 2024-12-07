@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   direnv = {
     enable = true;
     enableZshIntegration = true;
