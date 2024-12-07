@@ -13,7 +13,10 @@ in
     ../../modules/shared/cachix
   ];
 
-  home-manager.users.iilak.home.packages = [ inputs.nixvim.packages.${pkgs.system}.default ];
+  home-manager.users.${user}.home = {
+    packages = [ inputs.nixvim.packages.${pkgs.system}.default ];
+    # keyboard.layout = "eu"; # does not seem to do anything
+  };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
@@ -46,6 +49,8 @@ in
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs; (import ../../modules/shared/packages.nix { inherit pkgs; });
 
+  security.pam.enableSudoTouchIdAuth = true;
+
   system = {
     stateVersion = 4;
 
@@ -67,24 +72,56 @@ in
         "com.apple.mouse.tapBehavior" = 1;
         "com.apple.sound.beep.volume" = 0.0;
         "com.apple.sound.beep.feedback" = 0;
+
+        NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
+        NSAutomaticWindowAnimationsEnabled = false;
+        NSDocumentSaveNewDocumentsToCloud = false;
+        NSNavPanelExpandedStateForSaveMode = true;
+        PMPrintingExpandedStateForPrint = true;
       };
 
       dock = {
+        launchanim = false;
         autohide = true;
+        expose-animation-duration = 0.15;
         show-recents = false;
-        launchanim = true;
+        showhidden = true;
+        persistent-apps = [ ];
         mouse-over-hilite-stack = true;
+        tilesize = 30;
         orientation = "bottom";
-        tilesize = 48;
+        wvous-bl-corner = 1;
+        wvous-br-corner = 1;
+        wvous-tl-corner = 1;
+        wvous-tr-corner = 1;
+      };
+
+      screencapture = {
+        location = "/Users/${user}/Downloads/temp";
+        type = "png";
+        disable-shadow = true;
       };
 
       finder = {
+        AppleShowAllFiles = true;
+        CreateDesktop = false;
+        FXDefaultSearchScope = "SCcf";
+        FXEnableExtensionChangeWarning = false;
+        FXPreferredViewStyle = "Nlsv";
+        QuitMenuItem = true;
+        ShowPathbar = true;
+        ShowStatusBar = true;
         _FXShowPosixPathInTitle = false;
+        _FXSortFoldersFirst = true;
       };
 
       trackpad = {
+        TrackpadRightClick = true;
+        TrackpadThreeFingerDrag = false;
         Clicking = true;
-        TrackpadThreeFingerDrag = true;
       };
     };
 
@@ -92,6 +129,13 @@ in
       enableKeyMapping = true;
       remapCapsLockToEscape = true;
       swapLeftCtrlAndFn = true;
+      # Remap §± to ~
+      userKeyMapping = [
+        {
+          HIDKeyboardModifierMappingDst = 30064771125;
+          HIDKeyboardModifierMappingSrc = 30064771172;
+        }
+      ];
     };
   };
 }
