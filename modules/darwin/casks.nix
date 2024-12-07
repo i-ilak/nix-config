@@ -2,11 +2,12 @@ _: [
   # Utility
   "rectangle"
   "scroll-reverser"
-  "homebrew/cask/brave-browser"
-  "homebrew/cask/zoom"
+  "brave-browser"
+  "zoom"
+  "nikitabobko/tap/aerospace"
 
   # Development Tools
-  "homebrew/cask/docker"
+  "docker"
   "visual-studio-code"
   "iterm2"
 
@@ -16,6 +17,6 @@ _: [
 
   # Entertainment Tools
   "vlc"
-  "homebrew/cask/calibre"
-  "homebrew/cask/qbittorrent"
+  "calibre"
+  "qbittorrent"
 ]

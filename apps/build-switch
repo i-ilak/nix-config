@@ -18,10 +18,10 @@ if [[ $TARGET_SETUP_NAME == "work" ]]; then
 
 elif [[ $TARGET_SETUP_NAME == "mac" ]]; then
     echo "${YELLOW}Building flake${NC}"
-    nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.${TARGET_ARCHITECTURE}.system 1> /dev/null
+    nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.${TARGET_ARCHITECTURE}.system
 
     echo "${YELLOW}Switching to new generation...${NC}"
-    ./result/sw/bin/darwin-rebuild switch --flake .#${TARGET_ARCHITECTURE} 1> /dev/null
+    ./result/sw/bin/darwin-rebuild switch --flake .#${TARGET_ARCHITECTURE}
 
     echo "${YELLOW}Cleaning up...${NC}"
     unlink ./result
