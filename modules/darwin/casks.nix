@@ -1,5 +1,6 @@
 _: [
   # Utility
+  "eurkey"
   "rectangle"
   "scroll-reverser"
   "brave-browser"

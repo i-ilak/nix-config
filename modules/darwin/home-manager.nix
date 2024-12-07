@@ -13,6 +13,7 @@ in
 {
   imports = [
     ./dock
+    ./aerospace.nix
   ];
 
   users.users.${user} = {

@@ -31,7 +31,7 @@ in
         Hour = 2;
         Minute = 0;
       };
-      options = "--delete-older-than 30d";
+      options = "--delete-older-than 10d";
     };
 
     # Turn this on to make command line easier
@@ -90,7 +90,8 @@ in
 
     keyboard = {
       enableKeyMapping = true;
-      remapCapsLockToControl = true;
+      remapCapsLockToEscape = true;
+      swapLeftCtrlAndFn = true;
     };
   };
 }
