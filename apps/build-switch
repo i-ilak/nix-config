@@ -12,12 +12,14 @@ TARGET_ARCHITECTURE=$2
 
 echo "${YELLOW}Starting...${NC}"
 
-if [[ $TARGET_SETUP_NAME == "work" ]]; then
+if [ $TARGET_SETUP_NAME="work" ]; then
+    echo "${YELLOW}Building flake:\t${TARGET_SETUP_NAME}${NC}"
     # nix --extra-experimental-features 'nix-command flakes' build .#genericLinuxConfigurations.aarch64-linux.activate $@
-    home-manager switch  --experimental-features 'nix-command flakes' --impure --flake .#${TARGRT_SETUP_NAME}.${TARGET_ARCHITECTURE}.activate
+    # home-manager switch --experimental-features 'nix-command flakes' --impure --flake .#${TARGRT_SETUP_NAME}.${TARGET_ARCHITECTURE}.activate
+    home-manager switch --experimental-features 'nix-command flakes' --impure --flake .#utm.utm
 
-elif [[ $TARGET_SETUP_NAME == "mac" ]]; then
-    echo "${YELLOW}Building flake${NC}"
+elif [ $TARGET_SETUP_NAME="mac" ]; then
+    echo "${YELLOW}Building flake:\t${TARGET_SETUP_NAME}${NC}"
     nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.${TARGET_ARCHITECTURE}.system
 
     echo "${YELLOW}Switching to new generation...${NC}"

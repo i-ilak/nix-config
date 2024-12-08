@@ -1,12 +1,11 @@
-{ pkgs
-, inputs
-, ...
-}:
-let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   userName = "utm";
   homeDir = "/home/${userName}";
-in
-{
+in {
   home = {
     username = userName;
     homeDirectory = homeDir;
