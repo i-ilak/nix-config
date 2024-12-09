@@ -1,32 +1,62 @@
 #!/bin/sh -e
 
+# Define color variables for output
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-SYSTEM=$(uname -m)
+# Detect the operating system and architecture
+SYSTEM=$(uname -s)
+ARCH=$(uname -m)
 
+# Inputs
 TARGET_SETUP_NAME=$1
 TARGET_ARCHITECTURE=$2
 
-echo "${YELLOW}Starting...${NC}"
-
-if [ $TARGET_SETUP_NAME="work" ]; then
-    echo "${YELLOW}Building flake:\t${TARGET_SETUP_NAME}${NC}"
-    # nix --extra-experimental-features 'nix-command flakes' build .#genericLinuxConfigurations.aarch64-linux.activate $@
-    # home-manager switch --experimental-features 'nix-command flakes' --impure --flake .#${TARGRT_SETUP_NAME}.${TARGET_ARCHITECTURE}.activate
-    home-manager switch --experimental-features 'nix-command flakes' --impure --flake .#utm.utm
-
-elif [ $TARGET_SETUP_NAME="mac" ]; then
-    echo "${YELLOW}Building flake:\t${TARGET_SETUP_NAME}${NC}"
-    nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.${TARGET_ARCHITECTURE}.system
-
-    echo "${YELLOW}Switching to new generation...${NC}"
-    ./result/sw/bin/darwin-rebuild switch --flake .#${TARGET_ARCHITECTURE}
-
-    echo "${YELLOW}Cleaning up...${NC}"
-    unlink ./result
+# Validation of inputs
+if [ -z "$TARGET_SETUP_NAME" ] || [ -z "$TARGET_ARCHITECTURE" ]; then
+    echo "${RED}Error: Missing arguments. Usage: $0 <setup_name> <architecture>${NC}" >&2
+    exit 1
 fi
 
+echo "${YELLOW}Starting setup for ${SYSTEM} (${ARCH})...${NC}"
+
+case "$TARGET_SETUP_NAME" in
+    work)
+        echo "${YELLOW}Building flake:\t${TARGET_SETUP_NAME}${NC}"
+
+        # Example for Linux configuration
+        if [ "$SYSTEM" = "Linux" ]; then
+            home-manager switch --experimental-features 'nix-command flakes' --impure --flake .#utm.utm
+        else
+            echo "${RED}Error: Unsupported system for 'work' setup: $SYSTEM${NC}" >&2
+            exit 1
+        fi
+        ;;
+
+    mac)
+        echo "${YELLOW}Building flake:\t${TARGET_SETUP_NAME}${NC}"
+
+        if [ "$SYSTEM" = "Darwin" ]; then
+            nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.${TARGET_ARCHITECTURE}.system
+
+            echo "${YELLOW}Switching to new generation...${NC}"
+            ./result/sw/bin/darwin-rebuild switch --flake .#${TARGET_ARCHITECTURE}
+
+            echo "${YELLOW}Cleaning up...${NC}"
+            unlink ./result || echo "${RED}Warning: Failed to unlink result.${NC}"
+        else
+            echo "${RED}Error: Unsupported system for 'mac' setup: $SYSTEM${NC}" >&2
+            exit 1
+        fi
+        ;;
+
+    *)
+        echo "${RED}Error: Unknown setup name '${TARGET_SETUP_NAME}'. Valid options are 'work' or 'mac'.${NC}" >&2
+        exit 1
+        ;;
+esac
+
 echo "${GREEN}Switch to new generation complete!${NC}"
+

@@ -7,8 +7,8 @@
 let
   user = "iilak";
   sharedModules = import ../../modules/shared/home-manager.nix { inherit pkgs config lib user; };
-  sharedFiles = import ../shared/files.nix { inherit config pkgs lib; };
-  additionalFiles = import ./files.nix { inherit user config pkgs; };
+  sharedFiles = import ../../modules/shared/files.nix { inherit config pkgs lib; };
+  additionalFiles = import ../../modules/darwin/files.nix { inherit user config pkgs; };
 in
 {
   imports = [
@@ -27,7 +27,7 @@ in
     # This is a module from nix-darwin
     # Homebrew is *installed* via the flake input nix-homebrew
     enable = true;
-    casks = pkgs.callPackage ./casks.nix { };
+    casks = pkgs.callPackage ../../modules/darwin/casks.nix { };
 
     taps = [
       "nikitabobko/tap"
@@ -58,7 +58,7 @@ in
       }: {
         home = {
           enableNixpkgsReleaseCheck = false;
-          packages = pkgs.callPackage ./packages.nix { };
+          packages = pkgs.callPackage ../../modules/darwin/packages.nix { };
           file = lib.mkMerge [
             sharedFiles
             additionalFiles
