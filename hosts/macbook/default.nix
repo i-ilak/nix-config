@@ -8,7 +8,7 @@ let
 in
 {
   imports = [
-    ../../modules/darwin/home-manager.nix
+    ./home.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];

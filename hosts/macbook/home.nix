@@ -6,14 +6,14 @@
 }:
 let
   user = "iilak";
-  sharedModules = import ../shared/home-manager.nix { inherit pkgs config lib user; };
+  sharedModules = import ../../modules/shared/home-manager.nix { inherit pkgs config lib user; };
   sharedFiles = import ../shared/files.nix { inherit config pkgs lib; };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
 {
   imports = [
-    ./dock
-    ./aerospace.nix
+    ../../modules/darwin/dock
+    ../../modules/darwin/aerospace.nix
   ];
 
   users.users.${user} = {

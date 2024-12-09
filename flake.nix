@@ -2,7 +2,10 @@
   description = "General Purpose Configuration for macOS and NixOS";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,68 +42,73 @@
       url = "github:numtide/flake-utils";
     };
   };
-  outputs = {
-    self,
-    darwin,
-    nix-homebrew,
-    homebrew-bundle,
-    homebrew-core,
-    homebrew-cask,
-    home-manager,
-    disko,
-    nixpkgs,
-    nixvim,
-    flake-utils,
-    pre-commit-hooks,
-  } @ inputs: let
-    user = "iilak";
-    linuxSystems = ["x86_64-linux" "aarch64-linux"];
-    darwinSystems = ["x86_64-darwin" "aarch64-darwin"];
+  outputs =
+    { self
+    , darwin
+    , nix-homebrew
+    , homebrew-bundle
+    , homebrew-core
+    , homebrew-cask
+    , home-manager
+    , disko
+    , nixpkgs
+    , nixvim
+    , flake-utils
+    , pre-commit-hooks
+    ,
+    } @ inputs:
+    let
+      user = "iilak";
+      linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
+      darwinSystems = [ "x86_64-darwin" "aarch64-darwin" ];
 
-    forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
-    devShell = system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      preCommitCheck = self.checks.${system}.pre-commit-check;
-    in {
-      default = with pkgs;
-        mkShell {
-          inherit (preCommitCheck) shellHook;
-          buildInputs = preCommitCheck.enabledPackages;
-          nativeBuildInputs = with pkgs; [bashInteractive git];
+      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+      devShell = system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          preCommitCheck = self.checks.${system}.pre-commit-check;
+        in
+        {
+          default = with pkgs;
+            mkShell {
+              inherit (preCommitCheck) shellHook;
+              buildInputs = preCommitCheck.enabledPackages;
+              nativeBuildInputs = with pkgs; [ bashInteractive git ];
+            };
         };
-    };
-    mkApp = scriptName: targetSystem: system: {
-      type = "app";
-      program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
+      mkApp = scriptName: targetSystem: system: {
+        type = "app";
+        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
         #!/usr/bin/env bash
         PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
         echo "Running ${scriptName} for ${targetSystem}/${system}"
         exec ${self}/apps/${scriptName} ${targetSystem} ${system}
       '')}/bin/${scriptName}";
-    };
-    mkLinuxApps = system: {
-      "work" = mkApp "build-switch" "work" system;
-    };
-    mkDarwinApps = system: {
-      "mac" = mkApp "build-switch" "mac" system;
-    };
-  in {
-    checks = forAllSystems (system: {
-      pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = {
-          nixpkgs-fmt.enable = true;
-        };
       };
-    });
+      mkLinuxApps = system: {
+        "work" = mkApp "build-switch" "work" system;
+      };
+      mkDarwinApps = system: {
+        "mac" = mkApp "build-switch" "mac" system;
+      };
+    in
+    {
+      checks = forAllSystems (system: {
+        pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixpkgs-fmt.enable = true;
+          };
+        };
+      });
 
-    devShells = forAllSystems devShell;
-    apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
-    darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
-      system:
+      devShells = forAllSystems devShell;
+      apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
+        system:
         darwin.lib.darwinSystem {
           inherit system;
-          specialArgs = {inherit inputs;};
+          specialArgs = { inherit inputs; };
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
@@ -117,44 +125,44 @@
                 autoMigrate = true;
               };
             }
-            ./hosts/darwin
+            ./hosts/macbook/default.nix
           ];
         }
-    );
-    # nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
-    #   system:
-    #     nixpkgs.lib.nixosSystem {
-    #       inherit system;
-    #       specialArgs = {inherit inputs;};
-    #       modules = [
-    #         home-manager.nixosModules.home-manager
-    #         {
-    #           home-manager = {
-    #             useGlobalPkgs = true;
-    #             useUserPackages = true;
-    #             users.${user} = import ./modules/nixos/home-manager.nix;
-    #           };
-    #         }
-    #         ./hosts/nixos
-    #       ];
-    #     }
-    # );
-    homeConfigurations = {
-      utm = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.aarch64-linux;
-        modules = [
-          ./modules/work/home-manager.nix
-          # ./modules/shared/home-manager.nix
-        ];
-        extraSpecialArgs =
-          {inherit inputs;}
-          // {
-            isNixOS = false;
-            impurePaths = {
-              workingDir = "/home/utm/.config/nix";
+      );
+      # nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
+      #   system:
+      #     nixpkgs.lib.nixosSystem {
+      #       inherit system;
+      #       specialArgs = {inherit inputs;};
+      #       modules = [
+      #         home-manager.nixosModules.home-manager
+      #         {
+      #           home-manager = {
+      #             useGlobalPkgs = true;
+      #             useUserPackages = true;
+      #             users.${user} = import ./modules/nixos/home-manager.nix;
+      #           };
+      #         }
+      #         ./hosts/nixos
+      #       ];
+      #     }
+      # );
+      homeConfigurations = {
+        utm = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-linux;
+          modules = [
+            ./hosts/work/home.nix
+            # ./modules/shared/home-manager.nix
+          ];
+          extraSpecialArgs =
+            { inherit inputs; }
+            // {
+              isNixOS = false;
+              impurePaths = {
+                workingDir = "/home/utm/.config/nix";
+              };
             };
-          };
+        };
       };
     };
-  };
 }
