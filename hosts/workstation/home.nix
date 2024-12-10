@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  user = "utm";
+  user = "iilak";
   homeDir = "/home/${user}";
   sharedModules = import ../../modules/shared/home-manager.nix { inherit pkgs config lib user; };
 in

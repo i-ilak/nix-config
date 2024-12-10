@@ -35,14 +35,14 @@ case "$TARGET_SETUP_NAME" in
         fi
         ;;
 
-    mac)
+    macbook)
         echo "${YELLOW}Building flake:\t${TARGET_SETUP_NAME}${NC}"
 
         if [ "$SYSTEM" = "Darwin" ]; then
-            nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.${TARGET_ARCHITECTURE}.system
+            nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.$TARGET_SETUP_NAME.system
 
             echo "${YELLOW}Switching to new generation...${NC}"
-            ./result/sw/bin/darwin-rebuild switch --flake .#${TARGET_ARCHITECTURE}
+            ./result/sw/bin/darwin-rebuild switch --flake .#$TARGET_SETUP_NAME
 
             echo "${YELLOW}Cleaning up...${NC}"
             unlink ./result || echo "${RED}Warning: Failed to unlink result.${NC}"

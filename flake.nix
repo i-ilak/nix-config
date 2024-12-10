@@ -89,7 +89,7 @@
         "work" = mkApp "build-switch" "work" system;
       };
       mkDarwinApps = system: {
-        "mac" = mkApp "build-switch" "mac" system;
+        "macbook" = mkApp "build-switch" "macbook" system;
       };
     in
     {
@@ -104,31 +104,12 @@
 
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
-      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
-        system:
-        darwin.lib.darwinSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [
-            home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                inherit user;
-                enable = true;
-                taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-bundle" = homebrew-bundle;
-                };
-                mutableTaps = false;
-                autoMigrate = true;
-              };
-            }
-            ./hosts/macbook/default.nix
-          ];
-        }
-      );
+
+      darwinConfigurations = {
+        macbook = import ./hosts/macbook/nix-darwin.nix {
+          inherit inputs user;
+        };
+      };
       # nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
       #   system:
       #     nixpkgs.lib.nixosSystem {
@@ -148,20 +129,8 @@
       #     }
       # );
       homeConfigurations = {
-        utm = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-linux;
-          modules = [
-            ./hosts/work/home.nix
-            # ./modules/shared/home-manager.nix
-          ];
-          extraSpecialArgs =
-            { inherit inputs; }
-            // {
-              isNixOS = false;
-              impurePaths = {
-                workingDir = "/home/utm/.config/nix";
-              };
-            };
+        mxw-dalco02 = import ./hosts/workstation/home-manager.nix {
+          inherit nixpkgs inputs;
         };
       };
     };
