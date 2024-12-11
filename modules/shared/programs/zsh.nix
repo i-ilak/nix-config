@@ -44,11 +44,18 @@
         vim = "nvim";
         ip = "ip --color=auto";
         ll = "ls -lFha --color=auto";
+        ls = "ls --color=auto";
         mkdir = "mkdir -p";
         diff = "colordiff";
         df = "df -Tha --total";
         du = "du -ach | sort -h";
         ps = "ps auxf";
+      };
+      oh-my-zsh = {
+        enable = true;
+        plugins = [
+          "git"
+        ];
       };
 
       plugins = [

@@ -1,10 +1,5 @@
-{ config
-, pkgs
-, lib
-, ...
-}:
+_:
 let
-  user = "iilak";
   home = builtins.getEnv "HOME";
   xdg_configHome = "${home}/.config";
 in
