@@ -100,7 +100,7 @@
       };
 
       homeConfigurations = {
-        utm = import ./hosts/workstation/home-manager.nix {
+        mxw-dalco02 = import ./hosts/workstation/home-manager.nix {
           inherit nixpkgs inputs;
         };
       };
