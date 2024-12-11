@@ -7,16 +7,13 @@
 let
   user = "iilak";
   homeDir = "/home/${user}";
-  sharedModules = import ../../modules/shared/home-manager.nix { inherit pkgs config lib user; };
+  sharedModules = { }
+    // (import ../../modules/shared/programs/git.nix { inherit config lib pkgs user; })
+    // (import ../../modules/shared/programs/zsh.nix { inherit config lib pkgs user; })
+    // (import ../../modules/shared/programs/direnv.nix { inherit config lib pkgs user; })
+    // (import ../../modules/shared/programs/alacritty.nix { inherit config lib pkgs user; });
 in
 {
-  import = [
-    ../../modules/shared/programs/git.nix
-    ../../modules/shared/programs/zsh.nix
-    ../../modules/shared/programs/direnv.nix
-    ../../modules/shared/programs/alacritty.nix
-  ];
-
   home = {
     username = user;
     homeDirectory = homeDir;
@@ -25,9 +22,7 @@ in
     ];
   };
 
-  programs = {
-    home-manager.enable = true;
-  } // sharedModules;
+  programs = { home-manager.enable = true; } // sharedModules;
 
   home.stateVersion = "24.11";
 }

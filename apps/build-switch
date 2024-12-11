@@ -9,51 +9,45 @@ NC='\033[0m'
 # Detect the operating system and architecture
 SYSTEM=$(uname -s)
 ARCH=$(uname -m)
+HOSTNAME=$(hostname)
 
-# Inputs
-TARGET_SETUP_NAME=$1
-TARGET_ARCHITECTURE=$2
-
-# Validation of inputs
-if [ -z "$TARGET_SETUP_NAME" ] || [ -z "$TARGET_ARCHITECTURE" ]; then
-    echo "${RED}Error: Missing arguments. Usage: $0 <setup_name> <architecture>${NC}" >&2
+# Validation of hostname
+if [ -z "$HOSTNAME" ]; then
+    echo "${RED}Error: Unable to determine hostname.${NC}" >&2
     exit 1
 fi
 
-echo "${YELLOW}Starting setup for ${SYSTEM} (${ARCH})...${NC}"
+echo "${YELLOW}Starting setup for ${SYSTEM} (${ARCH}) with hostname: ${HOSTNAME}${NC}"
 
-case "$TARGET_SETUP_NAME" in
-    work)
-        echo "${YELLOW}Building flake:\t${TARGET_SETUP_NAME}${NC}"
+# Logic for system detection and setup case "$SYSTEM" in
+case "$SYSTEM" in
+    Darwin)
+        echo "${YELLOW}Building flake:\t${HOSTNAME}${NC}"
 
-        # Example for Linux configuration
-        if [ "$SYSTEM" = "Linux" ]; then
-            home-manager switch --experimental-features 'nix-command flakes' --impure --flake .#utm.utm
-        else
-            echo "${RED}Error: Unsupported system for 'work' setup: $SYSTEM${NC}" >&2
-            exit 1
-        fi
+        nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.$HOSTNAME.system
+
+        echo "${YELLOW}Switching to new generation...${NC}"
+        ./result/sw/bin/darwin-rebuild switch --flake .#$HOSTNAME
+
+        echo "${YELLOW}Cleaning up...${NC}"
+        unlink ./result || echo "${RED}Warning: Failed to unlink result.${NC}"
         ;;
 
-    macbook)
-        echo "${YELLOW}Building flake:\t${TARGET_SETUP_NAME}${NC}"
+    Linux)
+        # Check if the system is NixOS
+        if [ -f /etc/NIXOS ]; then
+            echo "${YELLOW}Building flake:\t${HOSTNAME}${NC}"
 
-        if [ "$SYSTEM" = "Darwin" ]; then
-            nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.$TARGET_SETUP_NAME.system
-
-            echo "${YELLOW}Switching to new generation...${NC}"
-            ./result/sw/bin/darwin-rebuild switch --flake .#$TARGET_SETUP_NAME
-
-            echo "${YELLOW}Cleaning up...${NC}"
-            unlink ./result || echo "${RED}Warning: Failed to unlink result.${NC}"
+            /run/current-system/sw/bin/nixos-rebuild switch --flake .#$HOSTNAME
         else
-            echo "${RED}Error: Unsupported system for 'mac' setup: $SYSTEM${NC}" >&2
-            exit 1
+            echo "${YELLOW}Building flake:\tutm${NC}"
+
+            home-manager switch --experimental-features 'nix-command flakes' --impure --flake .#$HOSTNAME
         fi
         ;;
 
     *)
-        echo "${RED}Error: Unknown setup name '${TARGET_SETUP_NAME}'. Valid options are 'work' or 'mac'.${NC}" >&2
+        echo "${RED}Error: Unsupported system '${SYSTEM}'.${NC}" >&2
         exit 1
         ;;
 esac

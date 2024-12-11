@@ -44,25 +44,13 @@
   };
   outputs =
     { self
-    , darwin
-    , nix-homebrew
-    , homebrew-bundle
-    , homebrew-core
-    , homebrew-cask
-    , home-manager
-    , disko
     , nixpkgs
-    , nixvim
     , flake-utils
     , pre-commit-hooks
-    ,
+    , ...
     } @ inputs:
     let
       user = "iilak";
-      linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
-      darwinSystems = [ "x86_64-darwin" "aarch64-darwin" ];
-
-      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
       devShell = system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
@@ -76,40 +64,47 @@
               nativeBuildInputs = with pkgs; [ bashInteractive git ];
             };
         };
-      mkApp = scriptName: targetSystem: system: {
-        type = "app";
-        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
-        #!/usr/bin/env bash
-        PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-        echo "Running ${scriptName} for ${targetSystem}/${system}"
-        exec ${self}/apps/${scriptName} ${targetSystem} ${system}
-      '')}/bin/${scriptName}";
-      };
-      mkLinuxApps = system: {
-        "work" = mkApp "build-switch" "work" system;
-      };
-      mkDarwinApps = system: {
-        "macbook" = mkApp "build-switch" "macbook" system;
-      };
     in
-    {
-      checks = forAllSystems (system: {
-        pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = {
-            nixpkgs-fmt.enable = true;
+    flake-utils.lib.eachDefaultSystem
+      (system:
+      {
+        # Add the default app
+        apps.default = {
+          meta = {
+            description = "Shell script to switch to next generation, based on hostname.";
+            mainProgram = "build-switch";
+          };
+          type = "app";
+          program = "${self}/apps/build-switch";
+        };
+
+        # Keep your existing checks
+        checks = {
+          pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              nixpkgs-fmt.enable = true;
+            };
           };
         };
-      });
 
-      devShells = forAllSystems devShell;
-      apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
-
+        # Keep your existing devShells
+        devShells = devShell system;
+      }
+      ) //
+    {
       darwinConfigurations = {
         macbook = import ./hosts/macbook/nix-darwin.nix {
           inherit inputs user;
         };
       };
+
+      homeConfigurations = {
+        utm = import ./hosts/workstation/home-manager.nix {
+          inherit nixpkgs inputs;
+        };
+      };
+
       # nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
       #   system:
       #     nixpkgs.lib.nixosSystem {
@@ -128,10 +123,5 @@
       #       ];
       #     }
       # );
-      homeConfigurations = {
-        mxw-dalco02 = import ./hosts/workstation/home-manager.nix {
-          inherit nixpkgs inputs;
-        };
-      };
     };
 }

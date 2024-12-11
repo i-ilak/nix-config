@@ -52,7 +52,6 @@ in
     useGlobalPkgs = true;
     users.${user} =
       { pkgs
-      , config
       , lib
       , ...
       }: {
