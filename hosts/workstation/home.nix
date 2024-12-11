@@ -10,6 +10,13 @@ let
   sharedModules = import ../../modules/shared/home-manager.nix { inherit pkgs config lib user; };
 in
 {
+  import = [
+    ../../modules/shared/programs/git.nix
+    ../../modules/shared/programs/zsh.nix
+    ../../modules/shared/programs/direnv.nix
+    ../../modules/shared/programs/alacritty.nix
+  ];
+
   home = {
     username = user;
     homeDirectory = homeDir;
