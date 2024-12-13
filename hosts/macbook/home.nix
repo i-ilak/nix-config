@@ -6,7 +6,11 @@
 }:
 let
   user = "iilak";
-  sharedModules = import ../../modules/shared/home-manager.nix { inherit pkgs config lib user; };
+  sharedModules = { }
+    // (import ../../modules/shared/programs/git.nix { inherit config lib pkgs user; })
+    // (import ../../modules/shared/programs/zsh.nix { inherit config lib pkgs user; })
+    // (import ../../modules/shared/programs/direnv.nix { inherit config lib pkgs user; })
+    // (import ../../modules/shared/programs/alacritty.nix { inherit config lib pkgs user; });
   sharedFiles = import ../../modules/shared/files.nix { inherit config pkgs lib; };
   additionalFiles = import ../../modules/darwin/files.nix { inherit user config pkgs; };
 in
@@ -57,7 +61,7 @@ in
       }: {
         home = {
           enableNixpkgsReleaseCheck = false;
-          packages = pkgs.callPackage ../../modules/darwin/packages.nix { };
+          packages = pkgs.callPackage ./packages.nix { };
           file = lib.mkMerge [
             sharedFiles
             additionalFiles

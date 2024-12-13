@@ -68,7 +68,6 @@
     flake-utils.lib.eachDefaultSystem
       (system:
       {
-        # Add the default app
         apps.default = {
           meta = {
             description = "Shell script to switch to next generation, based on hostname.";
@@ -78,7 +77,6 @@
           program = "${self}/apps/build-switch";
         };
 
-        # Keep your existing checks
         checks = {
           pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
             src = ./.;
@@ -88,7 +86,6 @@
           };
         };
 
-        # Keep your existing devShells
         devShells = devShell system;
       }
       ) //

@@ -19,6 +19,39 @@
       lockCmd = "${pkgs.swaylock}/bin/swaylock --color 0000ff";
     };
 
+    mako = {
+      enable = true;
+      backgroundColor = "#2e3440";
+      borderColor = "#88c0d0";
+      borderRadius = 15;
+      borderSize = 2;
+      defaultTimeout = 5000;
+      font = "MesloLGS NF 10";
+      height = 110;
+      icons = false;
+      ignoreTimeout = true;
+      layer = "overlay";
+      maxIconSize = 64;
+      sort = "-time";
+      width = 300;
+
+      extraConfig = ''
+        [urgency=low]
+        border-color=#cccccc
+
+        [urgency=normal]
+        border-color=#d08770
+
+        [urgency=high]
+        border-color=#bf616a
+        default-timeout=0
+
+        [category=mpd]
+        default-timeout=2000
+        group-by=category
+      '';
+    };
+
     # dunst = {
     #   enable = true;
     #   settings = {
