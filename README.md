@@ -5,5 +5,5 @@ The configuration I use for all my systems. It is based on [Dustin Lyons `nix-co
 Currently configured systems are:
 
 - `macbook`: Personal laptop.
-- `workstation`: Workstation used at my current employer.
+- `mxw-dalco02`: Workstation used at my current employer.
 - `eiger`: Private Intel Nuc. Used to host some small services.

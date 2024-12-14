@@ -101,7 +101,7 @@
       };
 
       homeConfigurations = {
-        mxw-dalco02 = import ./hosts/workstation/home-manager.nix {
+        mxw-dalco02 = import ./hosts/mxw-dalco02/home-manager.nix {
           inherit nixpkgs inputs;
         };
       };
