@@ -1,10 +1,14 @@
 { inputs
 , pkgs
+, config
+, lib
 , ...
 }:
 let
-  user = "iilak";
-  keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2CVn3MpTPf9D+Ljpst32oXI8OOcO2A0b3Fulobv9lt" ];
+  user = "test_user";
+  hostname = "test";
+  shared-files = import ../../modules/shared/files.nix { inherit config pkgs lib; };
+  keys = [ "" ];
 in
 {
   imports = [
@@ -15,6 +19,33 @@ in
     ../../modules/shared/cachix
   ];
 
+  # Screen lock
+
+  # programs =
+  #   shared-programs
+  #   // { gpg.enable = true; }
+  #   // import "${toString ./.}/programs/waybar.nix";
+
+  # This installs my GPG signing keys for Github
+  #systemd.user.services.gpg-import-keys = {
+  #  Unit = {
+  #    Description = "Import gpg keys";
+  #    After = [ "gpg-agent.socket" ];
+  #  };
+  #
+  #  Service = {
+  #    Type = "oneshot";
+  #    ExecStart = toString (pkgs.writeScript "gpg-import-keys" ''
+  #      #! ${pkgs.runtimeShell} -el
+  #      ${lib.optionalString (gpgKeys!= []) ''
+  #      ${pkgs.gnupg}/bin/gpg --import ${lib.concatStringsSep " " gpgKeys}
+  #      ''}
+  #    '');
+  #  };
+  #
+  #  Install = { WantedBy = [ "default.target" ]; };
+  #};
+
   boot = {
     loader = {
       systemd-boot.enable = true;
@@ -24,7 +55,7 @@ in
 
   networking = {
     networkmanager.enable = true; # Easiest to use and most distros use this by default.
-    hostName = "nix";
+    hostName = hostname;
     firewall = {
       enable = true;
       allowedTCPPorts = [ 80 443 22022 ];
@@ -63,16 +94,9 @@ in
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  # Enable sound
-  sound.enable = true;
   hardware = {
-    pulseaudio.enable = true;
-
-    # Video support
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport32Bit = true;
-      driSupport = true;
     };
 
     bluetooth = {

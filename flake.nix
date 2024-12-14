@@ -41,6 +41,10 @@
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     { self
@@ -102,23 +106,13 @@
         };
       };
 
-      # nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
-      #   system:
-      #     nixpkgs.lib.nixosSystem {
-      #       inherit system;
-      #       specialArgs = {inherit inputs;};
-      #       modules = [
-      #         home-manager.nixosModules.home-manager
-      #         {
-      #           home-manager = {
-      #             useGlobalPkgs = true;
-      #             useUserPackages = true;
-      #             users.${user} = import ./modules/nixos/home-manager.nix;
-      #           };
-      #         }
-      #         ./hosts/nixos
-      #       ];
-      #     }
-      # );
+      nixosConfigurations = {
+        eiger = import ./hosts/eiger/nixos.nix {
+          inherit nixpkgs inputs;
+        };
+        test = import ./hosts/test/nixos.nix {
+          inherit nixpkgs inputs;
+        };
+      };
     };
 }
