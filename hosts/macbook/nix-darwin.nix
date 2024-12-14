@@ -21,6 +21,7 @@ inputs.darwin.lib.darwinSystem {
         autoMigrate = true;
       };
     }
+    inputs.sops-nix.darwinModules.sops
     ./macbook.nix
   ];
 }
