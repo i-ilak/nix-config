@@ -21,6 +21,7 @@ _: {
         commit.gpgsign = false;
         pull.rebase = true;
         rebase.autoStash = true;
+        push.autoSetupRemote = true;
       };
     };
 }
