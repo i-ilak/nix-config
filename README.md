@@ -1,10 +1,9 @@
-# nix Configuration
+# `nix` Configuration
 
-System configuration for my computers:
+The configuration I use for all my systems. It is based on [Dustin Lyons `nix-config`](https://github.com/dustinlyons/nixos-config), but his split for host machines didn't really work for me. I have `macOS`, `NixOS` and general Linux systems, and I wanted to make sure that this config accommodated all of them.
 
-- `mac`: All mac based configurations, currently only Macbook
-- `work`: Configuration used at work.
+Currently configured systems are:
 
-# Credits
-
-- [dustinlyons/nixos-config](https://github.com/dustinlyons/nixos-config): This entire config is based on this repo. Over time quite a few changes accumulated, but without it this would have taken way longer or might have never happened.
+- `macbook`: Personal laptop.
+- `workstation`: Workstation used at my current employer.
+- `eiger`: Private Intel Nuc. Used to host some small services.
