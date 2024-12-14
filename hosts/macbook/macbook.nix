@@ -46,7 +46,7 @@ in
   system.checks.verifyNixPath = false;
 
   # Load configuration that is shared across systems
-  environment.systemPackages = (import ../../modules/shared/system_packages.nix { inherit pkgs; });
+  environment.systemPackages = import ../../modules/shared/system_packages.nix { inherit pkgs; };
 
   security.pam.enableSudoTouchIdAuth = true;
 
