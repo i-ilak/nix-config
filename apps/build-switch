@@ -35,13 +35,10 @@ case "$SYSTEM" in
 
     Linux)
         # Check if the system is NixOS
+        echo "${YELLOW}Building flake:\t${HOSTNAME}${NC}"
         if [ -f /etc/NIXOS ]; then
-            echo "${YELLOW}Building flake:\t${HOSTNAME}${NC}"
-
             /run/current-system/sw/bin/nixos-rebuild switch --flake .#$HOSTNAME
         else
-            echo "${YELLOW}Building flake:\tutm${NC}"
-
             home-manager switch --experimental-features 'nix-command flakes' --impure --flake .#$HOSTNAME
         fi
         ;;
