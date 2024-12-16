@@ -5,6 +5,7 @@ _: [
   "scroll-reverser"
   "brave-browser"
   "zoom"
+  "chromium"
   "raycast"
   "nikitabobko/tap/aerospace"
 

@@ -1,5 +1,11 @@
-_: {
-  git =
+{ config
+, ...
+}:
+let
+  user = config.sharedVariables.user;
+in
+{
+  home-manager.users.${user}.programs.git =
     let
       name = "Ivan Ilak";
       email = "ivan.ilak@hotmail.com";

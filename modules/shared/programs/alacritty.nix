@@ -1,5 +1,12 @@
-_: {
-  alacritty = {
+{ config
+, ...
+}:
+let
+  user = config.sharedVariables.user;
+  fontSize = config.sharedVariables.alacritty.settings.font.size;
+in
+{
+  home-manager.users.${user}.programs.alacritty = {
     enable = true;
     settings = {
       window = {
@@ -16,7 +23,7 @@ _: {
       };
       mouse.hide_when_typing = true;
       font = {
-        size = 11.0;
+        size = fontSize;
         normal = {
           family = "MesloLGS NF";
           style = "Regular";

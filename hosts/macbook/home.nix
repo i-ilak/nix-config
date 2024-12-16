@@ -5,19 +5,21 @@
 , ...
 }:
 let
-  user = "iilak";
-  sharedModules = { }
-    // (import ../../modules/shared/programs/git.nix { inherit config lib pkgs user; })
-    // (import ../../modules/shared/programs/zsh.nix { inherit config lib pkgs user; })
-    // (import ../../modules/shared/programs/direnv.nix { inherit config lib pkgs user; })
-    // (import ../../modules/shared/programs/alacritty.nix { inherit config lib pkgs user; });
-  sharedFiles = import ../../modules/shared/files.nix { inherit config pkgs lib; };
+  user = config.sharedVariables.user;
+
+  sharedFiles = import ../../modules/shared/files.nix {
+    inherit config pkgs lib;
+  };
   additionalFiles = import ../../modules/darwin/files.nix { inherit user config pkgs; };
 in
 {
   imports = [
     ../../modules/darwin/dock
     ../../modules/darwin/aerospace.nix
+    ../../modules/shared/programs/git.nix
+    ../../modules/shared/programs/zsh.nix
+    ../../modules/shared/programs/direnv.nix
+    ../../modules/shared/programs/alacritty.nix
   ];
 
   users.users.${user} = {
@@ -69,7 +71,6 @@ in
 
           stateVersion = "24.05";
         };
-        programs = { } // sharedModules;
 
         # Marked broken Oct 20, 2022 check later to remove this
         # https://github.com/nix-community/home-manager/issues/3344

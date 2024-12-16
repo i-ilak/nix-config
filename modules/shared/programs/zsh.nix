@@ -1,10 +1,13 @@
 { config
 , lib
 , pkgs
-, user
 , ...
-}: {
-  zsh = lib.mkMerge [
+}:
+let
+  user = config.sharedVariables.user;
+in
+{
+  home-manager.users.${user}.programs.zsh = lib.mkMerge [
     (
       let
         initExtraDarwin = ''

@@ -1,4 +1,6 @@
 { pkgs
 , ...
 }:
-[ pkgs.dockutil ]
+[
+  pkgs.dockutil
+]
