@@ -6,7 +6,7 @@ let
   fontSize = config.sharedVariables.alacritty.settings.font.size;
 in
 {
-  home-manager.users.${user}.programs.alacritty = {
+  programs.alacritty = {
     enable = true;
     settings = {
       window = {

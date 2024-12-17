@@ -7,7 +7,7 @@ let
   user = config.sharedVariables.user;
 in
 {
-  home-manager.users.${user}.programs.zsh = lib.mkMerge [
+  programs.zsh = lib.mkMerge [
     (
       let
         initExtraDarwin = ''

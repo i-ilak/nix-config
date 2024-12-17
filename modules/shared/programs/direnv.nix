@@ -1,11 +1,6 @@
-{ config
-, ...
-}:
-let
-  user = config.sharedVariables.user;
-in
+_:
 {
-  home-manager.users.${user}.programs.direnv = {
+  programs.direnv = {
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
