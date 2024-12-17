@@ -1,9 +1,9 @@
 {
   description = "General Purpose Configuration for macOS and NixOS";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2411.711349.tar.gz";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "https://flakehub.com/f/nix-community/home-manager/0.2411.3873.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
@@ -27,7 +27,7 @@
       flake = false;
     };
     disko = {
-      url = "github:nix-community/disko";
+      url = "https://flakehub.com/f/nix-community/disko/1.10.0.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
@@ -35,15 +35,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     pre-commit-hooks = {
-      url = "github:cachix/git-hooks.nix";
+      url = "https://flakehub.com/f/cachix/git-hooks.nix/0.1.946.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-utils = {
-      url = "github:numtide/flake-utils";
+      url = "https://flakehub.com/f/numtide/flake-utils/0.1.102.tar.gz";
     };
     sops-nix = {
-      url = "github:Mic92/sops-nix";
+      url = "https://flakehub.com/f/Mic92/sops-nix/0.1.887.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    fh = {
+      url = "https://flakehub.com/f/DeterminateSystems/fh/*";
     };
   };
   outputs =
