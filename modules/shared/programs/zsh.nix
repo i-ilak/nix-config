@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  user = config.sharedVariables.user;
+  inherit (config.sharedVariables) homeDir;
 in
 {
   programs.zsh = lib.mkMerge [
@@ -12,8 +12,8 @@ in
       let
         initExtraDarwin = ''
           # source the nix profiles
-          if [[ -r "${config.users.users.${user}.home}/.nix-profile/etc/profile.d/nix.sh" ]]; then
-            source "${config.users.users.${user}.home}/.nix-profile/etc/profile.d/nix.sh"
+          if [[ -r "${homeDir}/.nix-profile/etc/profile.d/nix.sh" ]]; then
+            source "${homeDir}/.nix-profile/etc/profile.d/nix.sh"
           fi
           source ~/.p10k.zsh
 

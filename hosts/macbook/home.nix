@@ -1,11 +1,10 @@
 { config
 , pkgs
 , lib
-, home-manager
 , ...
 }:
 let
-  user = config.sharedVariables.user;
+  inherit (config.sharedVariables) user;
 
   sharedFiles = import ../../modules/shared/files.nix {
     inherit config pkgs lib;
@@ -16,10 +15,6 @@ in
   imports = [
     ../../modules/darwin/dock
     ../../modules/darwin/aerospace.nix
-    ../../modules/shared/programs/git.nix
-    ../../modules/shared/programs/zsh.nix
-    ../../modules/shared/programs/direnv.nix
-    ../../modules/shared/programs/alacritty.nix
   ];
 
   users.users.${user} = {
@@ -59,8 +54,17 @@ in
     users.${user} =
       { pkgs
       , lib
+      , config
       , ...
       }: {
+        imports = [
+          ./additional_config_parameters.nix
+          ../../modules/shared/programs/git.nix
+          ../../modules/shared/programs/zsh.nix
+          ../../modules/shared/programs/direnv.nix
+          ../../modules/shared/programs/alacritty.nix
+        ];
+
         home = {
           enableNixpkgsReleaseCheck = false;
           packages = pkgs.callPackage ./packages.nix { };

@@ -22,7 +22,7 @@
   # Setup user, packages, programs
   nix =
     let
-      user = config.sharedVariables.user;
+      inherit (config.sharedVariables) user;
     in
     {
       package = pkgs.nix;
@@ -103,7 +103,7 @@
 
       screencapture =
         let
-          user = config.sharedVariables.user;
+          inherit (config.sharedVariables) user;
         in
         {
           location = "/Users/${user}/Downloads/temp";

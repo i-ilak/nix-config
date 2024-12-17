@@ -2,7 +2,7 @@
 , ...
 }:
 let
-  user = config.sharedVariables.user;
+  inherit (config.sharedVariables) user;
 in
 {
   programs.git =
