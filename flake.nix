@@ -45,8 +45,9 @@
       url = "https://flakehub.com/f/Mic92/sops-nix/0.1.887.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    fh = {
-      url = "https://flakehub.com/f/DeterminateSystems/fh/*";
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   outputs =

@@ -9,7 +9,7 @@
   config = {
     sharedVariables = {
       user = "iilak";
-      hostname = "macbook";
+      hostname = "mxw-dalco02";
       homeDir = "/home/iilak";
       alacritty.settings.font.size = 14;
     };

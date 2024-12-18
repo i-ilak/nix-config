@@ -11,7 +11,7 @@
       user = "iilak";
       homeDir = "/Users/iilak";
       hostname = "macbook";
-      alacritty.settings.font.size = 14;
+      alacritty.settings.font.size = 11;
     };
   };
 }

@@ -2,7 +2,6 @@
 , ...
 }:
 let
-  inherit (config.sharedVariables) user;
   fontSize = config.sharedVariables.alacritty.settings.font.size;
 in
 {

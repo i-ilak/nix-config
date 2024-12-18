@@ -5,6 +5,7 @@
 }:
 let
   inherit (config.sharedVariables) homeDir;
+  inherit (config.sharedVariables) hostname;
 in
 {
   programs.zsh = lib.mkMerge [
@@ -31,9 +32,15 @@ in
 
           export maestral="python3 -m maestral"
         '';
+
+        initMxwDalco02 = ''
+          export CONAN_HOME=/opt/mll_build/conan2/
+        '';
       in
       {
-        initExtra = lib.optionalString pkgs.stdenv.isDarwin initExtraDarwin + lib.optionalString pkgs.stdenv.isLinux initExtraLinux;
+        initExtra = lib.optionalString pkgs.stdenv.isDarwin initExtraDarwin
+          + lib.optionalString pkgs.stdenv.isLinux initExtraLinux
+          + lib.optionalString (hostname == "mxw-dalco02") initMxwDalco02;
       }
     )
     {
