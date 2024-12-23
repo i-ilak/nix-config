@@ -50,7 +50,6 @@
 
   # Load configuration that is shared across systems
   environment.systemPackages = [
-    inputs.fh.packages.aarch64-darwin.default
   ] ++ import ../../modules/shared/system_packages.nix { inherit pkgs; };
 
   security.pam.enableSudoTouchIdAuth = true;
