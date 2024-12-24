@@ -1,5 +1,6 @@
 { pkgs
 , inputs
+, lib
 , config
 , ...
 }:
@@ -25,21 +26,28 @@ in
     username = config.sharedVariables.user;
     homeDirectory = config.sharedVariables.homeDir;
     packages = with pkgs; [
-      inputs.nixvim.packages.${pkgs.system}.default
       keepassxc
+      firefox
+      thunderbird
+      rofi
+      polybar
+
+      # development
       uv
       ripgrep
+      docker
+      tree
+      inputs.nixvim.packages.${pkgs.system}.default
+
+      #fonts
       meslo-lgs-nf
       font-awesome
       noto-fonts
       noto-fonts-emoji
     ];
-    file.".config/i3/i3.conf".source = ../../modules/dotfiles/linux/i3/config;
-  };
-
-
-  xsession.windowManager.i3 = {
-    configFile = "${config.sharedVariables.homeDir}/i3/i3.conf";
+    file = {
+      ".config/i3/config".source = ../../modules/dotfiles/linux/i3/config;
+    };
   };
 
   fonts.fontconfig.enable = true;

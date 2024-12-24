@@ -60,6 +60,7 @@ in
         df = "df -Tha --total";
         du = "du -ach | sort -h";
         ps = "ps auxf";
+        ssh = "TERM=xterm-256color ssh";
       };
       oh-my-zsh = {
         enable = true;
