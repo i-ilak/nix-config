@@ -5,6 +5,7 @@ _: [
   "scroll-reverser"
   "brave-browser"
   "zoom"
+  "chromium"
   "raycast"
   "nikitabobko/tap/aerospace"
 
@@ -12,6 +13,7 @@ _: [
   "docker"
   "visual-studio-code"
   "iterm2"
+  "ghostty"
 
   # Communication Tools
   "discord"

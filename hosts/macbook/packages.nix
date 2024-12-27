@@ -1,4 +1,8 @@
 { pkgs
 , ...
 }:
-[ pkgs.dockutil ]
+with pkgs;
+[
+  dockutil
+  tailscale
+]

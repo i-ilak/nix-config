@@ -1,5 +1,11 @@
-_: {
-  git =
+{ config
+, ...
+}:
+let
+  inherit (config.sharedVariables) user;
+in
+{
+  programs.git =
     let
       name = "Ivan Ilak";
       email = "ivan.ilak@hotmail.com";

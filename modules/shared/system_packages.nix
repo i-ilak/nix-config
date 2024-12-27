@@ -10,6 +10,8 @@ with pkgs; [
   wget
   zip
   colordiff
+  uv
+  nixpkgs-fmt
 
   # Encryption and security tools
   gnupg
@@ -20,9 +22,6 @@ with pkgs; [
   font-awesome
   meslo-lgs-nf
 
-  # Source code management, Git, GitHub tools
-  gh
-
   # Text and terminal utilities
   htop
   jq
@@ -30,9 +29,4 @@ with pkgs; [
   tree
   unzip
   zsh-powerlevel10k
-
-  # Python packages
-  black
-  python311
-  python311Packages.virtualenv
 ]

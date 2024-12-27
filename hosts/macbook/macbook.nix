@@ -1,46 +1,54 @@
 { pkgs
 , inputs
+, config
 , ...
 }:
-let
-  user = "iilak";
-in
 {
   imports = [
+    ./additional_config_parameters.nix
     ./home.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
 
-  home-manager.users.${user}.home = {
-    packages = [ inputs.nixvim.packages.${pkgs.system}.default ];
+  home-manager.users.${config.sharedVariables.user}.home = {
+    packages = [
+      inputs.nixvim.packages.${pkgs.system}.default
+    ];
     # keyboard.layout = "eu"; # does not seem to do anything
   };
 
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+  services = {
+    nix-daemon.enable = true;
+    tailscale.enable = true;
+  };
 
   # Setup user, packages, programs
-  nix = {
-    package = pkgs.nix;
-    settings.trusted-users = [ "@admin" "${user}" ];
+  nix =
+    let
+      inherit (config.sharedVariables) user;
+    in
+    {
+      package = pkgs.nix;
+      settings.trusted-users = [ "@admin" "${user}" ];
 
-    gc = {
-      user = "root";
-      automatic = true;
-      interval = {
-        Weekday = 0;
-        Hour = 2;
-        Minute = 0;
+      gc = {
+        user = "root";
+        automatic = true;
+        interval = {
+          Weekday = 0;
+          Hour = 2;
+          Minute = 0;
+        };
+        options = "--delete-older-than 10d";
       };
-      options = "--delete-older-than 10d";
-    };
 
-    # Turn this on to make command line easier
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
+      # Turn this on to make command line easier
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+    };
 
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
@@ -98,11 +106,15 @@ in
         wvous-tr-corner = 1;
       };
 
-      screencapture = {
-        location = "/Users/${user}/Downloads/temp";
-        type = "png";
-        disable-shadow = true;
-      };
+      screencapture =
+        let
+          inherit (config.sharedVariables) user;
+        in
+        {
+          location = "/Users/${user}/Downloads/temp";
+          type = "png";
+          disable-shadow = true;
+        };
 
       finder = {
         AppleShowAllFiles = true;
