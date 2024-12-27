@@ -1,5 +1,4 @@
 { inputs
-, user
 ,
 }:
 inputs.darwin.lib.darwinSystem {
@@ -10,8 +9,8 @@ inputs.darwin.lib.darwinSystem {
     inputs.nix-homebrew.darwinModules.nix-homebrew
     {
       nix-homebrew = {
-        inherit user;
         enable = true;
+        user = "iilak";
         taps = {
           "homebrew/homebrew-core" = inputs.homebrew-core;
           "homebrew/homebrew-cask" = inputs.homebrew-cask;
@@ -21,7 +20,6 @@ inputs.darwin.lib.darwinSystem {
         autoMigrate = true;
       };
     }
-    inputs.sops-nix.darwinModules.sops
     ./macbook.nix
   ];
 }

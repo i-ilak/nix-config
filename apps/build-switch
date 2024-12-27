@@ -39,7 +39,7 @@ case "$SYSTEM" in
         if [ -f /etc/NIXOS ]; then
             /run/current-system/sw/bin/nixos-rebuild switch --flake .#$HOSTNAME
         else
-            home-manager switch --experimental-features 'nix-command flakes' --impure --flake .#$HOSTNAME
+            home-manager switch -v --experimental-features 'nix-command flakes' --impure --flake .#$HOSTNAME
         fi
         ;;
 

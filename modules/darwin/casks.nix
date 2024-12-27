@@ -13,6 +13,7 @@ _: [
   "docker"
   "visual-studio-code"
   "iterm2"
+  "ghostty"
 
   # Communication Tools
   "discord"

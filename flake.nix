@@ -61,7 +61,6 @@
     , ...
     } @ inputs:
     let
-      user = " iilak ";
       devShell = system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
@@ -110,7 +109,7 @@
     {
       darwinConfigurations = {
         macbook = import ./hosts/macbook/nix-darwin.nix {
-          inherit inputs user;
+          inherit inputs;
         };
       };
 

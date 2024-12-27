@@ -277,11 +277,11 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1735271978,
-        "narHash": "sha256-y6Ony5eq4F4E76Y2ZhALSEzBZ4GbGRVQIEScPieCDGI=",
+        "lastModified": 1735330124,
+        "narHash": "sha256-mz0hNKITGAy+hpKgMLEc8tGvaLg7I9w5sT93LSkHPRU=",
         "owner": "ghostty-org",
         "repo": "ghostty",
-        "rev": "a8e5eef11cc67f87f445626f9ca2993373774bf8",
+        "rev": "590c2929e71977e4b2f2d0c4bf81fc0d0fdd6347",
         "type": "github"
       },
       "original": {
@@ -451,11 +451,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1735284578,
-        "narHash": "sha256-Axe8beYEEugjrH8sdCUU2jAbEX+sA8HgXRpRa8+ZqO0=",
+        "lastModified": 1735328520,
+        "narHash": "sha256-EL9EJPFlFZTUR+xPBOgo2mh8SO6wkT0rehPQUQkzowU=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "3048f466b73ea288802b4628f6c3affbaf20c1b5",
+        "rev": "428abc16c4668301caf8ca191158a8ea3c1ff41a",
         "type": "github"
       },
       "original": {
@@ -467,11 +467,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1735279379,
-        "narHash": "sha256-AItNas/r6X8aRGmCb7cVAdKA5zDPc75BfqfrZM918X8=",
+        "lastModified": 1735329299,
+        "narHash": "sha256-zlhg6PUxJyRZo57EP7t8Zh1Rgn/hCENss2z4Ej79jAk=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "d638c53674297c8368ba715fa08314247c49ddd9",
+        "rev": "edf6d3b3ea500be48f5b87a009e7b56eb9898542",
         "type": "github"
       },
       "original": {

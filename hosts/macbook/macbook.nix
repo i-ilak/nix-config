@@ -12,12 +12,17 @@
   ];
 
   home-manager.users.${config.sharedVariables.user}.home = {
-    packages = [ inputs.nixvim.packages.${pkgs.system}.default ];
+    packages = [
+      inputs.nixvim.packages.${pkgs.system}.default
+    ];
     # keyboard.layout = "eu"; # does not seem to do anything
   };
 
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+  services = {
+    nix-daemon.enable = true;
+    tailscale.enable = true;
+  };
 
   # Setup user, packages, programs
   nix =
