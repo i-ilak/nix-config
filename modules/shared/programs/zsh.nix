@@ -35,6 +35,13 @@ in
 
         initMxwDalco02 = ''
           export CONAN_HOME=/opt/mll_build/conan2/
+          export MLL_ROOT=/opt/mll_root
+
+          PATH=$MLL_ROOT/bin:$PATH
+          LD_LIBRARY_PATH=$MLL_ROOT/lib:$MLL_ROOT/lib64:$LD_LIBRARY_PATH
+          PKG_CONFIG_PATH=$MLL_ROOT/lib/pkgconfig:$PKG_CONFIG_PATH
+          CMAKE_PREFIX_PATH=$MLL_ROOT:$CMAKE_PREFIX_PATH
+          CPATH=$MLL_ROOT/include:$CPATH
         '';
       in
       {

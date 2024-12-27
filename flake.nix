@@ -49,6 +49,9 @@
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
   };
   outputs =
     { self
@@ -58,7 +61,7 @@
     , ...
     } @ inputs:
     let
-      user = "iilak";
+      user = " iilak ";
       devShell = system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
@@ -78,7 +81,14 @@
       {
         apps.default = {
           meta = {
-            description = "Shell script to switch to next generation, based on hostname.";
+            description = "
+        Shell
+        script
+        to
+        switch
+        to
+        next
+        generation, based on hostname.";
             mainProgram = "build-switch";
           };
           type = "app";
@@ -120,3 +130,4 @@
       };
     };
 }
+
