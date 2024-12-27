@@ -5,50 +5,12 @@
 }:
 let
   inherit (config.sharedVariables) user;
-
   sharedFiles = import ../../modules/shared/files.nix {
     inherit config pkgs lib;
   };
   additionalFiles = import ../../modules/darwin/files.nix { inherit user config pkgs; };
 in
 {
-  imports = [
-    ../../modules/darwin/dock
-    ../../modules/darwin/aerospace.nix
-  ];
-
-  users.users.${user} = {
-    name = "${user}";
-    home = "/Users/${user}";
-    isHidden = false;
-    shell = pkgs.zsh;
-  };
-
-  homebrew = {
-    # This is a module from nix-darwin
-    # Homebrew is *installed* via the flake input nix-homebrew
-    enable = true;
-    casks = pkgs.callPackage ../../modules/darwin/casks.nix { };
-
-    taps = [
-      "nikitabobko/tap"
-    ];
-
-    # These app IDs are from using the mas CLI app
-    # mas = mac app store
-    # https://github.com/mas-cli/mas
-    #
-    # $ nix shell nixpkgs#mas
-    # $ mas search <app name>
-    #
-    masApps = {
-      "strongbox" = 897283731;
-      "reader" = 1529448980;
-      "whatsapp" = 310633997;
-    };
-  };
-
-  # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
     users.${user} =
@@ -63,6 +25,7 @@ in
           ../../modules/shared/programs/zsh.nix
           ../../modules/shared/programs/direnv.nix
           ../../modules/shared/programs/alacritty.nix
+          # ../../modules/shared/programs/ssh_private.nix
         ];
 
         home = {
@@ -80,13 +43,5 @@ in
         # https://github.com/nix-community/home-manager/issues/3344
         manual.manpages.enable = false;
       };
-  };
-
-  # Fully declarative dock using the latest from Nix Store
-  local = {
-    dock.enable = true;
-    dock.entries = [
-      { path = "/Applications/Safari.app/"; }
-    ];
   };
 }

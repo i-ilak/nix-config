@@ -7,9 +7,19 @@
   imports = [
     ./additional_config_parameters.nix
     ./home.nix
+    ../../modules/darwin/homebrew.nix
+    ../../modules/darwin/dock
+    ../../modules/darwin/aerospace.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
+
+  users.users.${config.sharedVariables.user} = {
+    name = "${config.sharedVariables.user}";
+    home = "/Users/${config.sharedVariables.user}";
+    isHidden = false;
+    shell = pkgs.zsh;
+  };
 
   home-manager.users.${config.sharedVariables.user}.home = {
     packages = [
@@ -18,7 +28,6 @@
     # keyboard.layout = "eu"; # does not seem to do anything
   };
 
-  # Auto upgrade nix package and the daemon service.
   services = {
     nix-daemon.enable = true;
     tailscale.enable = true;
@@ -57,6 +66,13 @@
   environment.systemPackages = import ../../modules/shared/system_packages.nix { inherit pkgs; };
 
   security.pam.enableSudoTouchIdAuth = true;
+
+  local = {
+    dock.enable = true;
+    dock.entries = [
+      { path = "/Applications/Safari.app/"; }
+    ];
+  };
 
   system = {
     stateVersion = 4;
