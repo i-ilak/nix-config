@@ -1,6 +1,7 @@
 { config
 , pkgs
 , lib
+, inputs
 , ...
 }:
 let
@@ -20,6 +21,7 @@ in
       , ...
       }: {
         imports = [
+          inputs.catppuccin.homeManagerModules.catppuccin
           ./additional_config_parameters.nix
           ../../modules/shared/programs/git.nix
           ../../modules/shared/programs/zsh.nix
@@ -37,6 +39,12 @@ in
           ];
 
           stateVersion = "24.05";
+        };
+
+
+        catppuccin = {
+          flavor = "mocha";
+          enable = true; # Enables it for all supported tools
         };
 
         # Marked broken Oct 20, 2022 check later to remove this
