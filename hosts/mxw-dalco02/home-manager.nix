@@ -5,6 +5,7 @@ inputs.home-manager.lib.homeManagerConfiguration
 {
   pkgs = nixpkgs.legacyPackages.x86_64-linux;
   modules = [
+    inputs.catppuccin.homeManagerModules.catppuccin
     ./additional_config_parameters.nix
     ./home.nix
   ];

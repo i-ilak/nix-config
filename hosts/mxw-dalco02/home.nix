@@ -55,6 +55,11 @@ in
     ];
   };
 
+  catppuccin = {
+    flavor = "mocha";
+    enable = true; # Enables it for all supported tools
+  };
+
   nixpkgs.config.allowUnfree = true;
   fonts.fontconfig.enable = true;
 

@@ -52,6 +52,10 @@
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    aerospace-taps = {
+      url = "github:nikitabobko/homebrew-tap";
+      flake = false;
+    };
   };
   outputs =
     { self
