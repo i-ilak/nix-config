@@ -69,7 +69,7 @@ _:
             # Layout commands
             alt-slash = "layout accordion horizontal vertical";
             alt-backslash = "layout tiles horizontal vertical";
-            alt-enter = "exec-and-forget /Users/iilak/.nix-profile/bin/alacritty";
+            alt-enter = "exec-and-forget open -n /Applications/Ghostty.app";
 
             # Fullscreen commands
             alt-shift-q = "close";

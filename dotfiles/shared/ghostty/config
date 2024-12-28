@@ -14,3 +14,4 @@ clipboard-read = allow
 clipboard-write = allow
 window-theme = dark
 gtk-titlebar = false
+macos-titlebar-style = "hidden"
