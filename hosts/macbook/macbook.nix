@@ -156,11 +156,17 @@
       enableKeyMapping = true;
       remapCapsLockToEscape = true;
       swapLeftCtrlAndFn = true;
-      # Remap §± to ~
       userKeyMapping = [
+        # Remap §± to ~
         {
           HIDKeyboardModifierMappingDst = 30064771125;
           HIDKeyboardModifierMappingSrc = 30064771172;
+        }
+        # Remap `Ctrl+Backspace` to `Forward Delete`
+        {
+
+          HIDKeyboardModifierMappingDst = 30064771115;
+          HIDKeyboardModifierMappingSrc = 30064771148;
         }
       ];
     };
