@@ -12,10 +12,10 @@ let
 in
 {
   imports = [
-    ../../modules/shared/programs/git.nix
-    ../../modules/shared/programs/zsh.nix
-    ../../modules/shared/programs/direnv.nix
-    ../../modules/shared/programs/alacritty.nix
+    ../../modules/home-manager/programs/git.nix
+    ../../modules/home-manager/programs/zsh.nix
+    ../../modules/home-manager/programs/direnv.nix
+    ../../modules/home-manager/programs/alacritty.nix
   ];
 
   nixGL = {

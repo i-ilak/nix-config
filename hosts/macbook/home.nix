@@ -12,44 +12,28 @@ let
   additionalFiles = import ../../modules/darwin/files.nix { inherit user config pkgs; };
 in
 {
-  home-manager = {
-    useGlobalPkgs = true;
-    users.${user} =
-      { pkgs
-      , lib
-      , config
-      , ...
-      }: {
-        imports = [
-          inputs.catppuccin.homeManagerModules.catppuccin
-          ./additional_config_parameters.nix
-          ../../modules/shared/programs/git.nix
-          ../../modules/shared/programs/zsh.nix
-          ../../modules/shared/programs/direnv.nix
-          ../../modules/shared/programs/alacritty.nix
-          # ../../modules/shared/programs/ssh_private.nix
-        ];
+  imports = [
+    inputs.catppuccin.homeManagerModules.catppuccin
+    ./additional_config_parameters.nix
+    ../../modules/home-manager/programs/git.nix
+    ../../modules/home-manager/programs/zsh.nix
+    ../../modules/home-manager/programs/direnv.nix
+    ../../modules/home-manager/programs/alacritty.nix
+  ];
 
-        home = {
-          enableNixpkgsReleaseCheck = false;
-          packages = pkgs.callPackage ./packages.nix { };
-          file = lib.mkMerge [
-            sharedFiles
-            additionalFiles
-          ];
+  home = {
+    enableNixpkgsReleaseCheck = false;
+    packages = pkgs.callPackage ./packages.nix { inherit inputs; };
+    file = lib.mkMerge [
+      sharedFiles
+      additionalFiles
+    ];
 
-          stateVersion = "24.05";
-        };
+    stateVersion = "24.05";
+  };
 
-
-        catppuccin = {
-          flavor = "mocha";
-          enable = true; # Enables it for all supported tools
-        };
-
-        # Marked broken Oct 20, 2022 check later to remove this
-        # https://github.com/nix-community/home-manager/issues/3344
-        manual.manpages.enable = false;
-      };
+  catppuccin = {
+    flavor = "mocha";
+    enable = true; # Enables it for all supported tools
   };
 }
