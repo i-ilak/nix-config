@@ -93,7 +93,7 @@ in
       # Remap `Ctrl+Backspace` to `Forward Delete`
       {
 
-        HIDKeyboardModifierMappingDst = 30064771115;
+        HIDKeyboardModifierMappingDst = 30064771306;
         HIDKeyboardModifierMappingSrc = 30064771148;
       }
     ];
