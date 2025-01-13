@@ -6,6 +6,7 @@ _: [
   "brave-browser"
   "zoom"
   "chromium"
+  "desktoppr"
   "raycast"
   "nikitabobko/tap/aerospace"
 

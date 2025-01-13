@@ -9,6 +9,7 @@
     ./additional_config_parameters.nix
     ../../modules/darwin/homebrew.nix
     ../../modules/darwin/dock
+    ../../modules/darwin/desktoppr
     ../../modules/darwin/aerospace.nix
     ../../modules/shared
     ../../modules/shared/cachix
@@ -61,9 +62,20 @@
   system = import ../../modules/darwin/system.nix { inherit config; };
 
   local = {
-    dock.enable = true;
-    dock.entries = [
-      { path = "/Applications/Safari.app/"; }
-    ];
+    dock = {
+      enable = true;
+      entries = [
+        { path = "/Applications/Safari.app/"; }
+      ];
+    };
+    desktoppr = {
+      enable = true;
+      wallpapers = [
+        {
+          desktop = 0;
+          path = "${config.sharedVariables.homeDir}/.config/wallpapers/red_devil.jpg";
+        }
+      ];
+    };
   };
 }
