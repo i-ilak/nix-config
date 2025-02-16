@@ -73,7 +73,7 @@
       wallpapers = [
         {
           desktop = 0;
-          path = "${config.sharedVariables.homeDir}/.config/wallpapers/red_devil.jpg";
+          name = "red_devil";
         }
       ];
     };

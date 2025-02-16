@@ -18,7 +18,7 @@ in
         type = with types; listOf (submodule {
           options = {
             desktop = lib.mkOption { type = int; };
-            path = lib.mkOption { type = str; };
+            name = lib.mkOption { type = str; };
           };
         });
         readOnly = true;
@@ -29,8 +29,20 @@ in
     mkIf cfg.enable
       (
         let
+          repo = pkgs.fetchFromGitHub {
+            owner = "i-ilak";
+            repo = "wallpapers";
+            rev = "main";
+            sha256 = "sha256-JonOmR1gdNKShqWNHx0AvgpncclwMMZsJYldeuLanLs=";
+          };
+          wallpaper_map = builtins.fromJSON (builtins.readFile "${repo}/wallpapers.json");
           setWallpapers = concatMapStrings
-            (entry: "/usr/local/bin/desktoppr ${toString entry.desktop} ${entry.path}\n")
+            (entry:
+              let
+                wallpaperUrl = wallpaper_map.wallpapers.${entry.name};
+              in
+              "/usr/local/bin/desktoppr ${toString entry.desktop} '${wallpaperUrl}'\n"
+            )
             cfg.wallpapers;
         in
         {

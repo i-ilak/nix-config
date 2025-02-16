@@ -7,7 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
-      url = "github:LnL7/nix-darwin/master";
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew = {
@@ -32,7 +32,7 @@
     };
     nixvim = {
       url = "github:i-ilak/nixvim-config";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs"; # Waiting for dap-lldb to get released with 25.05
     };
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
@@ -84,14 +84,9 @@
       {
         apps.default = {
           meta = {
-            description = "
-        Shell
-        script
-        to
-        switch
-        to
-        next
-        generation, based on hostname.";
+            description = ''
+              Shell script to switch to next generation, based on hostname.
+            '';
             mainProgram = "build-switch";
           };
           type = "app";

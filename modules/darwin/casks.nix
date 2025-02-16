@@ -8,6 +8,7 @@ _: [
   "chromium"
   "desktoppr"
   "raycast"
+  "gimp"
   "nikitabobko/tap/aerospace"
 
   # Development Tools
