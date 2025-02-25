@@ -65,7 +65,7 @@ in
         mkdir = "mkdir -p";
         diff = "colordiff";
         df = "df -Tha --total";
-        du = "du -ach | sort -h";
+        du = "du -ach";
         ps = "ps auxf";
         ssh = "TERM=xterm-256color ssh";
       };

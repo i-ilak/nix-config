@@ -44,7 +44,7 @@ exec --no-startup-id nitrogen --restore
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec /home/iilak/.local/bin/ghostty
 bindsym $mod+Shift+q kill
 bindsym $mod+space exec "~/.config/rofi/launchers/type-1/launcher.sh"
 
@@ -174,7 +174,7 @@ bindsym $mod+r mode "resize"
 # bar {
 #   font pango:"MesloLGS NF Normal", FontAwesome 9
 #   position top
-#   bash ~/.config/polybar/launch.sh --forest 
+#   bash ~/.config/polybar/launch.sh --forest
 # }
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh --forest
 

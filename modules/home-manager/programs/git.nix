@@ -19,15 +19,50 @@ in
         enable = true;
       };
       extraConfig = {
-        init.defaultBranch = "main";
-        core = {
-          editor = "vim";
-          autocrlf = "input";
+        branch.sort = "-commiterdate";
+        column.ui = "auto";
+        commit = {
+
+          gpgsign = false;
+          verbose = true;
         };
-        commit.gpgsign = false;
+        core = {
+          autocrlf = "input";
+          editor = "vim";
+          excludeFiles = "~/.gitignore";
+          fsmonitor = true;
+          untrackedCache = true;
+        };
+        diff = {
+          algorithm = "histogram";
+          colorMoved = "plain";
+          mnemonicPrefix = true;
+          renames = true;
+        };
+        fetch = {
+          prune = true;
+          pruneTags = true;
+          all = true;
+        };
+        help.autocorrect = "prompt";
+        init.defaultBranch = "main";
+        merge.conflictstyle = "zdiff3";
         pull.rebase = true;
-        rebase.autoStash = true;
-        push.autoSetupRemote = true;
+        push = {
+          autoSetupRemote = true;
+          default = "simple";
+          followTags = true;
+        };
+        rebase = {
+          autoStash = true;
+          autoSquash = true;
+          updateRefs = true;
+        };
+        rerere = {
+          enabled = true;
+          autoupdate = true;
+        };
+        tag.sort = "version:refname";
       };
     };
 }

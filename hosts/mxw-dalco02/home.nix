@@ -9,6 +9,15 @@ let
   sharedFiles = import ../../modules/shared/files.nix {
     inherit config pkgs lib;
   };
+  home = builtins.getEnv "HOME";
+  xdg_configHome = "${home}/.config";
+
+  files =
+    {
+      "${xdg_configHome}/i3/config".source = ../../dotfiles/linux/i3/config;
+      "${xdg_configHome}/ccache/ccache.conf".source = ../../dotfiles/linux/ccache/ccache.conf;
+      "${xdg_configHome}/systemd/user/dropbox.service".source = ../../dotfiles/linux/systemd/dropbox.service;
+    };
 in
 {
   imports = [
@@ -16,6 +25,7 @@ in
     ../../modules/home-manager/programs/zsh.nix
     ../../modules/home-manager/programs/direnv.nix
     ../../modules/home-manager/programs/alacritty.nix
+    ../../modules/home-manager/programs/fzf.nix
   ];
 
   nixGL = {
@@ -30,18 +40,25 @@ in
     homeDirectory = config.sharedVariables.homeDir;
     packages = with pkgs; [
       keepassxc
-      firefox
+      # firefox
       thunderbird
       rofi
       polybar
+      mupdf
+      (config.lib.nixGL.wrap dolphin)
+
 
       # development
       uv
       ripgrep
       docker
       tree
+      awscli2
+      ranger
+      ccache
+      doxygen
       inputs.nixvim.packages.${pkgs.system}.default
-      (config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.system}.default)
+      # (config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.system}.default)
 
       #fonts
       meslo-lgs-nf
@@ -52,6 +69,7 @@ in
     ];
     file = lib.mkMerge [
       sharedFiles
+      files
     ];
   };
 
@@ -65,7 +83,11 @@ in
 
   programs = {
     home-manager.enable = true;
-    alacritty.package = config.lib.nixGL.wrap pkgs.alacritty;
+    vscode = {
+      enable = true;
+      package = pkgs.vscode;
+    };
+    # alacritty.package = config.lib.nixGL.wrap pkgs.alacritty;
   };
 
   home.stateVersion = "24.11";
