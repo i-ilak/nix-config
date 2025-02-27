@@ -22,7 +22,8 @@ in
 {
   imports = [
     ../../modules/home-manager/programs/git.nix
-    ../../modules/home-manager/programs/zsh.nix
+    # ../../modules/home-manager/programs/zsh.nix
+    ../../modules/home-manager/programs/fish.nix
     ../../modules/home-manager/programs/direnv.nix
     ../../modules/home-manager/programs/alacritty.nix
     ../../modules/home-manager/programs/fzf.nix
@@ -57,6 +58,7 @@ in
       ranger
       ccache
       doxygen
+      grc
       inputs.nixvim.packages.${pkgs.system}.default
       # (config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.system}.default)
 
