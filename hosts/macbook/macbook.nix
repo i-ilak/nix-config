@@ -20,11 +20,12 @@
     users.${config.sharedVariables.user} = import ./home.nix { inherit pkgs inputs lib config; };
   };
 
+  programs.fish.enable = true;
   users.users.${config.sharedVariables.user} = {
     name = "${config.sharedVariables.user}";
     home = "/Users/${config.sharedVariables.user}";
     isHidden = false;
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
   services = {

@@ -12,6 +12,7 @@ with pkgs; [
   colordiff
   uv
   nixpkgs-fmt
+  grc
 
   # Encryption and security tools
   gnupg

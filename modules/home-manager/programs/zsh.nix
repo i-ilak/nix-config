@@ -12,19 +12,10 @@ in
     (
       let
         initExtraDarwin = ''
-          # source the nix profiles
-          if [[ -r "${homeDir}/.nix-profile/etc/profile.d/nix.sh" ]]; then
-            source "${homeDir}/.nix-profile/etc/profile.d/nix.sh"
+          if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
+          then
+              exec fish -l
           fi
-          source ~/.p10k.zsh
-
-          export PATH="$HOME/.cargo/bin:$PATH"
-          export EDITOR="vim"
-          export PATH="/usr/local/bin:$PATH"
-          export maestral="python3 -m maestral"
-          export PATH="/Applications/ArmGNUToolchain/13.2.Rel1/aarch64-none-elf/bin:$PATH"
-          export PATH="/opt/homebrew/bin:$PATH"
-          export HDF5_DIR=$(brew --prefix hdf5)
         '';
 
         initExtraLinux = ''
