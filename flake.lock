@@ -466,11 +466,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1740674917,
-        "narHash": "sha256-O0+tImg+3ybWlmFdjPXBD4NrWaQ9Pnq2cXACqfNBOZk=",
+        "lastModified": 1740683299,
+        "narHash": "sha256-Qq/82nYVMxPg1f/G3ZUKxckpM1tsvX/d9V3ZXQjFAWI=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "116fb9128f06eef92a03ed89b6f76dd0782a5041",
+        "rev": "432cc9f12b49665a929d4c62c4f8d1300cbe90e0",
         "type": "github"
       },
       "original": {
@@ -482,11 +482,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1740676502,
-        "narHash": "sha256-QaNyPkFRDR3kUjMIYLkYB8QUPFl/Et/qvv0PsUAg4Lg=",
+        "lastModified": 1740684366,
+        "narHash": "sha256-wAWjgFVtOpjhXxETx+P2KQ8a4W83QopfMk+ldD60CqU=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "956ce6c8d3b39fa1030f3c897a01e8203f42d9b2",
+        "rev": "3cb651e7238427dc898e41ce5f92367767ae3c99",
         "type": "github"
       },
       "original": {
@@ -721,11 +721,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1740685142,
-        "narHash": "sha256-mxCJHcGFo5faCsXaHVU1gN4YpgTikwVP/JSMCY7DjDE=",
+        "lastModified": 1740685836,
+        "narHash": "sha256-ebR/TKbMUaBp8FNAi23P0BImzevd5qbrqIFy9k19CNI=",
         "owner": "i-ilak",
         "repo": "nixvim-config",
-        "rev": "512c1148a82cc49dcb8a23596ba592f01b8dc7a8",
+        "rev": "9dc9440306be40aad3f96a8f63b8d14a9e2171c0",
         "type": "github"
       },
       "original": {

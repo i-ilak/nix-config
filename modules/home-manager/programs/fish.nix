@@ -14,12 +14,12 @@ in
       set fish_greeting # Disable greeting
     '';
     plugins = [
-      { name = "grc"; src = pkgs.fishPlugins.grc.src; }
-      { name = "z"; src = pkgs.fishPlugins.z.src; }
-      { name = "fzf"; src = pkgs.fishPlugins.fzf.src; }
-      { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
-      { name = "pisces"; src = pkgs.fishPlugins.pisces.src; }
-      { name = "tide"; src = pkgs.fishPlugins.tide.src; }
+      { name = "grc"; inherit (pkgs.fishPlugins.grc) src; }
+      { name = "z"; inherit (pkgs.fishPlugins.z) src; }
+      { name = "fzf"; inherit (pkgs.fishPlugins.fzf) src; }
+      { name = "fzf-fish"; inherit (pkgs.fishPlugins.fzf-fish) src; }
+      { name = "pisces"; inherit (pkgs.fishPlugins.pisces) src; }
+      { name = "tide"; inherit (pkgs.fishPlugins.tide) src; }
     ];
     shellAliases = {
       vim = "nvim";
