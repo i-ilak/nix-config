@@ -19,26 +19,12 @@ in
         '';
 
         initExtraLinux = ''
-          source ~/.p10k.zsh
-
           export maestral="python3 -m maestral"
-        '';
-
-        initMxwDalco02 = ''
-          export CONAN_HOME=/opt/mll_build/conan2/
-          export MLL_ROOT=/opt/mll_root
-
-          PATH=$MLL_ROOT/bin:$PATH
-          LD_LIBRARY_PATH=$MLL_ROOT/lib:$MLL_ROOT/lib64:$LD_LIBRARY_PATH
-          PKG_CONFIG_PATH=$MLL_ROOT/lib/pkgconfig:$PKG_CONFIG_PATH
-          CMAKE_PREFIX_PATH=$MLL_ROOT:$CMAKE_PREFIX_PATH
-          CPATH=$MLL_ROOT/include:$CPATH
         '';
       in
       {
         initExtra = lib.optionalString pkgs.stdenv.isDarwin initExtraDarwin
-          + lib.optionalString pkgs.stdenv.isLinux initExtraLinux
-          + lib.optionalString (hostname == "mxw-dalco02") initMxwDalco02;
+          + lib.optionalString pkgs.stdenv.isLinux initExtraLinux;
       }
     )
     {

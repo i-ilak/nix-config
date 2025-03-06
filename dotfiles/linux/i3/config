@@ -44,9 +44,9 @@ exec --no-startup-id nitrogen --restore
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-bindsym $mod+Return exec /home/iilak/.local/bin/ghostty
+bindsym $mod+Return exec /home/iilak/.nix-profile/bin/alacritty
 bindsym $mod+Shift+q kill
-bindsym $mod+space exec "~/.config/rofi/launchers/type-1/launcher.sh"
+bindsym $mod+space exec /home/iilak/.nix-profile/bin/rofi -show drun
 
 # change focus
 bindsym $mod+j focus left

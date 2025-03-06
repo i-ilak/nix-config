@@ -14,19 +14,23 @@ let
 
   files =
     {
-      "${xdg_configHome}/i3/config".source = ../../dotfiles/linux/i3/config;
+      # "${xdg_configHome}/i3/config".source = ../../dotfiles/linux/i3/config;
       "${xdg_configHome}/ccache/ccache.conf".source = ../../dotfiles/linux/ccache/ccache.conf;
       "${xdg_configHome}/systemd/user/dropbox.service".source = ../../dotfiles/linux/systemd/dropbox.service;
     };
 in
 {
   imports = [
+    ../../modules/home-manager/i3.nix
     ../../modules/home-manager/programs/git.nix
     # ../../modules/home-manager/programs/zsh.nix
+    ../../modules/home-manager/programs/rofi.nix
     ../../modules/home-manager/programs/fish.nix
     ../../modules/home-manager/programs/direnv.nix
     ../../modules/home-manager/programs/alacritty.nix
     ../../modules/home-manager/programs/fzf.nix
+    ../../modules/home-manager/programs/i3_status_rust.nix
+    ../../modules/home-manager/programs/polybar.nix
   ];
 
   nixGL = {
@@ -36,6 +40,10 @@ in
     installScripts = [ "mesa" "nvidiaPrime" ];
   };
 
+  xsession = {
+    enable = true;
+  };
+
   home = {
     username = config.sharedVariables.user;
     homeDirectory = config.sharedVariables.homeDir;
@@ -43,9 +51,10 @@ in
       keepassxc
       # firefox
       thunderbird
-      rofi
-      polybar
+      dmenu
       mupdf
+      p7zip
+      colordiff
       (config.lib.nixGL.wrap dolphin)
 
 
@@ -78,6 +87,7 @@ in
   catppuccin = {
     flavor = "mocha";
     enable = true; # Enables it for all supported tools
+    rofi.enable = false;
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -89,7 +99,7 @@ in
       enable = true;
       package = pkgs.vscode;
     };
-    # alacritty.package = config.lib.nixGL.wrap pkgs.alacritty;
+    alacritty.package = config.lib.nixGL.wrap pkgs.alacritty;
   };
 
   home.stateVersion = "24.11";

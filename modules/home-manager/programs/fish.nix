@@ -20,6 +20,7 @@ in
       { name = "fzf-fish"; inherit (pkgs.fishPlugins.fzf-fish) src; }
       { name = "pisces"; inherit (pkgs.fishPlugins.pisces) src; }
       { name = "tide"; inherit (pkgs.fishPlugins.tide) src; }
+      { name = "plugin-git"; inherit (pkgs.fishPlugins.plugin-git) src; }
     ];
     shellAliases = {
       vim = "nvim";
@@ -31,7 +32,6 @@ in
       df = "df -Tha --total";
       du = "du -ach";
       ps = "ps auxf";
-      ssh = "TERM=xterm-256color ssh";
     };
   };
 }

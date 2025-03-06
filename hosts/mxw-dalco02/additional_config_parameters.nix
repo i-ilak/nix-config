@@ -11,7 +11,7 @@
       user = "iilak";
       hostname = "mxw-dalco02";
       homeDir = "/home/iilak";
-      alacritty.settings.font.size = 14;
+      alacritty.settings.font.size = 13;
     };
   };
 }
