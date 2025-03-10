@@ -9,7 +9,7 @@ in
     enable = true;
     settings = {
       window = {
-        decorations = "None";
+        decorations = "buttonless";
         dynamic_title = true;
         opacity = 0.98;
         #option_as_alt   = "Both";

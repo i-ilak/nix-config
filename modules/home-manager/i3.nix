@@ -12,12 +12,40 @@ in
         modifier = "${modifier}";
         fonts = {
           names = [ "MesloLGS NF Normal" "FontAwesome 9" ];
-          style = "Bold Semi-Condensed";
+          # style = "Bold Semi-Condensed";
           size = 11.0;
         };
         focus = {
           followMouse = false;
         };
+        colors = {
+          focused = {
+            background = "#e2e2e3";
+            border = "#e2e2e3";
+            childBorder = "#e2e2e3";
+            indicator = "#e2e2e3";
+            text = "#e2e2e3";
+          };
+        };
+        floating = {
+          modifier = "${modifier}";
+        };
+        gaps =
+          {
+            inner = 5;
+            outer = 2;
+          };
+        window = {
+          commands = [
+            {
+              command = "floating enable";
+              criteria = { class = "^scope.*"; };
+            }
+          ];
+          border = 4;
+          titlebar = false;
+        };
+        bars = [ ];
         startup = [
           {
             command = "dex --autostart --environment i3";
@@ -93,41 +121,6 @@ in
 
           "${modifier}+Shift+e" = "exec \"i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'\"";
         };
-        floating = {
-          modifier = "${modifier}";
-        };
-        gaps =
-          {
-            inner = 5;
-            outer = 2;
-          };
-        window = {
-          commands = [
-            {
-              command = "floating enable";
-              criteria = { class = "^scope.*"; };
-            }
-          ];
-          border = 4;
-          titlebar = false;
-        };
-        # modes = {
-        #   resize = {
-        #     bindsym = {
-        #       "j" = "resize shrink width 10 px or 10 ppt";
-        #       "k" = "resize grow height 10 px or 10 ppt";
-        #       "l" = "resize shrink height 10 px or 10 ppt";
-        #       "odiaeresis" = "resize grow width 10 px or 10 ppt";
-        #       "Left" = "resize shrink width 10 px or 10 ppt";
-        #       "Down" = "resize grow height 10 px or 10 ppt";
-        #       "Up" = "resize shrink height 10 px or 10 ppt";
-        #       "Right" = "resize grow width 10 px or 10 ppt";
-        #       "Return" = "mode \"default\"";
-        #       "Escape" = "mode \"default\"";
-        #       "${modifier}+r" = "mode \"default\"";
-        #     };
-        #   };
-        # };
       };
   };
 }
