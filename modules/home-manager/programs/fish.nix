@@ -33,5 +33,8 @@ in
       du = "du -ach";
       ps = "ps auxf";
     };
+    shellInitLast = ''
+      set -gx PATH ${config.sharedVariables.homeDir}/.cargo/bin $PATH
+    '';
   };
 }

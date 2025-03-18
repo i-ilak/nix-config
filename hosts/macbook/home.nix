@@ -17,6 +17,7 @@ in
     ./additional_config_parameters.nix
     ../../modules/home-manager/programs/git.nix
     ../../modules/home-manager/programs/zsh.nix
+    ../../modules/home-manager/programs/fzf.nix
     ../../modules/home-manager/programs/fish.nix
     ../../modules/home-manager/programs/direnv.nix
     ../../modules/home-manager/programs/alacritty.nix
