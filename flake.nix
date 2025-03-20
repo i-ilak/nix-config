@@ -2,6 +2,7 @@
   description = "General Purpose Configuration for macOS and NixOS";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,7 +33,7 @@
     };
     nixvim = {
       url = "github:i-ilak/nixvim-config";
-      # inputs.nixpkgs.follows = "nixpkgs"; # Waiting for dap-lldb to get released with 25.05
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";

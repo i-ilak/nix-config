@@ -14,7 +14,6 @@ let
 
   files =
     {
-      # "${xdg_configHome}/i3/config".source = ../../dotfiles/linux/i3/config;
       "${xdg_configHome}/ccache/ccache.conf".source = ../../dotfiles/linux/ccache/ccache.conf;
       "${xdg_configHome}/systemd/user/dropbox.service".source = ../../dotfiles/linux/systemd/dropbox.service;
     };
@@ -55,6 +54,7 @@ in
       mupdf
       p7zip
       colordiff
+      nitrogen
       (config.lib.nixGL.wrap dolphin)
 
 
@@ -67,7 +67,9 @@ in
       ranger
       ccache
       doxygen
-      grc
+      grc # Needed for fish plugin
+      fd
+      libz # clangd does not bring it
       inputs.nixvim.packages.${pkgs.system}.default
       # (config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.system}.default)
 

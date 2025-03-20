@@ -235,6 +235,17 @@ in
           margin-bottom = "5";
         };
       };
-    script = "PATH=$PATH:${pkgs.i3}/bin polybar top-main &";
+    script = ''
+      export DISPLAY=:1
+      export XAUTHORITY=$HOME/.Xauthority
+      killall -q polybar
+      while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+      PATH=$PATH:${pkgs.i3}/bin polybar top-main &
+    '';
+  };
+
+  systemd.user.services.polybar.Unit = {
+    After = [ "graphical-session.target" ];
+    Requires = [ "graphical-session.target" ];
   };
 }

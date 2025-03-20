@@ -12,6 +12,10 @@ in
     enable = true;
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
+
+      set -x FZF_DEFAULT_COMMAND "fd . $HOME"
+      set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
+      set -x FZF_ALT_C_COMMAND "fd -t d . $HOME"
     '';
     plugins = [
       { name = "grc"; inherit (pkgs.fishPlugins.grc) src; }
