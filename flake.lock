@@ -704,14 +704,15 @@
           "nixpkgs-unstable"
         ],
         "nixvim": "nixvim_2",
-        "pre-commit-hooks": "pre-commit-hooks"
+        "pre-commit-hooks": "pre-commit-hooks",
+        "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1742308037,
-        "narHash": "sha256-HnP2qUAD0XL1h5derGdY8tgEfWf0qhg/9mJd1ZhxnM4=",
+        "lastModified": 1742502682,
+        "narHash": "sha256-YKo8n511Q4zvxxAa08w3MyuH4udFU75kO4k7ALqSPpA=",
         "owner": "i-ilak",
         "repo": "nixvim-config",
-        "rev": "0de58340e091717fd86b783bbc1090fdf22da016",
+        "rev": "8374a2cae7b1f585db1832c402c7b93647cbadce",
         "type": "github"
       },
       "original": {
@@ -897,6 +898,27 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "rev": "bebf27d00f7d10ba75332a0541ac43676985dea3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixvim",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1742370146,
+        "narHash": "sha256-XRE8hL4vKIQyVMDXykFh4ceo3KSpuJF3ts8GKwh5bIU=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "adc195eef5da3606891cedf80c0d9ce2d3190808",
         "type": "github"
       },
       "original": {
