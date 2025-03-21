@@ -6,17 +6,7 @@
 }:
 let
   inherit (inputs) nixgl;
-  sharedFiles = import ../../modules/shared/files.nix {
-    inherit config pkgs lib;
-  };
-  home = builtins.getEnv "HOME";
-  xdg_configHome = "${home}/.config";
-
-  files =
-    {
-      "${xdg_configHome}/ccache/ccache.conf".source = ../../dotfiles/linux/ccache/ccache.conf;
-      "${xdg_configHome}/systemd/user/dropbox.service".source = ../../dotfiles/linux/systemd/dropbox.service;
-    };
+  inherit (inputs) nixvim;
 in
 {
   imports = [
@@ -45,46 +35,10 @@ in
   };
 
   home = {
+    packages = import ./packages.nix { inherit pkgs nixvim config; };
+    file = import ./files.nix { inherit pkgs nixvim config; };
     username = config.sharedVariables.user;
     homeDirectory = config.sharedVariables.homeDir;
-    packages = with pkgs; [
-      keepassxc
-      # firefox
-      thunderbird
-      dmenu
-      mupdf
-      p7zip
-      colordiff
-      nitrogen
-      (config.lib.nixGL.wrap dolphin)
-
-
-      # development
-      uv
-      ripgrep
-      docker
-      tree
-      awscli2
-      ranger
-      ccache
-      doxygen
-      grc # Needed for fish plugin
-      fd
-      libz # clangd does not bring it
-      inputs.nixvim.packages.${pkgs.system}.default
-      # (config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.system}.default)
-
-      #fonts
-      meslo-lgs-nf
-      udev-gothic-nf
-      font-awesome
-      noto-fonts
-      noto-fonts-emoji
-    ];
-    file = lib.mkMerge [
-      sharedFiles
-      files
-    ];
   };
 
   catppuccin = {

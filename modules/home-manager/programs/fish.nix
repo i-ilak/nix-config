@@ -29,13 +29,14 @@ in
     shellAliases = {
       vim = "nvim";
       ip = "ip --color=auto";
-      ll = "ls -lFha --color=auto";
-      ls = "ls --color=auto";
+      ll = "eza -l";
+      ls = "eza -g";
+      tree = "eza -T";
       mkdir = "mkdir -p";
       diff = "colordiff";
       df = "df -Tha --total";
       du = "du -ach";
-      ps = "ps auxf";
+      ps = "procs";
     };
     shellInitLast = ''
       set -gx PATH ${config.sharedVariables.homeDir}/.cargo/bin $PATH
