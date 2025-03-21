@@ -2,15 +2,17 @@
 , inputs
 , ...
 }:
-with pkgs;
-[
-  dockutil
-  tailscale
-  fd
-  bat
-  ripgrep
-  inputs.nixvim.packages.${pkgs.system}.default
+let
+  inherit (inputs) nixvim;
+  sharedPackages = import ../../modules/home-manager/shared_packages.nix { inherit pkgs nixvim; };
 
-  # Fonts
-  meslo-lgs-nf
-]
+  packages = with pkgs;
+    [
+      dockutil
+      tailscale
+      # Fonts
+      meslo-lgs-nf
+    ] ++
+    sharedPackages;
+in
+packages

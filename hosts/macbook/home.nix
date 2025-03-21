@@ -1,16 +1,7 @@
-{ config
-, pkgs
-, lib
+{ pkgs
 , inputs
 , ...
 }:
-let
-  inherit (config.sharedVariables) user;
-  sharedFiles = import ../../modules/shared/files.nix {
-    inherit config pkgs lib;
-  };
-  additionalFiles = import ../../modules/darwin/files.nix { inherit user config pkgs; };
-in
 {
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
@@ -26,11 +17,7 @@ in
   home = {
     enableNixpkgsReleaseCheck = false;
     packages = pkgs.callPackage ./packages.nix { inherit inputs; };
-    file = lib.mkMerge [
-      sharedFiles
-      additionalFiles
-    ];
-
+    file = import ./files.nix { };
     stateVersion = "24.05";
   };
 
