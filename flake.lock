@@ -708,11 +708,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1742743193,
-        "narHash": "sha256-4SP6flelHnUvMwb6oILDHogkRkHzTtHTdbaw6ErqPrg=",
+        "lastModified": 1742920569,
+        "narHash": "sha256-kg1niu8fWwrYmidwVgQgYXAk3kvIrxIGrbk8BdUWi/s=",
         "owner": "i-ilak",
         "repo": "nixvim-config",
-        "rev": "8ccc17c63eb8deb5b270d269655aa884e8c62839",
+        "rev": "f46ca66ca3023b250a4e9ab02eb2e9f50c4a0d46",
         "type": "github"
       },
       "original": {

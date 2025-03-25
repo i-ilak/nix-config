@@ -41,7 +41,6 @@ in
         };
       };
       keyboard.bindings = [ ];
-      env.WINIT_X11_SCALE_FACTOR = "1.0";
     };
   };
 }
