@@ -4,7 +4,7 @@
 }:
 {
   imports = [
-    inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.catppuccin.homeModules.catppuccin
     ./additional_config_parameters.nix
     ../../modules/home-manager/programs/git.nix
     ../../modules/home-manager/programs/zsh.nix
