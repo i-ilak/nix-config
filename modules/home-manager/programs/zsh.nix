@@ -23,7 +23,7 @@ in
         '';
       in
       {
-        initExtra = lib.optionalString pkgs.stdenv.isDarwin initExtraDarwin
+        initContent = lib.optionalString pkgs.stdenv.isDarwin initExtraDarwin
           + lib.optionalString pkgs.stdenv.isLinux initExtraLinux;
       }
     )

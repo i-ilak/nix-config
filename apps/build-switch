@@ -27,7 +27,7 @@ case "$SYSTEM" in
         nix --extra-experimental-features 'nix-command flakes' build .#darwinConfigurations.$HOSTNAME.system
 
         echo "${YELLOW}Switching to new generation...${NC}"
-        ./result/sw/bin/darwin-rebuild switch --flake .#$HOSTNAME
+        sudo ./result/sw/bin/darwin-rebuild switch --flake .#$HOSTNAME
 
         echo "${YELLOW}Cleaning up...${NC}"
         unlink ./result || echo "${RED}Warning: Failed to unlink result.${NC}"

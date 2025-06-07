@@ -6,23 +6,30 @@ let
 in
 {
   options = {
-    local.desktoppr.enable = mkOption {
-      description = "Enable setting of wallpaper with `desktoppr`";
-      default = stdenv.isDarwin;
-      example = false;
-    };
-
-    local.desktoppr.wallpapers = mkOption
-      {
-        description = "Wallpapers to be set for different screens!";
-        type = with types; listOf (submodule {
-          options = {
-            desktop = lib.mkOption { type = int; };
-            name = lib.mkOption { type = str; };
-          };
-        });
-        readOnly = true;
+    local.desktoppr = {
+      enable = mkOption {
+        description = "Enable setting of wallpaper with `desktoppr`";
+        default = stdenv.isDarwin;
+        example = false;
       };
+
+      wallpapers = mkOption
+        {
+          description = "Wallpapers to be set for different screens!";
+          type = with types; listOf (submodule {
+            options = {
+              desktop = lib.mkOption { type = int; };
+              name = lib.mkOption { type = str; };
+            };
+          });
+          readOnly = true;
+        };
+
+      username = mkOption {
+        description = "Username to apply the dock settings to";
+        type = types.str;
+      };
+    };
   };
 
   config =
@@ -46,9 +53,12 @@ in
             cfg.wallpapers;
         in
         {
-          system.activationScripts.postUserActivation.text = ''
+          system.activationScripts.postActivation.text = ''
             echo >&2 "Setting up wallpapers..."
+
+            su ${cfg.username} -s /bin/sh <<'USERBLOCK'
             ${setWallpapers} 
+            USERBLOCK
           '';
         }
       );

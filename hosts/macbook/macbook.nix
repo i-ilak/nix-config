@@ -15,6 +15,8 @@
     ../../modules/shared/cachix
   ];
 
+  ids.gids.nixbld = 350;
+
   home-manager = {
     useGlobalPkgs = true;
     users.${config.sharedVariables.user} = import ./home.nix { inherit pkgs inputs lib config; };
@@ -60,21 +62,27 @@
   security.pam.services.sudo_local.touchIdAuth = true;
   system = import ../../modules/darwin/system.nix { inherit config; };
 
-  local = {
-    dock = {
-      enable = true;
-      entries = [
-        { path = "/Applications/Safari.app/"; }
-      ];
+  local =
+    let
+      inherit (config.sharedVariables) user;
+    in
+    {
+      dock = {
+        enable = true;
+        entries = [
+          { path = "/Applications/Safari.app/"; }
+        ];
+        username = "${user}";
+      };
+      desktoppr = {
+        enable = true;
+        wallpapers = [
+          {
+            desktop = 0;
+            name = "red_devil";
+          }
+        ];
+        username = "${user}";
+      };
     };
-    desktoppr = {
-      enable = true;
-      wallpapers = [
-        {
-          desktop = 0;
-          name = "red_devil";
-        }
-      ];
-    };
-  };
 }
