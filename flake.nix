@@ -122,7 +122,7 @@
         eiger = import ./hosts/eiger/nixos.nix {
           inherit nixpkgs inputs;
         };
-        test = import ./hosts/test/nixos.nix {
+        pilatus = import ./hosts/pilatus/nixos.nix {
           inherit nixpkgs inputs;
         };
       };

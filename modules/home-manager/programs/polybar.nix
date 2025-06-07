@@ -1,7 +1,11 @@
 { pkgs
+, config
 , ...
 }:
 let
+  inherit (config.sharedVariables.polybar) monitor;
+  inherit (config.sharedVariables.polybar.network) interface;
+
   glyph = {
     fill = "";
     empty = "";
@@ -33,7 +37,7 @@ in
         "settings" = { screenchange-reload = "true"; };
 
         "bar/top-main" = {
-          monitor = "VNC-0";
+          monitor = "${monitor}";
           width = "100%";
           height = "20";
           fixed-center = "true";
@@ -91,7 +95,7 @@ in
 
         "module/network" = {
           type = "internal/network";
-          interface = "eno1";
+          interface = "${interface}";
           interval = "1.0";
           accumulate-stats = true;
           unknown-as-up = true;
@@ -236,7 +240,7 @@ in
         };
       };
     script = ''
-      export DISPLAY=:1
+      export DISPLAY=$DISPLAY
       export XAUTHORITY=$HOME/.Xauthority
       killall -q polybar
       while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done

@@ -25,8 +25,8 @@ _: {
                 type = "luks";
                 name = "crypted";
                 extraOpenArgs = [ ];
+                passwordFile = "/tmp/secret.key";
                 settings = {
-                  passwordFile = "/tmp/secret.key";
                   allowDiscards = true;
                 };
                 content = {
@@ -44,7 +44,7 @@ _: {
         type = "lvm_vg";
         lvs = {
           encryptedSwap = {
-            size = "32G";
+            size = "4G";
             content = {
               type = "swap";
               randomEncryption = true;
