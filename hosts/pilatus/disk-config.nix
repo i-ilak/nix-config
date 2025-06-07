@@ -26,7 +26,7 @@ _: {
                 name = "crypted";
                 extraOpenArgs = [ ];
                 settings = {
-                  keyFile = "/tmp/secret.key";
+                  passwordFile = "/tmp/secret.key";
                   allowDiscards = true;
                 };
                 content = {
