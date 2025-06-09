@@ -5,46 +5,24 @@
 , ...
 }:
 let
-  user = "test_user";
-  hostname = "test";
+  user = "iilak";
+  hostname = "pilatus";
   shared-files = import ../../modules/shared/files.nix { inherit config pkgs lib; };
-  keys = [ "" ];
+  sharedPackages = import ../../modules/shared/system_packages.nix { inherit pkgs; };
 in
 {
   imports = [
     inputs.disko.nixosModules.disko
     ./disk-config.nix
-    # ./services.nix
+    ./additional_config_parameters.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
 
-  # Screen lock
-
-  # programs =
-  #   shared-programs
-  #   // { gpg.enable = true; }
-  #   // import "${toString ./.}/programs/waybar.nix";
-
-  # This installs my GPG signing keys for Github
-  #systemd.user.services.gpg-import-keys = {
-  #  Unit = {
-  #    Description = "Import gpg keys";
-  #    After = [ "gpg-agent.socket" ];
-  #  };
-  #
-  #  Service = {
-  #    Type = "oneshot";
-  #    ExecStart = toString (pkgs.writeScript "gpg-import-keys" ''
-  #      #! ${pkgs.runtimeShell} -el
-  #      ${lib.optionalString (gpgKeys!= []) ''
-  #      ${pkgs.gnupg}/bin/gpg --import ${lib.concatStringsSep " " gpgKeys}
-  #      ''}
-  #    '');
-  #  };
-  #
-  #  Install = { WantedBy = [ "default.target" ]; };
-  #};
+  home-manager = {
+    useGlobalPkgs = true;
+    users.${config.sharedVariables.user} = import ./home.nix { inherit pkgs inputs lib config; };
+  };
 
   boot = {
     loader = {
@@ -63,14 +41,7 @@ in
   };
 
   time.timeZone = "Europe/Amsterdam";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
 
   nix = {
     nixPath = [ "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos" ];
@@ -81,56 +52,61 @@ in
     '';
   };
 
-  # Manages keys and such
   programs = {
-    gnupg.agent.enable = true;
-    dconf.enable = true;
-    zsh.enable = true;
-    hyprland = {
-      enable = true;
-      xwayland.enable = true;
-    };
+    fish.enable = true;
   };
-
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   hardware = {
     graphics = {
       enable = true;
     };
-
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-    };
   };
 
-  # Add docker daemon
   virtualisation = {
-    docker = {
+    vmware.guest.enable = true;
+  };
+
+  services = {
+    displayManager = {
+      defaultSession = "none+i3";
+    };
+
+    xserver = {
       enable = true;
-      logDriver = "json-file";
+
+      resolutions = [
+        {
+          x = 1920;
+          y = 1200;
+        }
+      ];
+
+      desktopManager = {
+        xterm.enable = false;
+      };
+
+      windowManager.i3 = {
+        enable = true;
+        extraPackages = with pkgs; [
+          dmenu
+          i3status
+          i3lock
+          i3blocks
+        ];
+      };
     };
   };
 
-  # It's me, it's you, it's everyone
   users.users = {
     ${user} = {
       isNormalUser = true;
       extraGroups = [
-        "wheel" # Enable ‘sudo’ for the user.
-        "docker"
+        "wheel"
       ];
-      shell = pkgs.zsh;
-      openssh.authorizedKeys.keys = keys;
-    };
-
-    root = {
-      openssh.authorizedKeys.keys = keys;
+      shell = pkgs.fish;
     };
   };
 
-  # Don't require password for users in `wheel` group for these commands
   security.sudo = {
     enable = true;
     extraRules = [
@@ -164,8 +140,9 @@ in
     linuxPackages.v4l2loopback
     v4l-utils
     inetutils
-    bluez
-  ];
+    vim
+  ] ++ sharedPackages;
 
-  system.stateVersion = "24.05";
+  # Do not change this, ever
+  system.stateVersion = "25.05";
 }

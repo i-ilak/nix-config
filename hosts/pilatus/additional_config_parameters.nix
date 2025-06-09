@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config
+, pkgs
+, lib
+, ...
+}:
 {
   options.sharedVariables = lib.mkOption {
     type = lib.types.attrs;
@@ -9,13 +13,13 @@
   config = {
     sharedVariables = {
       user = "iilak";
-      hostname = "mxw-dalco02";
       homeDir = "/home/iilak";
+      hostname = "pilatus";
       alacritty.settings.font.size = 13;
-      i3.modifier = "Mod4";
+      i3.modifier = "Mod1";
       polybar = {
-        monitor = "VNC-0";
-        network.interface = "eno1";
+        monitor = "Virtual-1";
+        network.interface = "ens160";
       };
     };
   };

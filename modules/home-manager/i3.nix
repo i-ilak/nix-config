@@ -1,8 +1,9 @@
 { pkgs
+, config
 , ...
 }:
 let
-  modifier = "Mod4";
+  inherit (config.sharedVariables.i3) modifier;
 in
 {
   xsession.windowManager.i3 = {
