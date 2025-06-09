@@ -9,6 +9,7 @@ let
   hostname = "pilatus";
   shared-files = import ../../modules/shared/files.nix { inherit config pkgs lib; };
   sharedPackages = import ../../modules/shared/system_packages.nix { inherit pkgs; };
+  secretspath = builtins.toString inputs.nix-secrets;
 in
 {
   imports = [
@@ -107,7 +108,15 @@ in
       hashedPasswordFile = config.sops.secrets.user_dev_password.path;
     };
   };
-  sops.secrets."user_dev_password".neededForUsers = true;
+  sops = {
+    defaultSopsFile = "${secretspath}/secrets/pilatus.yaml";
+    age = {
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = true;
+    };
+    secrets."user_dev_password".neededForUsers = true;
+  };
 
   security.sudo = {
     enable = true;

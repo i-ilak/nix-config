@@ -4,6 +4,10 @@
 , lib
 , ...
 }:
+let
+  secretspath = builtins.toString inputs.nix-secrets;
+  inherit (config.sharedVariables) user;
+in
 {
   imports = [
     ./additional_config_parameters.nix
@@ -19,7 +23,7 @@
 
   home-manager = {
     useGlobalPkgs = true;
-    users.${config.sharedVariables.user} = import ./home.nix { inherit pkgs inputs lib config; };
+    users.${user} = import ./home.nix { inherit pkgs inputs lib config; };
   };
 
   programs.fish.enable = true;
@@ -28,6 +32,13 @@
     home = "/Users/${config.sharedVariables.user}";
     isHidden = false;
     shell = pkgs.fish;
+  };
+
+  sops = {
+    defaultSopsFile = "${secretspath}/secrets.yaml";
+    age = {
+      keyFile = "/User/${user}/Library/Application Support/sops/age/keys.txt";
+    };
   };
 
   services = {

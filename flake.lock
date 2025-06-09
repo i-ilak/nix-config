@@ -564,6 +564,24 @@
         "type": "github"
       }
     },
+    "nix-secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1749476851,
+        "narHash": "sha256-VzvJOqXSzp9OA4hussvgy+Jw5ZXGAvbXvzy6ipipZyw=",
+        "ref": "main",
+        "rev": "4a00f961d15ae856aad62b046a7be38031e1d9bd",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/i-ilak/nix-secrets"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/i-ilak/nix-secrets"
+      }
+    },
     "nixgl": {
       "inputs": {
         "flake-utils": "flake-utils_3",
@@ -777,6 +795,7 @@
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
         "nix-homebrew": "nix-homebrew",
+        "nix-secrets": "nix-secrets",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
