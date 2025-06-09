@@ -8,6 +8,7 @@ let
 
   packages = with pkgs;
     [
+      age # Needed for sops-nix to genereate initial key
       dockutil
       tailscale
       # Fonts

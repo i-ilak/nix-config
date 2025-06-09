@@ -56,6 +56,14 @@
       url = "github:nikitabobko/homebrew-tap";
       flake = false;
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-secrets = {
+      url = "git+ssh://git@github.com/i-ilak/nix-secrets?shallow=1&ref=main";
+      flake = false;
+    };
   };
   outputs =
     { self

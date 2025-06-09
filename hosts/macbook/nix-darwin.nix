@@ -7,6 +7,7 @@ inputs.darwin.lib.darwinSystem {
   modules = [
     inputs.home-manager.darwinModules.home-manager
     inputs.nix-homebrew.darwinModules.nix-homebrew
+    inputs.sops-nix.nixosModules.sops
     {
       nix-homebrew =
         {

@@ -104,8 +104,10 @@ in
         "wheel"
       ];
       shell = pkgs.fish;
+      hashedPasswordFile = config.sops.secrets.user_dev_password.path;
     };
   };
+  sops.secrets."user_dev_password".neededForUsers = true;
 
   security.sudo = {
     enable = true;
