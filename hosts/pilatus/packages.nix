@@ -9,6 +9,7 @@ let
   packages = with pkgs;
     [
       tailscale
+      qbittorrent
       # Fonts
       meslo-lgs-nf
     ] ++
