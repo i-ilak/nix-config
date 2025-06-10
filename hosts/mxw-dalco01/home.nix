@@ -20,6 +20,7 @@ in
     ../../modules/home-manager/programs/fzf.nix
     ../../modules/home-manager/programs/i3_status_rust.nix
     ../../modules/home-manager/programs/polybar.nix
+    ../../modules/home-manager/programs/dunst.nix
     ../../modules/home-manager/programs/ghostty.nix
   ];
 

@@ -23,9 +23,11 @@ let
     ranger
     ccache
     doxygen
+    mako
     # Needed for fish plugin
     grc
   ];
+
   fonts = with pkgs; [
     meslo-lgs-nf
     udev-gothic-nf
