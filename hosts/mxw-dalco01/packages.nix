@@ -23,7 +23,7 @@ let
     ranger
     ccache
     doxygen
-    mako
+    flameshot
     # Needed for fish plugin
     grc
   ];
