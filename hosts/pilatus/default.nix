@@ -79,6 +79,10 @@ in
         X11Forwarding = false;
         PermitRootLogin = "prohibit-password";
       };
+
+      services.openssh.extraConfig = ''
+        Port ${builtins.readFile config.sops.secrets.commonSshPort.path}
+      '';
     };
 
     displayManager = {
@@ -133,7 +137,11 @@ in
     age = {
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     };
-    secrets."user_dev_password".neededForUsers = true;
+
+    secrets = {
+      sopsFile = "./secrets/shared.yaml";
+      commonSshPort = { sopsPath = [ "ssh pilatus port" ]; };
+    };
   };
 
   security.sudo = {
