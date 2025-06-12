@@ -98,22 +98,24 @@ in
     };
   };
 
-  users.users = {
-    ${user} = {
-      isNormalUser = true;
-      extraGroups = [
-        "wheel"
-      ];
-      shell = pkgs.fish;
-      hashedPasswordFile = config.sops.secrets.user_dev_password.path;
+  users = {
+    mutableUsers = false;
+    users = {
+      ${user} = {
+        isNormalUser = true;
+        extraGroups = [
+          "wheel"
+        ];
+        shell = pkgs.fish;
+        hashedPasswordFile = config.sops.secrets.user_dev_password.path;
+      };
     };
   };
+
   sops = {
     defaultSopsFile = "${secretspath}/secrets/pilatus.yaml";
     age = {
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-      keyFile = "/var/lib/sops-nix/key.txt";
-      generateKey = true;
     };
     secrets."user_dev_password".neededForUsers = true;
   };

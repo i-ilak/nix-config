@@ -567,10 +567,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1749476851,
-        "narHash": "sha256-VzvJOqXSzp9OA4hussvgy+Jw5ZXGAvbXvzy6ipipZyw=",
+        "lastModified": 1749662477,
+        "narHash": "sha256-8LmYL0qqm4MSmYOG86XYmEv3jEHl2gDHl4477wgkOv8=",
         "ref": "main",
-        "rev": "4a00f961d15ae856aad62b046a7be38031e1d9bd",
+        "rev": "b3c1d58c509d1636b05b9200111c47d9c1deefaa",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/i-ilak/nix-secrets"
