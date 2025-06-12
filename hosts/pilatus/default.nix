@@ -71,7 +71,7 @@ in
 
     openssh = {
       enable = true;
-      ports = [ config.sops.secrets.ssh.pilatus.port ];
+      ports = [ 11231 ];
       settings = {
         PasswordAuthentication = true;
         AllowUsers = [ "iilak" ];
@@ -127,6 +127,9 @@ in
 
   sops = {
     defaultSopsFile = "${secretspath}/secrets/pilatus.yaml";
+    sopsFiles = [
+      "${secretspath}/secrets/shared.yaml"
+    ];
     age = {
       sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     };
