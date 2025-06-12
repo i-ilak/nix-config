@@ -68,6 +68,19 @@ in
   };
 
   services = {
+
+    openssh = {
+      enable = true;
+      ports = [ config.sops.secrets.ssh.pilatus.port ];
+      settings = {
+        PasswordAuthentication = true;
+        AllowUsers = [ "iilak" ];
+        UseDns = true;
+        X11Forwarding = false;
+        PermitRootLogin = "prohibit-password";
+      };
+    };
+
     displayManager = {
       defaultSession = "none+i3";
     };
