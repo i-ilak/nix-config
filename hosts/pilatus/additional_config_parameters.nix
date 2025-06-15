@@ -12,8 +12,8 @@
 
   config = {
     sharedVariables = {
-      user = "iilak";
-      homeDir = "/home/iilak";
+      user = "dev";
+      homeDir = "/home/dev";
       hostname = "pilatus";
       alacritty.settings.font.size = 13;
       i3.modifier = "Mod1";
