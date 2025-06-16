@@ -16,6 +16,8 @@ in
       set -x FZF_DEFAULT_COMMAND "fd . $HOME"
       set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
       set -x FZF_ALT_C_COMMAND "fd -t d . $HOME"
+      set -x UID "$(id -u)"
+      set -x GID "$(id -g)"
     '';
     plugins = [
       { name = "grc"; inherit (pkgs.fishPlugins.grc) src; }
@@ -37,6 +39,7 @@ in
       df = "df -Tha --total";
       du = "du -ach";
       ps = "procs";
+      flame = "flameshot gui";
     };
     shellInitLast = ''
       set -gx PATH ${config.sharedVariables.homeDir}/.cargo/bin $PATH

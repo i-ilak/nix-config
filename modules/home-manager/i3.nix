@@ -117,6 +117,8 @@ in
           "${modifier}+Ctrl+Right" = "resize grow width 1 px or 1 ppt";
           "${modifier}+Ctrl+Left" = "resize shrink width 1 px or 1 ppt";
 
+          "${modifier}+m" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+
           "${modifier}+Shift+c" = "reload";
           "${modifier}+Shift+r" = "restart";
 

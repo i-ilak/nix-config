@@ -53,10 +53,10 @@ in
 
   programs = {
     home-manager.enable = true;
-    vscode = {
-      enable = true;
-      package = pkgs.vscode;
-    };
+    # vscode = {
+    #   enable = true;
+    #   package = config.lib.nixGL.wrap pkgs.vscodium;
+    # };
     alacritty.package = config.lib.nixGL.wrap pkgs.alacritty;
   };
 
