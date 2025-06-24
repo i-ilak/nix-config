@@ -4,7 +4,7 @@
 }:
 {
   imports = [
-    inputs.catppuccin.homeModules.catppuccin
+    # inputs.catppuccin.homeModules.catppuccin
     ./additional_config_parameters.nix
     ../../modules/home-manager/i3.nix
     ../../modules/home-manager/programs/git.nix
@@ -25,8 +25,8 @@
     stateVersion = "25.05";
   };
 
-  catppuccin = {
-    flavor = "mocha";
-    enable = true;
-  };
+  # catppuccin = {
+  #   flavor = "mocha";
+  #   enable = true;
+  # };
 }

@@ -51,7 +51,10 @@ in
     in
     {
       package = pkgs.nix;
-      settings.trusted-users = [ "@admin" "${user}" ];
+      settings = {
+        trusted-users = [ "@admin" "${user}" ];
+        extra-platforms = [ "aarch64-darwin" "aarch64-linux" "x86_64-linux" ];
+      };
 
       gc = {
         automatic = true;
