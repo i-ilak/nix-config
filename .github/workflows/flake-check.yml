@@ -12,4 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check Nix flake inputs
-        uses: DeterminateSystems/flake-checker-action@v10 # This action
+        uses: DeterminateSystems/flake-checker-action@v11 # This action
