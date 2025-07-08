@@ -385,6 +385,21 @@
         "type": "github"
       }
     },
+    "impermanence": {
+      "locked": {
+        "lastModified": 1737831083,
+        "narHash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI=",
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "rev": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "type": "github"
+      }
+    },
     "ixx": {
       "inputs": {
         "flake-utils": [
@@ -436,10 +451,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1750789649,
-        "narHash": "sha256-mK0prsPbC+drGYQa+ZNM0oH22d3xsf+cBAEbJdhLouY=",
+        "lastModified": 1752000134,
+        "narHash": "sha256-pwewu98DM+dHxrxRDwFRE0iz+q0tZblE7OKzsX8qKdg=",
         "ref": "main",
-        "rev": "0b4be404f1b7855627a341ec9dc7c57629971802",
+        "rev": "c7688065e7bc8bbebcdd9a795447cf0079928b47",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/i-ilak/nix-secrets"
@@ -661,6 +676,7 @@
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "impermanence": "impermanence",
         "nix-homebrew": "nix-homebrew",
         "nix-secrets": "nix-secrets",
         "nixgl": "nixgl",

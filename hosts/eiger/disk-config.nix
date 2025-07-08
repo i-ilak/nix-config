@@ -25,8 +25,8 @@ _: {
                 type = "luks";
                 name = "crypted";
                 extraOpenArgs = [ ];
+                passwordFile = "/tmp/secret.key";
                 settings = {
-                  keyFile = "/tmp/secret.key";
                   allowDiscards = true;
                 };
                 content = {
@@ -44,19 +44,19 @@ _: {
         type = "lvm_vg";
         lvs = {
           encryptedSwap = {
-            size = "32G";
+            size = "8G";
             content = {
               type = "swap";
               randomEncryption = true;
               priority = 100;
             };
           };
-          root = {
+          persist = {
             size = "100%FREE";
             content = {
               type = "filesystem";
               format = "ext4";
-              mountpoint = "/";
+              mountpoint = "/nix/persist";
               mountOptions = [
                 "defaults"
               ];

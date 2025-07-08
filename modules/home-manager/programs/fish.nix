@@ -18,6 +18,8 @@ in
       set -x FZF_ALT_C_COMMAND "fd -t d . $HOME"
       set -x UID "$(id -u)"
       set -x GID "$(id -g)"
+
+      set -x SSH_AUTH_SOCK /Users/iilak/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock
     '';
     plugins = [
       { name = "grc"; inherit (pkgs.fishPlugins.grc) src; }

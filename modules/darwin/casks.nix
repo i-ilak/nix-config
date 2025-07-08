@@ -7,10 +7,11 @@ _: [
   "zoom"
   "chromium"
   "desktoppr"
-  "raycast"
   "gimp"
   "nikitabobko/tap/aerospace"
   "vmware-fusion"
+  "obsidian"
+  "firefox"
 
   # Development Tools
   "docker"

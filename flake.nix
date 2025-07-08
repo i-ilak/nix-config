@@ -64,6 +64,9 @@
       url = "git+ssh://git@github.com/i-ilak/nix-secrets?shallow=1&ref=main";
       flake = false;
     };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
   };
   outputs =
     { self

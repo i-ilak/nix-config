@@ -12,6 +12,7 @@ let
       sops # Needed to actually edit secrets
       dockutil
       tailscale
+      ollama
       # Fonts
       meslo-lgs-nf
     ] ++

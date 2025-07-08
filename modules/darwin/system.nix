@@ -92,12 +92,12 @@ in
         HIDKeyboardModifierMappingDst = 30064771125;
         HIDKeyboardModifierMappingSrc = 30064771172;
       }
-      # Remap `Ctrl+Backspace` to `Forward Delete`
-      {
-
-        HIDKeyboardModifierMappingDst = 30064771306;
-        HIDKeyboardModifierMappingSrc = 30064771148;
-      }
+      # # Remap `Ctrl+Backspace` to `Forward Delete`
+      # {
+      #
+      #   HIDKeyboardModifierMappingDst = 30064771306;
+      #   HIDKeyboardModifierMappingSrc = 30064771148;
+      # }
     ];
   };
 }
