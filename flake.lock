@@ -451,10 +451,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1752000134,
-        "narHash": "sha256-pwewu98DM+dHxrxRDwFRE0iz+q0tZblE7OKzsX8qKdg=",
+        "lastModified": 1752083742,
+        "narHash": "sha256-x5Tu+ncx5gtQo08NXyvuKJ0aVRWHvPOf/uC9Z1Pob6w=",
         "ref": "main",
-        "rev": "c7688065e7bc8bbebcdd9a795447cf0079928b47",
+        "rev": "8180c122968e68ac183f1f10a929ccf4781bfbab",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/i-ilak/nix-secrets"

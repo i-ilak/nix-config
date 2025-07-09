@@ -88,10 +88,10 @@ in
     swapLeftCtrlAndFn = true;
     userKeyMapping = [
       # Remap §± to ~
-      {
-        HIDKeyboardModifierMappingDst = 30064771125;
-        HIDKeyboardModifierMappingSrc = 30064771172;
-      }
+      # {
+      #   HIDKeyboardModifierMappingDst = 30064771125;
+      #   HIDKeyboardModifierMappingSrc = 30064771172;
+      # }
       # # Remap `Ctrl+Backspace` to `Forward Delete`
       # {
       #
