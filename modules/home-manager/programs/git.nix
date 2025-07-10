@@ -3,12 +3,14 @@
 }:
 let
   inherit (config.sharedVariables) user;
+  inherit (config.sharedVariables) hostname;
 in
 {
   programs.git =
     let
       name = "Ivan Ilak";
-      email = "ivan.ilak@hotmail.com";
+      email =
+        if hostname == "mxw-dalco01" then "ivan.ilak@mxwbio.com" else "ivan.ilak@hotmail.com";
     in
     {
       enable = true;

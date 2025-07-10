@@ -9,7 +9,7 @@
   config = {
     sharedVariables = {
       user = "iilak";
-      hostname = "mxw-dalco02";
+      hostname = "mxw-dalco01";
       homeDir = "/home/iilak";
       alacritty.settings.font.size = 13;
       i3.modifier = "Mod4";
