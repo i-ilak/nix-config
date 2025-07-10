@@ -3,6 +3,10 @@
 , config
 , ...
 }:
+let
+  secretspath = builtins.toString inputs.nix-secrets;
+
+in
 {
   imports =
     [
@@ -21,12 +25,14 @@
       ./tailscale.nix
     ];
 
-  environment.persistence."/nix/persist" = {
+  environment.persistence."/persist" = {
     directories = [
       "/etc/nixos"
       "/passwords"
       "/var/lib"
       "/var/log"
+      "/var/lib/sops-nix"
+      secretspath
     ];
     files = [
       "/etc/machine-id"
@@ -38,9 +44,10 @@
     ];
   };
 
-  fileSystems."/nix/persist".neededForBoot = true;
+  fileSystems."/persist".neededForBoot = true;
+
   fileSystems."/" = {
-    device = "none";
+    device = "tmpfs";
     fsType = "tmpfs";
     options = [ "defaults" "size=2G" "mode=755" ];
   };
@@ -56,7 +63,7 @@
     groups.media = { };
     mutableUsers = false;
     users = {
-      root.hashedPasswordFile = config.sops.secrets."user-root-password".path;
+      root.hashedPassword = "$y$j9T$dTeAq0ghLi2QWHogO1Jw10$UzHAEX.TWuyUBh7R1PR3NSBblesY2oF4E0JcsNuANX3";
       worker = {
         hashedPasswordFile = config.sops.secrets."user-worker-password".path;
         isNormalUser = true;

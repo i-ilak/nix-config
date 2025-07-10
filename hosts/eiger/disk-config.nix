@@ -7,16 +7,18 @@ _: {
         content = {
           type = "gpt";
           partitions = {
+            boot = {
+              size = "1M";
+              type = "EF02";
+            };
             ESP = {
-              size = "500M";
+              size = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [
-                  "defaults"
-                ];
+                mountOptions = [ "defaults" "umask=0077" ];
               };
             };
             luks = {
@@ -24,42 +26,34 @@ _: {
               content = {
                 type = "luks";
                 name = "crypted";
-                extraOpenArgs = [ ];
                 passwordFile = "/tmp/secret.key";
                 settings = {
                   allowDiscards = true;
+                  bypassWorkqueues = true;
                 };
                 content = {
-                  type = "lvm_pv";
-                  vg = "pool";
+                  type = "btrfs";
+                  extraArgs = [ "-f" ];
+                  subvolumes = {
+                    "/nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "/persist" = {
+                      mountpoint = "/persist";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "/swap" = {
+                      mountpoint = "/swap";
+                      swap.swapfile.size = "4G";
+                    };
+                  };
                 };
               };
-            };
-          };
-        };
-      };
-    };
-    lvm_vg = {
-      pool = {
-        type = "lvm_vg";
-        lvs = {
-          encryptedSwap = {
-            size = "8G";
-            content = {
-              type = "swap";
-              randomEncryption = true;
-              priority = 100;
-            };
-          };
-          persist = {
-            size = "100%FREE";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/nix/persist";
-              mountOptions = [
-                "defaults"
-              ];
             };
           };
         };
