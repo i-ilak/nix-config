@@ -32,7 +32,6 @@ in
       "/var/lib"
       "/var/log"
       "/var/lib/sops-nix"
-      secretspath
     ];
     files = [
       "/etc/machine-id"
