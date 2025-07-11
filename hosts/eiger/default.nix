@@ -3,10 +3,6 @@
 , config
 , ...
 }:
-let
-  secretspath = builtins.toString inputs.nix-secrets;
-
-in
 {
   imports =
     [

@@ -1,4 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ lib
+, ...
+}:
 {
   options.sharedVariables = lib.mkOption {
     type = lib.types.attrs;

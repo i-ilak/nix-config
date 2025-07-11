@@ -1,7 +1,5 @@
-{ inputs
-, pkgs
+{ pkgs
 , nixvim
-, config
 , ...
 }:
 let

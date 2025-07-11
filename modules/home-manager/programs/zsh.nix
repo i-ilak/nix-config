@@ -1,12 +1,7 @@
-{ config
-, lib
+{ lib
 , pkgs
 , ...
 }:
-let
-  inherit (config.sharedVariables) homeDir;
-  inherit (config.sharedVariables) hostname;
-in
 {
   programs.zsh = lib.mkMerge [
     (

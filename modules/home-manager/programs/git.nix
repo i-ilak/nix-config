@@ -2,7 +2,6 @@
 , ...
 }:
 let
-  inherit (config.sharedVariables) user;
   inherit (config.sharedVariables) hostname;
 in
 {
