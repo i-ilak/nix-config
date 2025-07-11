@@ -67,12 +67,22 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
+    deadnix = {
+      url = "github:astro/deadnix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    nixpkgs-lint = {
+      url = "github:nix-community/nixpkgs-lint";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     { self
     , nixpkgs
     , flake-utils
     , pre-commit-hooks
+    , deadnix
+    , nixpkgs-lint
     , ...
     } @ inputs:
     let
@@ -111,6 +121,8 @@
               nixpkgs-fmt.enable = true;
             };
           };
+          # dead-code = inputs.deadnix.checks.${system}.deadnix;
+          # lint = inputs.nixpkgs-lint.checks.${system}.lint;
         };
 
         devShells = devShell system;
