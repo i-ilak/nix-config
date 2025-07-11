@@ -8,7 +8,7 @@ _:
       "radio_browser"
       "google_translate"
       "vesync"
-      "aiohue"
+      "hue"
     ];
     config = {
       # Includes dependencies for a basic setup
