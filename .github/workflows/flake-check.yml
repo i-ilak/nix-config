@@ -1,15 +1,117 @@
-name: Run flake check
+name: Nix Config CI
 
 on:
-  pull_request:
   push:
-    branches: [main]
+    branches:
+      - main
+    paths:
+      - "**.nix"
+      - "flake.nix"
+      - "flake.lock"
+  pull_request:
+    paths:
+      - "**.nix"
+      - "flake.nix"
+      - "flake.lock"
+      - "apps/**"
+  workflow_dispatch: # Allows manual trigger
 
 jobs:
-  build:
-    name: Run flake check
-    runs-on: ubuntu-22.04
+  flake-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+          substituters: https://cache.nixos.org/
+          trusted-public-keys: cache.nixos.org-1:6NCHdGRBg4BLGaC4PRNixGCdLfkbWgFnWBPx3SmjGMO=
+      - name: Run Nix flake checks
+        run: nix flake check
+
+  build-nixos:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config_name: ["eiger", "pilatus"]
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
-      - name: Check Nix flake inputs
-        uses: DeterminateSystems/flake-checker-action@v10 # This action
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Build NixOS Configuration ${{ matrix.config_name }}
+        run: |
+          NIXOS_SYSTEM=""
+          if [ "${{ matrix.config_name }}" == "eiger" ]; then
+            NIXOS_SYSTEM="x86_64-linux"
+          elif [ "${{ matrix.config_name }}" == "pilatus" ]; then
+            NIXOS_SYSTEM="aarch64-linux"
+          else
+            echo "Unknown NixOS config_name: ${{ matrix.config_name }}"
+            exit 1
+          fi
+
+          nix build .#nixosConfigurations.${{ matrix.config_name }}.config.system.build.toplevel \
+            --system $NIXOS_SYSTEM \
+            --no-link
+
+  build-darwin:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        config_name: ["macbook"]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Build nix-darwin Configuration ${{ matrix.config_name }}
+        run: |
+          DARWIN_SYSTEM="aarch64-darwin"
+
+          nix build .#darwinConfigurations.${{ matrix.config_name }}.system \
+            --system $DARWIN_SYSTEM \
+            --no-link
+
+  build-home-manager:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        user_config_name: ["mxw-dalco01"]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Build Home Manager Configuration ${{ matrix.user_config_name }}
+        run: |
+          HOME_MANAGER_SYSTEM="x86_64-linux"
+
+          nix build .#homeConfigurations.${{ matrix.user_config_name }}.activationPackage \
+            --system $HOME_MANAGER_SYSTEM \
+            --no-link
+
+  # # Job 5: Test 'build-switch' app (if desired)
+  # # This tests your custom app that builds and switches generations.
+  # # This could also be part of 'flake-check' if it's a simple evaluation.
+  # test-build-switch-app:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+  #
+  #     - name: Install Nix
+  #       uses: cachix/install-nix-action@v23
+  #       with:
+  #         extra_nix_config: |
+  #           experimental-features = nix-command flakes
+  #         substituters: https://cache.nixos.org/
+  #         trusted-public-keys: cache.nixos.org-1:6NCHdGRBg4BLGaC4PRNixGCdLfkbWgFnWBPx3SmjGMO=
+  #
+  #     - name: Test build-switch app
+  #       # This will evaluate and build your app
+  #       run: nix build .#apps.default.x86_64-linux
