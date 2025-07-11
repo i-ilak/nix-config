@@ -59,23 +59,24 @@ jobs:
             --system $NIXOS_SYSTEM \
             --no-link
 
-  build-darwin:
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        config_name: ["macbook"]
-      fail-fast: false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/determinate-nix-action@v3
-      - uses: DeterminateSystems/magic-nix-cache-action@main
-      - name: Build nix-darwin Configuration ${{ matrix.config_name }}
-        run: |
-          DARWIN_SYSTEM="aarch64-darwin"
-
-          nix build .#darwinConfigurations.${{ matrix.config_name }}.system \
-            --system $DARWIN_SYSTEM \
-            --no-link
+  # Disabling for now since its too expensive, i.e. 10x of a Linux build
+  # build-darwin:
+  #   runs-on: macos-latest
+  #   strategy:
+  #     matrix:
+  #       config_name: ["macbook"]
+  #     fail-fast: false
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: DeterminateSystems/determinate-nix-action@v3
+  #     - uses: DeterminateSystems/magic-nix-cache-action@main
+  #     - name: Build nix-darwin Configuration ${{ matrix.config_name }}
+  #       run: |
+  #         DARWIN_SYSTEM="aarch64-darwin"
+  #
+  #         nix build .#darwinConfigurations.${{ matrix.config_name }}.system \
+  #           --system $DARWIN_SYSTEM \
+  #           --no-link
 
   build-home-manager:
     runs-on: ubuntu-latest
@@ -94,24 +95,3 @@ jobs:
           nix build .#homeConfigurations.${{ matrix.user_config_name }}.activationPackage \
             --system $HOME_MANAGER_SYSTEM \
             --no-link
-
-  # # Job 5: Test 'build-switch' app (if desired)
-  # # This tests your custom app that builds and switches generations.
-  # # This could also be part of 'flake-check' if it's a simple evaluation.
-  # test-build-switch-app:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-  #
-  #     - name: Install Nix
-  #       uses: cachix/install-nix-action@v23
-  #       with:
-  #         extra_nix_config: |
-  #           experimental-features = nix-command flakes
-  #         substituters: https://cache.nixos.org/
-  #         trusted-public-keys: cache.nixos.org-1:6NCHdGRBg4BLGaC4PRNixGCdLfkbWgFnWBPx3SmjGMO=
-  #
-  #     - name: Test build-switch app
-  #       # This will evaluate and build your app
-  #       run: nix build .#apps.default.x86_64-linux
