@@ -6,7 +6,9 @@ _:
       "esphome"
       "met"
       "radio_browser"
-      "gtts"
+      "google_translate"
+      "vesync"
+      "aiohue"
     ];
     config = {
       # Includes dependencies for a basic setup
