@@ -1,9 +1,15 @@
 { pkgs
 , inputs
+, config
 , ...
 }:
+let
+  secretspath = builtins.toString inputs.nix-secrets;
+  inherit (config.sharedVariables) user;
+in
 {
   imports = [
+    inputs.sops-nix.homeManagerModules.sops
     inputs.catppuccin.homeModules.catppuccin
     ./additional_config_parameters.nix
     ../../modules/home-manager/programs/git.nix
@@ -13,6 +19,15 @@
     ../../modules/home-manager/programs/direnv.nix
     ../../modules/home-manager/programs/alacritty.nix
   ];
+
+
+  sops = {
+    defaultSopsFile = "${secretspath}/secrets/shared.yaml";
+    age = {
+      keyFile = "/Users/${user}/Library/Application Support/sops/age/keys.txt";
+    };
+    secrets."git_signing_ssh_key_public" = { };
+  };
 
   home = {
     enableNixpkgsReleaseCheck = false;

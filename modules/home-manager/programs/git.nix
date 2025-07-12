@@ -2,6 +2,7 @@
 , ...
 }:
 let
+  inherit (config.sharedVariables) user;
   inherit (config.sharedVariables) hostname;
 in
 {
@@ -70,9 +71,9 @@ in
       };
       signing = {
         format = "ssh";
-        key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIABGHfu7+Bw2SNXIZ/IS630lG1jWLBsiXxhOPYFTqamU";
+        key = "${config.sops.secrets."git_signing_ssh_key_public".path}";
         signByDefault = true;
-
       };
     };
 }
+

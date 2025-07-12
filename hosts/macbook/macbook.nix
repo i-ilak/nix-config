@@ -5,7 +5,6 @@
 , ...
 }:
 let
-  secretspath = builtins.toString inputs.nix-secrets;
   inherit (config.sharedVariables) user;
 in
 {
@@ -32,13 +31,6 @@ in
     home = "/Users/${config.sharedVariables.user}";
     isHidden = false;
     shell = pkgs.fish;
-  };
-
-  sops = {
-    defaultSopsFile = "${secretspath}/secrets.yaml";
-    age = {
-      keyFile = "/User/${user}/Library/Application Support/sops/age/keys.txt";
-    };
   };
 
   services = {
