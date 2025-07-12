@@ -24,7 +24,7 @@ in
         column.ui = "auto";
         commit = {
 
-          gpgsign = false;
+          gpgsign = true;
           verbose = true;
         };
         core = {
@@ -63,7 +63,16 @@ in
           enabled = true;
           autoupdate = true;
         };
-        tag.sort = "version:refname";
+        tag = {
+          sort = "version:refname";
+          gpgSign = true;
+        };
+      };
+      signing = {
+        format = "ssh";
+        key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIABGHfu7+Bw2SNXIZ/IS630lG1jWLBsiXxhOPYFTqamU";
+        signByDefault = true;
+
       };
     };
 }

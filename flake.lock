@@ -472,10 +472,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1752083742,
-        "narHash": "sha256-x5Tu+ncx5gtQo08NXyvuKJ0aVRWHvPOf/uC9Z1Pob6w=",
+        "lastModified": 1752328302,
+        "narHash": "sha256-R8MeOksV4yGt6ESrTh6Yu5oTSkkFdmIZr0s6NkI+08o=",
         "ref": "main",
-        "rev": "8180c122968e68ac183f1f10a929ccf4781bfbab",
+        "rev": "a8a61093c34a58d548185bc4b3ebda22d359f5e8",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/i-ilak/nix-secrets"
@@ -579,11 +579,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1752245145,
-        "narHash": "sha256-7iJ3GyKKW6TrpDD4kGia0Ph8f5R/Cv31AI9GciuW4XE=",
+        "lastModified": 1752327093,
+        "narHash": "sha256-zwe2QJNTGyFldsP6p4SoOQtl4qQ4XVVg4Gn6Dlq0Smo=",
         "owner": "i-ilak",
         "repo": "nixvim-config",
-        "rev": "936ae785d1bea5e5f2cd88c31de62c2f8d221ec7",
+        "rev": "28c01268ccc9108986d6a0106726256bc51edfd3",
         "type": "github"
       },
       "original": {
