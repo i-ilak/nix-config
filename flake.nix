@@ -71,12 +71,17 @@
       url = "github:astro/deadnix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     { self
     , nixpkgs
     , flake-utils
     , pre-commit-hooks
+    , treefmt-nix
     , deadnix
     , ...
     } @ inputs:
@@ -97,17 +102,23 @@
     in
     flake-utils.lib.eachDefaultSystem
       (system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+        treefmt = treefmt-nix.lib.evalModule pkgs ./modules/shared/format.nix;
+        preCommitCheck = self.checks.${system}.pre-commit-check;
+      in
       {
-        apps.default = {
-          meta = {
-            description = ''
-              Shell script to switch to next generation, based on hostname.
-            '';
-            mainProgram = "build-switch";
+        apps.default =
+          {
+            meta = {
+              description = ''
+                Shell script to switch to next generation, based on hostname.
+              '';
+              mainProgram = "build-switch";
+            };
+            type = "app";
+            program = "${self}/apps/build-switch";
           };
-          type = "app";
-          program = "${self}/apps/build-switch";
-        };
 
         checks = {
           pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
@@ -115,10 +126,12 @@
             hooks = {
               nixpkgs-fmt.enable = true;
               deadnix.enable = true;
+              statix.enable = true;
             };
           };
         };
 
+        formatter = treefmt.config.build.wrapper;
         devShells = devShell system;
       }
       ) //
