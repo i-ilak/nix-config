@@ -22,6 +22,8 @@ let
     uv
     just
     docker
+    rustc
+    cargo
     nixvim.packages.${pkgs.system}.default
   ];
 
