@@ -21,6 +21,7 @@
       ./sshd.nix
       ./jellyfin.nix
       ./tailscale.nix
+      ./ytdl-sub.nix
     ];
 
   networking = {
@@ -30,8 +31,6 @@
       allowedTCPPorts = [ 8123 ];
     };
   };
-
-  virtualisation.vmware.guest.enable = true;
 
   users = {
     groups.media = { };

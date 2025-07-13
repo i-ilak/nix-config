@@ -18,6 +18,7 @@ _: [
   "visual-studio-code"
   "iterm2"
   "ghostty"
+  "cmake"
 
   # Communication Tools
   "discord"
