@@ -7,9 +7,12 @@
 let
   inherit (inputs) nixgl;
   inherit (inputs) nixvim;
+  inherit (config.sharedVariables) homeDir;
+  secretspath = builtins.toString inputs.nix-secrets;
 in
 {
   imports = [
+    inputs.sops-nix.homeManagerModules.sops
     ../../modules/home-manager/i3.nix
     ../../modules/home-manager/programs/git.nix
     # ../../modules/home-manager/programs/zsh.nix
@@ -41,6 +44,15 @@ in
     username = config.sharedVariables.user;
     homeDirectory = config.sharedVariables.homeDir;
   };
+
+  sops = {
+    defaultSopsFile = "${secretspath}/secrets/shared.yaml";
+    age = {
+      keyFile = "${homeDir}/.config/sops/age/keys.txt";
+    };
+    secrets."git_signing_ssh_key_public" = { };
+  };
+
 
   catppuccin = {
     flavor = "mocha";
