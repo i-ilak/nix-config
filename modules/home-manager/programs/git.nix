@@ -4,11 +4,19 @@
 }:
 let
   inherit (config.sharedVariables) hostname;
+
+  allowed_signers_content =
+    if hostname == "mxw-dalco01" then
+      ''
+        * ${config.sops.placeholder."git_signing_ssh_key_work"}
+      ''
+    else
+      ''
+        * ${config.sops.placeholder."git_signing_ssh_key_public"}
+      '';
 in
 {
-  sops.templates."allowed_signers".content = ''
-    * ${config.sops.placeholder."git_signing_ssh_key_public"}
-  '';
+  sops.templates."allowed_signers".content = allowed_signers_content;
 
   programs.git =
     let
@@ -17,7 +25,11 @@ in
 
       signing = {
         format = "ssh";
-        key = "${config.sops.secrets."git_signing_ssh_key_public".path}";
+        key =
+          if hostname == "mxw-dalco01" then
+            "${config.sops.secrets."git_signing_ssh_key_work".path}"
+          else
+            "${config.sops.secrets."git_signing_ssh_key_public".path}";
         signByDefault = true;
       };
 

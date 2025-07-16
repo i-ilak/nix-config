@@ -31,7 +31,10 @@ in
     inherit (nixgl) packages;
     defaultWrapper = "mesa";
     offloadWrapper = "nvidiaPrime";
-    installScripts = [ "mesa" "nvidiaPrime" ];
+    installScripts = [
+      "mesa"
+      "nvidiaPrime"
+    ];
   };
 
   xsession = {
@@ -39,7 +42,14 @@ in
   };
 
   home = {
-    packages = import ./packages.nix { inherit inputs pkgs nixvim config; };
+    packages = import ./packages.nix {
+      inherit
+        inputs
+        pkgs
+        nixvim
+        config
+        ;
+    };
     file = import ./files.nix { inherit pkgs nixvim config; };
     username = config.sharedVariables.user;
     homeDirectory = config.sharedVariables.homeDir;
@@ -50,9 +60,8 @@ in
     age = {
       keyFile = "${homeDir}/.config/sops/age/keys.txt";
     };
-    secrets."git_signing_ssh_key_public" = { };
+    secrets."git_signing_ssh_key_work" = { };
   };
-
 
   catppuccin = {
     flavor = "mocha";
@@ -65,10 +74,6 @@ in
 
   programs = {
     home-manager.enable = true;
-    # vscode = {
-    #   enable = true;
-    #   package = config.lib.nixGL.wrap pkgs.vscodium;
-    # };
     alacritty.package = config.lib.nixGL.wrap pkgs.alacritty;
   };
 
