@@ -11,16 +11,16 @@
       ./disk-config.nix
       ./boot.nix
       ./impermanance.nix
-      ./home-assistant.nix
+      # ./home-assistant.nix
       ./sops.nix
-      ./locale.nix
-      ./audit.nix
-      ./sudo.nix
-      ./no-defaults.nix
-      ./noexec.nix
-      ./sshd.nix
-      ./jellyfin.nix
-      ./tailscale.nix
+      # ./locale.nix
+      # ./audit.nix
+      # ./sudo.nix
+      # ./no-defaults.nix
+      # ./noexec.nix
+      # ./sshd.nix
+      # ./jellyfin.nix
+      # ./tailscale.nix
       ./ytdl-sub.nix
     ];
 
