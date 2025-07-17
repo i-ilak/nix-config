@@ -111,7 +111,6 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
           treefmt = treefmt-nix.lib.evalModule pkgs ./modules/shared/format.nix;
-          preCommitCheck = self.checks.${system}.pre-commit-check;
         in
         {
           apps.default = {
