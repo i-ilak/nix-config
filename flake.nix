@@ -84,32 +84,37 @@
     , treefmt-nix
     , deadnix
     , ...
-    } @ inputs:
+    }@inputs:
     let
-      devShell = system:
+      devShell =
+        system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
           preCommitCheck = self.checks.${system}.pre-commit-check;
         in
         {
-          default = with pkgs;
+          default =
+            with pkgs;
             mkShell {
               inherit (preCommitCheck) shellHook;
               buildInputs = preCommitCheck.enabledPackages;
-              nativeBuildInputs = with pkgs; [ bashInteractive git ];
+              nativeBuildInputs = with pkgs; [
+                bashInteractive
+                git
+              ];
             };
         };
     in
     flake-utils.lib.eachDefaultSystem
-      (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        treefmt = treefmt-nix.lib.evalModule pkgs ./modules/shared/format.nix;
-        preCommitCheck = self.checks.${system}.pre-commit-check;
-      in
-      {
-        apps.default =
-          {
+      (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          treefmt = treefmt-nix.lib.evalModule pkgs ./modules/shared/format.nix;
+          preCommitCheck = self.checks.${system}.pre-commit-check;
+        in
+        {
+          apps.default = {
             meta = {
               description = ''
                 Shell script to switch to next generation, based on hostname.
@@ -120,22 +125,23 @@
             program = "${self}/apps/build-switch";
           };
 
-        checks = {
-          pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-            src = self;
-            hooks = {
-              nixpkgs-fmt.enable = true;
-              deadnix.enable = true;
-              statix.enable = true;
+          checks = {
+            pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+              src = self;
+              hooks = {
+                nixpkgs-fmt.enable = true;
+                deadnix.enable = true;
+                statix.enable = true;
+                trufflehog.enable = true;
+              };
             };
           };
-        };
 
-        formatter = treefmt.config.build.wrapper;
-        devShells = devShell system;
-      }
-      ) //
-    {
+          formatter = treefmt.config.build.wrapper;
+          devShells = devShell system;
+        }
+      )
+    // {
       darwinConfigurations = {
         macbook = import ./hosts/macbook/nix-darwin.nix {
           inherit inputs;
@@ -158,4 +164,3 @@
       };
     };
 }
-
