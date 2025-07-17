@@ -14,7 +14,6 @@ _: [
   "firefox"
 
   # Development Tools
-  "docker"
   "visual-studio-code"
   "iterm2"
   "ghostty"
