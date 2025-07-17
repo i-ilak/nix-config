@@ -61,7 +61,7 @@ in
     age = {
       keyFile = "${homeDir}/.config/sops/age/keys.txt";
     };
-    secrets."git_signing_ssh_key_public" = { };
+    secrets."git_signing_ssh_key_work" = { };
   };
 
   catppuccin = {
@@ -75,10 +75,6 @@ in
 
   programs = {
     home-manager.enable = true;
-    # vscode = {
-    #   enable = true;
-    #   package = config.lib.nixGL.wrap pkgs.vscodium;
-    # };
     alacritty.package = config.lib.nixGL.wrap pkgs.alacritty;
   };
 

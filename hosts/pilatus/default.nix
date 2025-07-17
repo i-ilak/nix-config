@@ -21,7 +21,7 @@ in
     ./services.nix
     ./locale.nix
     ./fonts.nix
-    ./security.nix
+    # ./security.nix
   ];
 
   home-manager = {
@@ -50,7 +50,8 @@ in
           "wheel"
         ];
         shell = pkgs.fish;
-        hashedPasswordFile = config.sops.secrets."user-dev-password".path;
+        hashedPassword = "$y$j9T$Kqzarw2tJDeQ0A4GisyVl1$qfPVBMznqkR/3b/rlRRCyFPcU1/NtDLquhNly97KIXD";
+        # hashedPasswordFile = config.sops.secrets."user-dev-password".path;
       };
     };
   };

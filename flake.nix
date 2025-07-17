@@ -111,7 +111,6 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         treefmt = treefmt-nix.lib.evalModule pkgs ./modules/shared/format.nix;
-        preCommitCheck = self.checks.${system}.pre-commit-check;
       in
       {
         apps.default = {
@@ -129,9 +128,10 @@
           pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
             src = self;
             hooks = {
-              nixpkgs-fmt.enable = true;
+              nixfmt-rfc-style.enable = true;
               deadnix.enable = true;
               statix.enable = true;
+              trufflehog.enable = true;
             };
           };
         };
