@@ -20,12 +20,19 @@ in
     ./services.nix
     ./locale.nix
     ./fonts.nix
-    ./security.nix
+    # ./security.nix
   ];
 
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = import ./home.nix { inherit pkgs inputs lib config; };
+    users.${user} = import ./home.nix {
+      inherit
+        pkgs
+        inputs
+        lib
+        config
+        ;
+    };
   };
 
   programs = {
@@ -42,7 +49,8 @@ in
           "wheel"
         ];
         shell = pkgs.fish;
-        hashedPasswordFile = config.sops.secrets."user-dev-password".path;
+        hashedPassword = "$y$j9T$Kqzarw2tJDeQ0A4GisyVl1$qfPVBMznqkR/3b/rlRRCyFPcU1/NtDLquhNly97KIXD";
+        # hashedPasswordFile = config.sops.secrets."user-dev-password".path;
       };
     };
   };
@@ -50,13 +58,16 @@ in
   hardware.graphics.enable = true;
   virtualisation.vmware.guest.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    gitAndTools.gitFull
-    linuxPackages.v4l2loopback
-    v4l-utils
-    inetutils
-    vim
-  ] ++ systemPackages;
+  environment.systemPackages =
+    with pkgs;
+    [
+      gitAndTools.gitFull
+      linuxPackages.v4l2loopback
+      v4l-utils
+      inetutils
+      vim
+    ]
+    ++ systemPackages;
 
   nix = {
     nixPath = [ "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos" ];
