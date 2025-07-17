@@ -1,5 +1,6 @@
-{ lib
-, ...
+{
+  lib,
+  ...
 }:
 {
   options.sharedVariables = lib.mkOption {

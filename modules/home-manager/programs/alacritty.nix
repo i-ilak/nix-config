@@ -1,5 +1,6 @@
-{ config
-, ...
+{
+  config,
+  ...
 }:
 let
   fontSize = config.sharedVariables.alacritty.settings.font.size;

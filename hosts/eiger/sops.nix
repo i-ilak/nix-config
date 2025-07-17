@@ -1,5 +1,6 @@
-{ inputs
-, ...
+{
+  inputs,
+  ...
 }:
 let
   secretspath = builtins.toString inputs.nix-secrets;
@@ -22,4 +23,3 @@ in
     };
   };
 }
-

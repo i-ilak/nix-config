@@ -1,8 +1,7 @@
-_:
-{
+_: {
   projectRootFile = "flake.nix";
   programs = {
-    nixpkgs-fmt.enable = true;
+    nixfmt.enable = true;
     yamlfmt.enable = true;
   };
   settings.global.excludes = [

@@ -77,13 +77,14 @@
     };
   };
   outputs =
-    { self
-    , nixpkgs
-    , flake-utils
-    , pre-commit-hooks
-    , treefmt-nix
-    , deadnix
-    , ...
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      pre-commit-hooks,
+      treefmt-nix,
+      deadnix,
+      ...
     }@inputs:
     let
       devShell =
@@ -105,41 +106,40 @@
             };
         };
     in
-    flake-utils.lib.eachDefaultSystem
-      (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-          treefmt = treefmt-nix.lib.evalModule pkgs ./modules/shared/format.nix;
-        in
-        {
-          apps.default = {
-            meta = {
-              description = ''
-                Shell script to switch to next generation, based on hostname.
-              '';
-              mainProgram = "build-switch";
-            };
-            type = "app";
-            program = "${self}/apps/build-switch";
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+        treefmt = treefmt-nix.lib.evalModule pkgs ./modules/shared/format.nix;
+      in
+      {
+        apps.default = {
+          meta = {
+            description = ''
+              Shell script to switch to next generation, based on hostname.
+            '';
+            mainProgram = "build-switch";
           };
+          type = "app";
+          program = "${self}/apps/build-switch";
+        };
 
-          checks = {
-            pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-              src = self;
-              hooks = {
-                nixpkgs-fmt.enable = true;
-                deadnix.enable = true;
-                statix.enable = true;
-                trufflehog.enable = true;
-              };
+        checks = {
+          pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+            src = self;
+            hooks = {
+              nixfmt-rfc-style.enable = true;
+              deadnix.enable = true;
+              statix.enable = true;
+              trufflehog.enable = true;
             };
           };
+        };
 
-          formatter = treefmt.config.build.wrapper;
-          devShells = devShell system;
-        }
-      )
+        formatter = treefmt.config.build.wrapper;
+        devShells = devShell system;
+      }
+    )
     // {
       darwinConfigurations = {
         macbook = import ./hosts/macbook/nix-darwin.nix {

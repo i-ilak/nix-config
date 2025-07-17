@@ -1,5 +1,6 @@
-{ inputs
-, ...
+{
+  inputs,
+  ...
 }:
 inputs.nixpkgs.lib.nixosSystem {
   system = "aarch64-linux";
@@ -10,4 +11,3 @@ inputs.nixpkgs.lib.nixosSystem {
     ./default.nix
   ];
 }
-

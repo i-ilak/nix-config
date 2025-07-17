@@ -1,5 +1,4 @@
-_:
-{
+_: {
   environment.persistence."/persist" = {
     directories = [
       "/etc/nixos"
@@ -26,6 +25,10 @@ _:
   fileSystems."/" = {
     device = "tmpfs";
     fsType = "tmpfs";
-    options = [ "defaults" "size=2G" "mode=755" ];
+    options = [
+      "defaults"
+      "size=2G"
+      "mode=755"
+    ];
   };
 }

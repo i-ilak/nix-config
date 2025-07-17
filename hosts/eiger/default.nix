@@ -1,27 +1,27 @@
-{ inputs
-, pkgs
-, config
-, ...
+{
+  inputs,
+  pkgs,
+  config,
+  ...
 }:
 {
-  imports =
-    [
-      inputs.disko.nixosModules.disko
-      inputs.impermanence.nixosModules.impermanence
-      ./disk-config.nix
-      ./boot.nix
-      ./impermanance.nix
-      ./home-assistant.nix
-      ./sops.nix
-      ./locale.nix
-      ./audit.nix
-      ./sudo.nix
-      ./no-defaults.nix
-      ./noexec.nix
-      ./sshd.nix
-      ./jellyfin.nix
-      ./tailscale.nix
-    ];
+  imports = [
+    inputs.disko.nixosModules.disko
+    inputs.impermanence.nixosModules.impermanence
+    ./disk-config.nix
+    ./boot.nix
+    ./impermanance.nix
+    ./home-assistant.nix
+    ./sops.nix
+    ./locale.nix
+    ./audit.nix
+    ./sudo.nix
+    ./no-defaults.nix
+    ./noexec.nix
+    ./sshd.nix
+    ./jellyfin.nix
+    ./tailscale.nix
+  ];
 
   networking = {
     hostName = "eiger";
@@ -63,4 +63,3 @@
   # Needs to be the version of the installer that was used to install the initial version of NixOS
   system.stateVersion = "25.05"; # Did you read the comment?
 }
-

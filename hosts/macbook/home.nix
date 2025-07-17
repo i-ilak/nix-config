@@ -1,7 +1,8 @@
-{ pkgs
-, inputs
-, config
-, ...
+{
+  pkgs,
+  inputs,
+  config,
+  ...
 }:
 let
   secretspath = builtins.toString inputs.nix-secrets;
@@ -19,7 +20,6 @@ in
     ../../modules/home-manager/programs/direnv.nix
     ../../modules/home-manager/programs/alacritty.nix
   ];
-
 
   sops = {
     defaultSopsFile = "${secretspath}/secrets/shared.yaml";

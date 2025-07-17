@@ -1,5 +1,4 @@
-_:
-{
+_: {
   programs.rofi = {
     enable = true;
     location = "center";

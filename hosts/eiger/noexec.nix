@@ -1,9 +1,7 @@
-_:
-{
-  fileSystems =
-    {
-      "/".options = [ "noexec" ];
-      "/etc/nixos".options = [ "noexec" ];
-      "/var/log".options = [ "noexec" ];
-    };
+_: {
+  fileSystems = {
+    "/".options = [ "noexec" ];
+    "/etc/nixos".options = [ "noexec" ];
+    "/var/log".options = [ "noexec" ];
+  };
 }
