@@ -1,8 +1,9 @@
-{ pkgs
-, inputs
-, config
-, lib
-, ...
+{
+  pkgs,
+  inputs,
+  config,
+  lib,
+  ...
 }:
 let
   inherit (config.sharedVariables) user;
@@ -22,7 +23,14 @@ in
 
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = import ./home.nix { inherit pkgs inputs lib config; };
+    users.${user} = import ./home.nix {
+      inherit
+        pkgs
+        inputs
+        lib
+        config
+        ;
+    };
   };
 
   programs.fish.enable = true;
@@ -44,8 +52,15 @@ in
     {
       package = pkgs.nix;
       settings = {
-        trusted-users = [ "@admin" "${user}" ];
-        extra-platforms = [ "aarch64-darwin" "aarch64-linux" "x86_64-linux" ];
+        trusted-users = [
+          "@admin"
+          "${user}"
+        ];
+        extra-platforms = [
+          "aarch64-darwin"
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
       };
 
       gc = {

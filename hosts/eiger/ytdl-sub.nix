@@ -1,5 +1,6 @@
-{ pkgs
-, ...
+{
+  pkgs,
+  ...
 }:
 let
   output = "/media/tv";
@@ -105,16 +106,15 @@ in
         };
       };
 
-      subscriptions =
-        {
-          "TV Show Only Recent" = {
-            "= Science" = {
-              Veritasium = "https://www.youtube.com/@veritasium";
-              Kurzgesagt = "https://www.youtube.com/@kurzgesagt";
-              "3Blue1Brown" = "https://www.youtube.com/@3blue1brown/videos";
-            };
+      subscriptions = {
+        "TV Show Only Recent" = {
+          "= Science" = {
+            Veritasium = "https://www.youtube.com/@veritasium";
+            Kurzgesagt = "https://www.youtube.com/@kurzgesagt";
+            "3Blue1Brown" = "https://www.youtube.com/@3blue1brown/videos";
           };
         };
+      };
     };
   };
   users.users.ytdl-sub.extraGroups = [ "media" ];

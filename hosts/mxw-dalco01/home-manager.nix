@@ -1,8 +1,8 @@
-{ nixpkgs
-, inputs
-}:
-inputs.home-manager.lib.homeManagerConfiguration
 {
+  nixpkgs,
+  inputs,
+}:
+inputs.home-manager.lib.homeManagerConfiguration {
   pkgs = nixpkgs.legacyPackages.x86_64-linux;
   modules = [
     inputs.catppuccin.homeModules.catppuccin
@@ -10,7 +10,9 @@ inputs.home-manager.lib.homeManagerConfiguration
     ./home.nix
   ];
   extraSpecialArgs =
-    { inherit inputs; }
+    {
+      inherit inputs;
+    }
     // {
       isNixOS = false;
       impurePaths = {

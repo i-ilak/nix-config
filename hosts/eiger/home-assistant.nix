@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.home-assistant = {
     enable = true;
     extraComponents = [

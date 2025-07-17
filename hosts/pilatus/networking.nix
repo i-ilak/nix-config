@@ -1,5 +1,6 @@
-{ config
-, ...
+{
+  config,
+  ...
 }:
 let
   inherit (config.sharedVariables) hostname;
@@ -10,7 +11,11 @@ in
     hostName = hostname;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 443 22022 ];
+      allowedTCPPorts = [
+        80
+        443
+        22022
+      ];
     };
   };
 

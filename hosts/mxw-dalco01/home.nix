@@ -1,8 +1,9 @@
-{ pkgs
-, inputs
-, lib
-, config
-, ...
+{
+  pkgs,
+  inputs,
+  lib,
+  config,
+  ...
 }:
 let
   inherit (inputs) nixgl;
@@ -31,7 +32,10 @@ in
     inherit (nixgl) packages;
     defaultWrapper = "mesa";
     offloadWrapper = "nvidiaPrime";
-    installScripts = [ "mesa" "nvidiaPrime" ];
+    installScripts = [
+      "mesa"
+      "nvidiaPrime"
+    ];
   };
 
   xsession = {
@@ -39,7 +43,14 @@ in
   };
 
   home = {
-    packages = import ./packages.nix { inherit inputs pkgs nixvim config; };
+    packages = import ./packages.nix {
+      inherit
+        inputs
+        pkgs
+        nixvim
+        config
+        ;
+    };
     file = import ./files.nix { inherit pkgs nixvim config; };
     username = config.sharedVariables.user;
     homeDirectory = config.sharedVariables.homeDir;
@@ -52,7 +63,6 @@ in
     };
     secrets."git_signing_ssh_key_public" = { };
   };
-
 
   catppuccin = {
     flavor = "mocha";

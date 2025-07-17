@@ -1,6 +1,7 @@
-{ pkgs
-, nixvim
-, ...
+{
+  pkgs,
+  nixvim,
+  ...
 }:
 let
   sharedPackages = import ../../modules/home-manager/shared_packages.nix { inherit pkgs nixvim; };
@@ -37,7 +38,8 @@ let
   # Currently installed manually since I need Bitwarden 2025.5.0 and unstable has only 2025.4.2
   # unstablePackages = with inputs.nixpkgs-unstable.legacyPackages."x86_64-linux"; [ bitwarden-desktop ];
 
-  packages = guiApplications
+  packages =
+    guiApplications
     ++ developmentPackages
     ++ fonts
     # ++ unstablePackages

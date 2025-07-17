@@ -1,5 +1,6 @@
-{ config
-, ...
+{
+  config,
+  ...
 }:
 let
   inherit (config.sharedVariables) user;
@@ -55,12 +56,11 @@ in
       wvous-tr-corner = 1;
     };
 
-    screencapture =
-      {
-        location = "/Users/${user}/Downloads/temp";
-        type = "png";
-        disable-shadow = true;
-      };
+    screencapture = {
+      location = "/Users/${user}/Downloads/temp";
+      type = "png";
+      disable-shadow = true;
+    };
 
     finder = {
       AppleShowAllFiles = true;

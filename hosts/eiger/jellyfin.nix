@@ -1,5 +1,6 @@
-{ pkgs
-, ...
+{
+  pkgs,
+  ...
 }:
 let
   jellyfinFolder = "/media/jellyfin";
@@ -73,7 +74,11 @@ in
     ProtectKernelTunables = true;
     RemoveIPC = true;
 
-    RestrictAddressFamilies = [ "AF_NETLINK" "AF_INET" "AF_INET6" ];
+    RestrictAddressFamilies = [
+      "AF_NETLINK"
+      "AF_INET"
+      "AF_INET6"
+    ];
 
     RestrictNamespaces = true;
     RestrictRealtime = true;

@@ -1,5 +1,6 @@
-{ inputs
-, ...
+{
+  inputs,
+  ...
 }:
 inputs.nixpkgs.lib.nixosSystem {
   # TODO: Change back, real machine is x86_64-linux
@@ -11,4 +12,3 @@ inputs.nixpkgs.lib.nixosSystem {
     ./default.nix
   ];
 }
-

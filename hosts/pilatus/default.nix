@@ -1,8 +1,9 @@
-{ inputs
-, pkgs
-, config
-, lib
-, ...
+{
+  inputs,
+  pkgs,
+  config,
+  lib,
+  ...
 }:
 let
   inherit (config.sharedVariables) user;
@@ -25,7 +26,14 @@ in
 
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = import ./home.nix { inherit pkgs inputs lib config; };
+    users.${user} = import ./home.nix {
+      inherit
+        pkgs
+        inputs
+        lib
+        config
+        ;
+    };
   };
 
   programs = {
@@ -50,13 +58,16 @@ in
   hardware.graphics.enable = true;
   virtualisation.vmware.guest.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    gitAndTools.gitFull
-    linuxPackages.v4l2loopback
-    v4l-utils
-    inetutils
-    vim
-  ] ++ systemPackages;
+  environment.systemPackages =
+    with pkgs;
+    [
+      gitAndTools.gitFull
+      linuxPackages.v4l2loopback
+      v4l-utils
+      inetutils
+      vim
+    ]
+    ++ systemPackages;
 
   nix = {
     nixPath = [ "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos" ];

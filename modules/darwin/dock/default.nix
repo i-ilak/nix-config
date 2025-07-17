@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 # Original source: https://gist.github.com/antifuchs/10138c4d838a63c0a05e725ccd7bccdd
 
 with lib;
@@ -48,17 +53,37 @@ in
         path:
         "file://"
         + (builtins.replaceStrings
-          [ " " "!" "\"" "#" "$" "%" "&" "'" "(" ")" ]
-          [ "%20" "%21" "%22" "%23" "%24" "%25" "%26" "%27" "%28" "%29" ]
+          [
+            " "
+            "!"
+            "\""
+            "#"
+            "$"
+            "%"
+            "&"
+            "'"
+            "("
+            ")"
+          ]
+          [
+            "%20"
+            "%21"
+            "%22"
+            "%23"
+            "%24"
+            "%25"
+            "%26"
+            "%27"
+            "%28"
+            "%29"
+          ]
           (normalize path)
         );
       wantURIs = concatMapStrings (entry: "${entryURI entry.path}\n") cfg.entries;
-      createEntries =
-        concatMapStrings
-          (entry:
-            "${dockutil}/bin/dockutil --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}\n"
-          )
-          cfg.entries;
+      createEntries = concatMapStrings (
+        entry:
+        "${dockutil}/bin/dockutil --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}\n"
+      ) cfg.entries;
     in
     {
       system.activationScripts.postActivation.text = ''

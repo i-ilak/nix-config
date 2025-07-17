@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.aerospace = {
     enable = true;
     settings = {
@@ -60,7 +59,6 @@ _:
       #   run = "layout floating";
       #   }
       # ];
-
 
       # Mode main binding
       mode = {
@@ -128,16 +126,46 @@ _:
             alt-shift-0 = "move-node-to-workspace 10";
 
             # Move node and switch to workspace
-            alt-ctrl-1 = [ "move-node-to-workspace 1" "workspace 1" ];
-            alt-ctrl-2 = [ "move-node-to-workspace 2" "workspace 2" ];
-            alt-ctrl-3 = [ "move-node-to-workspace 3" "workspace 3" ];
-            alt-ctrl-4 = [ "move-node-to-workspace 4" "workspace 4" ];
-            alt-ctrl-5 = [ "move-node-to-workspace 5" "workspace 5" ];
-            alt-ctrl-6 = [ "move-node-to-workspace 6" "workspace 6" ];
-            alt-ctrl-7 = [ "move-node-to-workspace 7" "workspace 7" ];
-            alt-ctrl-8 = [ "move-node-to-workspace 8" "workspace 8" ];
-            alt-ctrl-9 = [ "move-node-to-workspace 9" "workspace 9" ];
-            alt-ctrl-0 = [ "move-node-to-workspace 10" "workspace 10" ];
+            alt-ctrl-1 = [
+              "move-node-to-workspace 1"
+              "workspace 1"
+            ];
+            alt-ctrl-2 = [
+              "move-node-to-workspace 2"
+              "workspace 2"
+            ];
+            alt-ctrl-3 = [
+              "move-node-to-workspace 3"
+              "workspace 3"
+            ];
+            alt-ctrl-4 = [
+              "move-node-to-workspace 4"
+              "workspace 4"
+            ];
+            alt-ctrl-5 = [
+              "move-node-to-workspace 5"
+              "workspace 5"
+            ];
+            alt-ctrl-6 = [
+              "move-node-to-workspace 6"
+              "workspace 6"
+            ];
+            alt-ctrl-7 = [
+              "move-node-to-workspace 7"
+              "workspace 7"
+            ];
+            alt-ctrl-8 = [
+              "move-node-to-workspace 8"
+              "workspace 8"
+            ];
+            alt-ctrl-9 = [
+              "move-node-to-workspace 9"
+              "workspace 9"
+            ];
+            alt-ctrl-0 = [
+              "move-node-to-workspace 10"
+              "workspace 10"
+            ];
 
             # Back and forth workspace navigation
             alt-tab = "workspace-back-and-forth";
@@ -149,14 +177,38 @@ _:
 
         service = {
           binding = {
-            esc = [ "reload-config" "mode main" ];
-            r = [ "flatten-workspace-tree" "mode main" ];
-            f = [ "layout floating tiling" "mode main" ];
-            backspace = [ "close-all-windows-but-current" "mode main" ];
-            alt-h = [ "join-with left" "mode main" ];
-            alt-j = [ "join-with down" "mode main" ];
-            alt-k = [ "join-with up" "mode main" ];
-            alt-l = [ "join-with right" "mode main" ];
+            esc = [
+              "reload-config"
+              "mode main"
+            ];
+            r = [
+              "flatten-workspace-tree"
+              "mode main"
+            ];
+            f = [
+              "layout floating tiling"
+              "mode main"
+            ];
+            backspace = [
+              "close-all-windows-but-current"
+              "mode main"
+            ];
+            alt-h = [
+              "join-with left"
+              "mode main"
+            ];
+            alt-j = [
+              "join-with down"
+              "mode main"
+            ];
+            alt-k = [
+              "join-with up"
+              "mode main"
+            ];
+            alt-l = [
+              "join-with right"
+              "mode main"
+            ];
           };
         };
       };
