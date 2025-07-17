@@ -475,10 +475,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1752674005,
-        "narHash": "sha256-xPg81B439pm5ypGnQMWqObovR9P4zRX3Ni8HRcwSPC4=",
+        "lastModified": 1752785267,
+        "narHash": "sha256-tBNoqM/qyEbhfbutqoNOPqHhSalBNH6s0b9PO+pCfFE=",
         "ref": "main",
-        "rev": "cee3455b2c469227d7321005d90a94350f17dc3a",
+        "rev": "c962cc9aee6b3aa1238577fda218e399d129a957",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/i-ilak/nix-secrets"
@@ -541,17 +541,17 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1752480373,
-        "narHash": "sha256-JHQbm+OcGp32wAsXTE/FLYGNpb+4GLi5oTvCxwSoBOA=",
+        "lastModified": 1752785489,
+        "narHash": "sha256-GlWNrCaxH0BDDrJBlG+2xvHUhd+o5VfX2EEi52WBjr8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "62e0f05ede1da0d54515d4ea8ce9c733f12d9f08",
+        "rev": "e139aa6a2b5f1f42d682a1fbc60abd355d2b4771",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "rev": "e139aa6a2b5f1f42d682a1fbc60abd355d2b4771",
         "type": "github"
       }
     },
@@ -582,11 +582,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1752784824,
-        "narHash": "sha256-jJOGSVoIEoVclszGnMIJgk1hoWTFmYPh8OUaGN5hado=",
+        "lastModified": 1752786981,
+        "narHash": "sha256-5fKxTmFyG7ZE91M0JT0uQjfg5OQX4N5sqzVTfbyTA7E=",
         "owner": "i-ilak",
         "repo": "nixvim-config",
-        "rev": "7be3fc3da9a72e7bcd3a444f010b7c5a16f548cd",
+        "rev": "1472c9876d5aa4a5551a998fd28e47d9318336b7",
         "type": "github"
       },
       "original": {

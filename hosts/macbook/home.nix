@@ -26,7 +26,7 @@ in
     age = {
       keyFile = "${homeDir}/Library/Application Support/sops/age/keys.txt";
     };
-    secrets."git_signing_ssh_key_public" = { };
+    secrets."ssh_git_signing_key/public" = { };
   };
 
   home = {

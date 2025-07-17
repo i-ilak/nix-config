@@ -9,11 +9,11 @@ let
   allowed_signers_content =
     if hostname == "mxw-dalco01" then
       ''
-        * ${config.sops.placeholder."git_signing_ssh_key_work"}
+        * ${config.sops.placeholder."ssh_git_signing_key/work"}
       ''
     else
       ''
-        * ${config.sops.placeholder."git_signing_ssh_key_public"}
+        * ${config.sops.placeholder."ssh_git_signing_key/public"}
       '';
 in
 {
@@ -28,9 +28,9 @@ in
         format = "ssh";
         key =
           if hostname == "mxw-dalco01" then
-            "${config.sops.secrets."git_signing_ssh_key_work".path}"
+            "${config.sops.secrets."ssh_git_signing_key/public".path}"
           else
-            "${config.sops.secrets."git_signing_ssh_key_public".path}";
+            "${config.sops.secrets."ssh_git_signing_key/public".path}";
         signByDefault = true;
       };
 
