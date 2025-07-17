@@ -8,7 +8,7 @@
     # inputs.catppuccin.homeModules.catppuccin
     ./additional_config_parameters.nix
     ../../modules/home-manager/i3.nix
-    # ../../modules/home-manager/programs/git.nix
+    ../../modules/home-manager/programs/git.nix
     ../../modules/home-manager/programs/rofi.nix
     ../../modules/home-manager/programs/fish.nix
     ../../modules/home-manager/programs/direnv.nix
