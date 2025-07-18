@@ -61,7 +61,7 @@ in
     age = {
       keyFile = "${homeDir}/.config/sops/age/keys.txt";
     };
-    secrets."git_signing_ssh_key_work" = { };
+    secrets."ssh_git_signing_key/work" = { };
   };
 
   catppuccin = {
