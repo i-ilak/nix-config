@@ -162,6 +162,9 @@
         pilatus = import ./hosts/pilatus/nixos.nix {
           inherit nixpkgs inputs;
         };
+        nordwand = import ./hosts/nordwand/nixos.nix {
+          inherit nixpkgs inputs;
+        };
       };
     };
 }

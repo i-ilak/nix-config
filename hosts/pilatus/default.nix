@@ -16,10 +16,10 @@ in
     ./additional_config_parameters.nix
     ../../modules/shared
     ../../modules/shared/cachix
+    ../../modules/nixos/locale.nix
     ./boot.nix
     ./networking.nix
     ./services.nix
-    ./locale.nix
     ./fonts.nix
     ./security.nix
   ];

@@ -13,11 +13,11 @@
     ./impermanance.nix
     ./home-assistant.nix
     ./sops.nix
-    ./locale.nix
-    ./audit.nix
-    ./sudo.nix
-    ./no-defaults.nix
-    ./noexec.nix
+    ../../modules/nixos/locale.nix
+    ../../modules/nixos/hardening/audit.nix
+    ../../modules/nixos/hardening/sudo.nix
+    ../../modules/nixos/hardening/no-defaults.nix
+    ../../modules/nixos/hardening/noexec.nix
     ./sshd.nix
     ./jellyfin.nix
     ./tailscale.nix

@@ -7,7 +7,6 @@ let
   secretspath = builtins.toString inputs.nix-secrets;
 in
 {
-
   sops = {
     defaultSopsFile = "${secretspath}/secrets/pilatus.yaml";
     secrets.user-dev-password = {
