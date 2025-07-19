@@ -28,7 +28,7 @@ in
         format = "ssh";
         key =
           if hostname == "mxw-dalco01" then
-            "${config.sops.secrets."ssh_git_signing_key/public".path}"
+            "${config.sops.secrets."ssh_git_signing_key/work".path}"
           else
             "${config.sops.secrets."ssh_git_signing_key/public".path}";
         signByDefault = true;
