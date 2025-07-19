@@ -50,4 +50,3 @@ case "$SYSTEM" in
 esac
 
 echo "${GREEN}Switch to new generation complete!${NC}"
-

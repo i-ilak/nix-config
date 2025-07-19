@@ -7,7 +7,7 @@ let
 in
 {
   sops = {
-    defaultSopsFile = "${secretspath}/secrets/eiger.yaml";
+    defaultSopsFile = "${secretspath}/secrets/nordwand.yaml";
     secrets = {
       user-worker-password = {
         key = "user/worker/password";

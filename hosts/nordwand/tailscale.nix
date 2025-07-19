@@ -1,8 +1,11 @@
 { config, ... }:
 {
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    authKeyFile = config.sops.secrets.tailscale_auth_key.path;
+    extraUpFlags = [ "--advertise-tags=tag:vault-server" ];
+  };
 
-  # Tell the firewall implicitly to trust packated routed over Tailscale:
   networking.firewall = {
     trustedInterfaces = [ "tailscale0" ];
     allowedUDPPorts = [ config.services.tailscale.port ];

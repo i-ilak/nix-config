@@ -134,6 +134,11 @@
               deadnix.enable = true;
               statix.enable = true;
               trufflehog.enable = true;
+              check-added-large-files.enable = true;
+              check-executables-have-shebangs.enable = true;
+              check-shebang-scripts-are-executable.enable = true;
+              end-of-file-fixer.enable = true;
+              ripsecrets.enable = true;
             };
           };
         };
