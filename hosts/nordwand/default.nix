@@ -4,8 +4,7 @@
   ...
 }:
 let
-  secretspath = builtins.toString inputs.nix-secrets;
-  certloc = "/var/lib/acme/vault.iilak.com";
+  domain = "vault.ilak.ch";
 in
 {
   # READ: https://aottr.dev/posts/2024/08/homelab-setting-up-caddy-reverse-proxy-with-ssl-on-nixos/
@@ -41,7 +40,7 @@ in
   nix.settings.allowed-users = [ "root" ];
 
   sops = {
-    defaultSopsFile = "${secretspath}/secrets/nordwand.yaml";
+    defaultSopsFile = "${inputs.nix-secrets}/secrets/nordwand.yaml";
     age = {
       sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
     };
@@ -82,6 +81,25 @@ in
         group = "root";
         mode = "0400";
       };
+      vaultwarden_admin_token = {
+        key = "vaultwarden/admin_token";
+        # nix-shell -p vaultwarden --run "vaultwarden hash"
+        owner = "vaultwarden";
+        group = "vaultwarden";
+        mode = "0400";
+      };
+      vaultwarden_domain = {
+        owner = "vaultwarden";
+        group = "vaultwarden";
+        key = "vaultwarden/domain";
+        mode = "0400";
+      };
+      acme_email = {
+        key = "acme/email";
+        owner = "root";
+        group = "root";
+        mode = "0400";
+      };
     };
   };
 
@@ -110,34 +128,38 @@ in
       config = {
         ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = 8000;
-        DOMAIN = "[https://vault.ilak.ch](https://vault.ilak.ch)";
+        DOMAIN = "https://${domain}";
         SIGNUPS_ALLOWED = false;
         WEBSOCKET_ENABLED = true;
-        ADMIN_TOKEN = "your-secure-admin-token-hash"; # IMPORTANT: Generate with `vaultwarden hash`
+        ADMIN_TOKEN = config.sops.secrets.vaultwarden_admin_token.path;
         LOG_FILE = "/var/log/vaultwarden/vaultwarden.log";
         LOG_LEVEL = "info";
       };
     };
-    caddy = {
-      enable = true;
-      group = "caddy";
-      virtualHosts."vault.ilak.ch" = {
-        # Caddy will bind to 0.0.0.0:80 and 0.0.0.0:443 for public access
-        # including ACME challenges.
-        extraConfig = ''
-          reverse_proxy 127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT} {
-            header_up Host {host}
-            header_up X-Real-IP {remote_ip}
-            header_up X-Forwarded-For {remote_ip}
-            header_up X-Forwarded-Proto {scheme}
-          }
+    caddy =
+      let
+        certloc = "${config.security.acme.certs."${domain}".directory}";
+      in
+      {
+        enable = true;
+        group = "caddy";
+        virtualHosts."${domain}" = {
+          # Caddy will bind to 0.0.0.0:80 and 0.0.0.0:443 for public access
+          # including ACME challenges.
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT} {
+              header_up Host {host}
+              header_up X-Real-IP {remote_ip}
+              header_up X-Forwarded-For {remote_ip}
+              header_up X-Forwarded-Proto {scheme}
+            }
 
-          tls ${certloc}/cert.pem ${certloc}/key.pem {
-            protocols tls1.3
-          }
-        '';
+            tls ${certloc}/cert.pem ${certloc}/key.pem {
+              protocols tls1.3
+            }
+          '';
+        };
       };
-    };
     cloudflared = {
       enable = true;
       tunnels."vault-tunnel" = {
@@ -152,12 +174,11 @@ in
 
   security.acme = {
     acceptTerms = true;
-    defaults.email = "your@email.com";
+    defaults.email = config.sops.secrets.acme_email.path;
 
-    certs."your.domain.com" = {
+    certs."${domain}" = {
       inherit (config.services.caddy) group;
-      domain = "your.domain.com";
-      extraDomainNames = [ "*.your.domain.com" ];
+      domain = "${domain}";
       dnsProvider = "cloudflare";
       dnsResolver = "1.1.1.1:53";
       dnsPropagationCheck = true;
