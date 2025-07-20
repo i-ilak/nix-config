@@ -123,6 +123,7 @@
         packages.default = nix-config-helper.packages.${system}.default;
 
         apps.default = {
+          inherit (nix-config-helper.packages.${system}.default) meta;
           type = "app";
           program = "${nix-config-helper.apps.${system}.default.program}";
         };
