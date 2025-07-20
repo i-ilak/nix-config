@@ -141,6 +141,7 @@
               check-shebang-scripts-are-executable.enable = true;
               end-of-file-fixer.enable = true;
               ripsecrets.enable = true;
+              flake-checker.enable = true;
             };
           };
         };
