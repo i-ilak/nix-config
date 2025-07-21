@@ -32,7 +32,7 @@
             # Enable client authentication (mTLS)
             client_auth {
               mode require
-              trusted_ca_certs ${config.sops.secrets.cloudflare_origin_pulls_ca_cert.path}
+              trusted_ca_certs ${config.sops.secrets.cloudflared_origin_pulls_ca_cert.path}
             }
           }
         '';

@@ -45,8 +45,8 @@
         group = "root";
         mode = "0400";
       };
-      cloudflare_origin_pulls_ca_cert = {
-        key = "cloudflare/origin_pulls_ca_cert";
+      cloudflared_origin_pulls_ca_cert = {
+        key = "cloudflared/origin_pulls_ca_cert";
         owner = "caddy";
         group = "caddy";
         mode = "0440";
