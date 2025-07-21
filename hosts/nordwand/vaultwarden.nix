@@ -20,10 +20,4 @@
       ADMIN_RATELIMIT_MAX_BURST = 3;
     };
   };
-
-  systemd.services.vaultwarden.unitConfig = {
-    Requires = [ "tailscaled-autoconnect.service" ];
-    After = [ "tailscaled-autoconnect.service" ];
-    BindsTo = [ "tailscaled-autoconnect.service" ];
-  };
 }
