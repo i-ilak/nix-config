@@ -20,12 +20,8 @@
       credentialsFile = config.sops.templates."cloudflared_credentials.json".path;
       default = "http_status:404";
       ingress = {
-        "${config.sharedVariables.domain}" = "https://YOUR_TAILSCALE_IP:443";
+        "${config.sharedVariables.domain}" = "https://127.0.0.1:8080";
       };
     };
-  };
-
-  systemd.services.cloudflared.unitConfig = {
-    After = [ "caddy.service" ];
   };
 }

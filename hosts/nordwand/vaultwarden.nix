@@ -14,10 +14,16 @@
       WEBSOCKET_ENABLED = true;
       ADMIN_TOKEN = config.sops.secrets.vaultwarden_admin_token.path;
       LOG_LEVEL = "info";
+      ROCKET_ENV = "production";
+      ROCKET_WORKERS = 10;
+      ADMIN_RATELIMIT_SECONDS = 300;
+      ADMIN_RATELIMIT_MAX_BURST = 3;
     };
   };
 
   systemd.services.vaultwarden.unitConfig = {
-    After = [ "tailscale.service" ];
+    Requires = [ "tailscaled-autoconnect.service" ];
+    After = [ "tailscaled-autoconnect.service" ];
+    BindsTo = [ "tailscaled-autoconnect.service" ];
   };
 }

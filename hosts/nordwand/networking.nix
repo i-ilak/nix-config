@@ -4,10 +4,9 @@ _: {
     firewall = {
       enable = true;
       allowedTCPPorts = [
-        80
-        443
-      ]; # For Caddy's ACME challenge & HTTPS termination
+      ];
     };
+    enableIPv6 = false;
   };
 
 }

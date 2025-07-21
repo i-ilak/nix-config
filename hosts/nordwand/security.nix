@@ -23,5 +23,4 @@
       environmentFile = config.sops.templates."cloudflared_dns_api_token".path;
     };
   };
-
 }

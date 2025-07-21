@@ -45,6 +45,12 @@
         group = "root";
         mode = "0400";
       };
+      cloudflare_origin_pulls_ca_cert = {
+        key = "cloudflare/origin_pulls_ca_cert";
+        owner = "caddy";
+        group = "caddy";
+        mode = "0440";
+      };
       vaultwarden_admin_token = {
         key = "vaultwarden/admin_token";
         # nix-shell -p vaultwarden --run "vaultwarden hash"
