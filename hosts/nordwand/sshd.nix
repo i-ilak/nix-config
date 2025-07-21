@@ -1,8 +1,9 @@
 _: {
   services.openssh = {
     enable = true;
-    settings.PasswordAuthentication = false;
-    settings.PermitRootLogin = "no";
+    # FIXME: !!!!!!!!!!!
+    settings.PasswordAuthentication = true;
+    settings.PermitRootLogin = "yes";
     ports = [ 22023 ];
     extraConfig = ''
       AllowTcpForwarding yes

@@ -15,6 +15,7 @@ with pkgs;
   uv
   nixpkgs-fmt
   grc
+  comma
 
   # Encryption and security tools
   gnupg
