@@ -37,7 +37,7 @@
 
   services.cloudflared = {
     enable = true;
-    tunnels."vault-tunnel" = {
+    tunnels."homelab" = {
       credentialsFile = config.sops.templates."cloudflared_credentials.json".path;
       default = "http_status:404";
       ingress = {
