@@ -11,8 +11,9 @@
 
   config = {
     sharedVariables = {
-      domain = "vault.ilak.ch";
+      domain = "ilak.ch";
       acmeEmail = "ivan.ilak@hotmail.com";
+      authelia.port = 9091;
     };
   };
 }

@@ -2,96 +2,57 @@
   config,
   ...
 }:
+let
+  inherit (config.sharedVariables) domain;
+in
 {
   services.caddy = {
     enable = true;
-    group = "caddy";
-    settings =
+
+    globalConfig = ''
+      auto_https off
+    '';
+
+    virtualHosts =
       let
-        inherit (config.sharedVariables) domain;
-        certloc = "${config.security.acme.certs."${domain}".directory}";
-        vaultwardenPort = toString config.services.vaultwarden.config.ROCKET_PORT;
-        cloudflareCaCertPath = config.sops.secrets.cloudflared_origin_pulls_ca_cert.path;
+        originPem = config.sops.secrets.cloudflared_origin_cert_pem.path;
+        originPrivateKey = config.sops.secrets.cloudflared_origin_cert_private_key.path;
+        trustedCaCert = config.sops.secrets.cloudflare_authenticated_origin_pull_ca.path;
+
+        autheliaPort = builtins.toString config.sharedVariables.authelia.port;
+        homepagePort = builtins.toString config.services.homepage-dashboard.listenPort;
       in
       {
-        admin.listen = "off";
-        auto_https.enable = false;
-        logging.logs.default.level = "ERROR";
-        apps = {
-          http = {
-            servers = {
-              "${domain}" = {
-                listen = [
-                  "127.0.0.1:8080"
-                ];
-                routes = [
-                  {
-                    match = [
-                      {
-                        host = [
-                          "${domain}"
-                        ];
-                      }
-                    ];
-                    handle = [
-                      {
-                        handler = "reverse_proxy";
-                        upstreams = [
-                          {
-                            dial = "127.0.0.1:${vaultwardenPort}";
-                          }
-                        ];
-                        headers.request.set = {
-                          Host = [
-                            "{http.request.host}"
-                          ];
-                          "X-Real-IP" = [
-                            "{http.request.remote.host}"
-                          ];
-                          "X-Forwarded-For" = [
-                            "{http.request.remote.host}"
-                          ];
-                          "X-Forwarded-Proto" = [
-                            "{http.request.scheme}"
-                          ];
-                        };
-                      }
-                    ];
-                    logs = {
-                      logger_names = [
-                        "access_${domain}"
-                      ];
-                    };
-                    tls = {
-                      certificates.load_folders = [
-                        "${certloc}"
-                      ];
-                      protocols = [
-                        "tls1.3"
-                      ];
-                      client_authentication = {
-                        mode = "require";
-                        trusted_ca_certs = [
-                          "${cloudflareCaCertPath}"
-                        ];
-                      };
-                    };
-                  }
-                ];
-              };
-            };
-            loggers."access_${domain}".output.writer = {
-              output = "file";
-              filename = "/var/log/caddy/access-${domain}.log";
-            };
-          };
+        "auth.${domain}" = {
+          extraConfig = ''
+            tls ${originPem} ${originPrivateKey} {
+              client_auth {
+                mode require_and_verify
+                trusted_ca_cert_file ${trustedCaCert}
+              }
+            }
+
+            reverse_proxy 127.0.0.1:${autheliaPort}
+          '';
+        };
+
+        "home.${domain}" = {
+          extraConfig = ''
+            tls ${originPem} ${originPrivateKey} {
+              client_auth {
+                mode require_and_verify
+                trusted_ca_cert_file ${trustedCaCert}
+              }
+            }
+
+            forward_auth 127.0.0.1:${autheliaPort} {
+              uri /api/authz/forward-auth
+              copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+              header_up Host {upstream_hostport}
+            }
+            reverse_proxy 127.0.0.1:${homepagePort}
+          '';
         };
       };
-  };
-
-  systemd.services.caddy.unitConfig = {
-    Requires = [ "vaultwarden.service" ];
-    After = [ "vaultwarden.service" ];
-    BindsTo = [ "vaultwarden.service" ];
   };
 }

@@ -22,9 +22,11 @@
     ./sshd.nix
     ./tailscale.nix
     ./cloudflared.nix
-    ./security.nix
+    # ./security.nix
     ./caddy.nix
-    ./vaultwarden.nix
+    # ./vaultwarden.nix
+    ./authalia.nix
+    ./homepage.nix
   ];
 
   users = {

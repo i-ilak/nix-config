@@ -21,49 +21,31 @@
         group = "root";
         mode = "0400";
       };
-      cloudflared_test_tunnel_id = {
-        key = "cloudflared/test/tunnel_id";
-        owner = "cloudflared";
-        group = "cloudflared";
-        mode = "0400";
-      };
-      cloudflared_test_account_id = {
-        key = "cloudflared/test/account_id";
-        owner = "cloudflared";
-        group = "cloudflared";
-        mode = "0400";
-      };
-      cloudflared_test_tunnel_secret = {
-        key = "cloudflared/test/tunnel_secret";
-        owner = "cloudflared";
-        group = "cloudflared";
-        mode = "0400";
-      };
-      cloudflared_dns_api_token = {
-        key = "cloudflared/dns_api_token";
-        owner = "root";
-        group = "root";
-        mode = "0400";
-      };
-      cloudflared_origin_pulls_ca_cert = {
-        key = "cloudflared/origin_pulls_ca_cert";
+      cloudflare_authenticated_origin_pull_ca = {
+        key = "cloudflared/authenticated_origin_pull_ca";
         owner = "caddy";
         group = "caddy";
         mode = "0440";
       };
-      vaultwarden_admin_token = {
-        key = "vaultwarden/admin_token";
-        # nix-shell -p vaultwarden --run "vaultwarden hash"
-        owner = "vaultwarden";
-        group = "vaultwarden";
-        mode = "0400";
+      cloudflared_origin_cert_pem = {
+        key = "cloudflared/origin_cert_pem";
+        owner = "caddy";
+        group = "caddy";
+        mode = "0440";
       };
-      acme_email = {
-        key = "acme/email";
-        owner = "root";
-        group = "root";
-        mode = "0400";
+      cloudflared_origin_cert_private_key = {
+        key = "cloudflared/origin_cert_private_key";
+        owner = "caddy";
+        group = "caddy";
+        mode = "0440";
       };
+      # vaultwarden_admin_token = {
+      #   key = "vaultwarden/admin_token";
+      #   # nix-shell -p vaultwarden --run "vaultwarden hash"
+      #   owner = "vaultwarden";
+      #   group = "vaultwarden";
+      #   mode = "0400";
+      # };
     };
   };
 }
