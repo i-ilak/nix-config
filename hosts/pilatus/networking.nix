@@ -14,7 +14,6 @@ in
       allowedTCPPorts = [
         80
         443
-        22022
       ];
     };
   };

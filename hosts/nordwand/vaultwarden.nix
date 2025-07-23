@@ -3,6 +3,14 @@
   ...
 }:
 {
+  # sops.secrets.vaultwarden_admin_token = {
+  #   key = "vaultwarden/admin_token";
+  #   # nix-shell -p vaultwarden --run "vaultwarden hash"
+  #   owner = "vaultwarden";
+  #   group = "vaultwarden";
+  #   mode = "0400";
+  # };
+
   services.vaultwarden = {
     enable = true;
     dbBackend = "sqlite";

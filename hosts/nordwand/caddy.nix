@@ -6,13 +6,27 @@ let
   inherit (config.sharedVariables) domain;
 in
 {
+  sops.secrets = {
+    cloudflared_origin_cert_pem = {
+      key = "cloudflared/origin_cert_pem";
+      owner = "caddy";
+      group = "caddy";
+      mode = "0440";
+    };
+    cloudflared_origin_cert_private_key = {
+      key = "cloudflared/origin_cert_private_key";
+      owner = "caddy";
+      group = "caddy";
+      mode = "0440";
+    };
+  };
+
   services.caddy = {
     enable = true;
-
     globalConfig = ''
       auto_https off
+      debug
     '';
-
     virtualHosts =
       let
         originPem = config.sops.secrets.cloudflared_origin_cert_pem.path;
@@ -23,7 +37,7 @@ in
         homepagePort = builtins.toString config.services.homepage-dashboard.listenPort;
       in
       {
-        "auth.${domain}" = {
+        "auth.${domain}:443" = {
           extraConfig = ''
             tls ${originPem} ${originPrivateKey} {
               client_auth {
@@ -36,7 +50,7 @@ in
           '';
         };
 
-        "home.${domain}" = {
+        "home.${domain}:443" = {
           extraConfig = ''
             tls ${originPem} ${originPrivateKey} {
               client_auth {

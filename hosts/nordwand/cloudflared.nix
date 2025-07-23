@@ -41,8 +41,20 @@
       credentialsFile = config.sops.templates."cloudflared_credentials.json".path;
       default = "http_status:404";
       ingress = {
-        "*.${config.sharedVariables.domain}" = "https://127.0.0.1:443";
+        "auth.${config.sharedVariables.domain}" = "https://auth.${config.sharedVariables.domain}:443";
+
+        "home.${config.sharedVariables.domain}" = "https://home.${config.sharedVariables.domain}:443";
       };
+      originRequest = {
+        caPool = config.sops.secrets.cloudflare_authenticated_origin_pull_ca.path;
+      };
+    };
+  };
+
+  systemd.services.cloudflared-tunnel-homelab = {
+    serviceConfig = {
+      User = "cloudflared";
+      SupplementaryGroups = [ "origin_pull" ];
     };
   };
 }

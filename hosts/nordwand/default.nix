@@ -30,7 +30,15 @@
   ];
 
   users = {
-    groups.cloudflared = { };
+    groups = {
+      cloudflared = { };
+      origin_pull = {
+        members = [
+          "caddy"
+          "cloudflared"
+        ];
+      };
+    };
     mutableUsers = false;
     users = {
       root.hashedPasswordFile = config.sops.secrets."user-root-password".path;
