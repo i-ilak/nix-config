@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   ...
 }:
 let
@@ -7,19 +8,32 @@ let
 in
 {
   sops.secrets = {
-    cloudflared_origin_cert_pem = {
-      key = "cloudflared/origin_cert_pem";
+    # Origin Certificate (+ Private key)
+    cloudflared_ilak_ch_pem = {
+      key = "cloudflared/ilak_ch_pem";
       owner = "caddy";
       group = "caddy";
       mode = "0440";
     };
-    cloudflared_origin_cert_private_key = {
-      key = "cloudflared/origin_cert_private_key";
+    cloudflared_ilak_ch_private_key = {
+      key = "cloudflared/ilak_ch_private_key";
       owner = "caddy";
       group = "caddy";
       mode = "0440";
     };
   };
+
+  sops.templates."mtls_combined.pem" =
+    let
+      combinedCert = lib.concatStrings [
+        "${config.sops.placeholder.cloudflared_ilak_ch_pem}"
+        "${config.sops.placeholder.cloudflare_authenticated_origin_pull_ca}"
+      ];
+    in
+    {
+      content = "${combinedCert}";
+      owner = "caddy";
+    };
 
   services.caddy = {
     enable = true;
@@ -29,9 +43,9 @@ in
     '';
     virtualHosts =
       let
-        originPem = config.sops.secrets.cloudflared_origin_cert_pem.path;
-        originPrivateKey = config.sops.secrets.cloudflared_origin_cert_private_key.path;
-        trustedCaCert = config.sops.secrets.cloudflare_authenticated_origin_pull_ca.path;
+        originPem = config.sops.secrets.cloudflared_ilak_ch_pem.path;
+        originPrivateKey = config.sops.secrets.cloudflared_ilak_ch_private_key.path;
+        # trustedCaCert = config.sops.secrets.cloudflare_authenticated_origin_pull_ca.path;
 
         autheliaPort = builtins.toString config.sharedVariables.authelia.port;
         homepagePort = builtins.toString config.services.homepage-dashboard.listenPort;
@@ -39,24 +53,26 @@ in
       {
         "auth.${domain}" = {
           extraConfig = ''
-            tls ${originPem} ${originPrivateKey} {
-              client_auth {
-                mode require_and_verify
-                trusted_ca_cert_file ${trustedCaCert}
-              }
-            }
+            tls ${originPem} ${originPrivateKey} 
+            #{
+            #  client_auth {
+            #    mode require_and_verify
+            #    trusted_ca_cert_file ${config.sops.templates."mtls_combined.pem".path}
+            #  }
+            #}
             reverse_proxy 127.0.0.1:${autheliaPort}
           '';
         };
 
         "home.${domain}" = {
           extraConfig = ''
-            tls ${originPem} ${originPrivateKey} {
-              client_auth {
-                mode require_and_verify
-                trusted_ca_cert_file ${trustedCaCert}
-              }
-            }
+            tls ${originPem} ${originPrivateKey}
+            # {
+            #  client_auth {
+            #    mode require_and_verify
+            #    trusted_ca_cert_file ${config.sops.templates."mtls_combined.pem".path}
+            # }
+            # }
             reverse_proxy 127.0.0.1:${homepagePort}
           '';
         };

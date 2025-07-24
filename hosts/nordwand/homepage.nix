@@ -1,8 +1,12 @@
-_: {
+{
+  config,
+  ...
+}:
+{
   services.homepage-dashboard = {
     enable = true;
     listenPort = 8082;
-    allowedHosts = "127.0.0.1:8082";
+    allowedHosts = "home.${config.sharedVariables.domain},127.0.0.1:8082";
     settings = {
       bookmarks = [
         {

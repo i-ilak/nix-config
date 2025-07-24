@@ -1,14 +1,9 @@
-{
-  config,
-  ...
-}:
-{
+_: {
   networking = {
     hostName = "nordwand";
     firewall = {
       enable = true;
-      allowedTCPPorts = [
-      ];
+      allowedUDPPorts = [ 7844 ];
     };
     enableIPv6 = false;
   };
