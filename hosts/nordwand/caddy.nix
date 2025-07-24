@@ -37,7 +37,7 @@ in
         homepagePort = builtins.toString config.services.homepage-dashboard.listenPort;
       in
       {
-        "auth.${domain}:443" = {
+        "auth.${domain}" = {
           extraConfig = ''
             tls ${originPem} ${originPrivateKey} {
               client_auth {
@@ -45,24 +45,17 @@ in
                 trusted_ca_cert_file ${trustedCaCert}
               }
             }
-
             reverse_proxy 127.0.0.1:${autheliaPort}
           '';
         };
 
-        "home.${domain}:443" = {
+        "home.${domain}" = {
           extraConfig = ''
             tls ${originPem} ${originPrivateKey} {
               client_auth {
                 mode require_and_verify
                 trusted_ca_cert_file ${trustedCaCert}
               }
-            }
-
-            forward_auth 127.0.0.1:${autheliaPort} {
-              uri /api/authz/forward-auth
-              copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
-              header_up Host {upstream_hostport}
             }
             reverse_proxy 127.0.0.1:${homepagePort}
           '';

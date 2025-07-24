@@ -41,12 +41,20 @@
       credentialsFile = config.sops.templates."cloudflared_credentials.json".path;
       default = "http_status:404";
       ingress = {
-        "auth.${config.sharedVariables.domain}" = "https://auth.${config.sharedVariables.domain}:443";
-
-        "home.${config.sharedVariables.domain}" = "https://home.${config.sharedVariables.domain}:443";
-      };
-      originRequest = {
-        caPool = config.sops.secrets.cloudflare_authenticated_origin_pull_ca.path;
+        "auth.${config.sharedVariables.domain}" = {
+          service = "https://127.0.0.1:443";
+          originRequest = {
+            originServerName = "auth.${config.sharedVariables.domain}";
+            caPool = config.sops.secrets.cloudflare_authenticated_origin_pull_ca.path;
+          };
+        };
+        "home.${config.sharedVariables.domain}" = {
+          service = "https://127.0.0.1:443";
+          originRequest = {
+            originServerName = "home.${config.sharedVariables.domain}";
+            caPool = config.sops.secrets.cloudflare_authenticated_origin_pull_ca.path;
+          };
+        };
       };
     };
   };
