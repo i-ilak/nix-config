@@ -14,6 +14,7 @@
       domain = "ilak.ch";
       acmeEmail = "ivan.ilak@hotmail.com";
       authelia.port = 9091;
+      authentik.port = 9000; # HTTP
     };
   };
 }

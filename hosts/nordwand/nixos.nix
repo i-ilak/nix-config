@@ -7,6 +7,7 @@ inputs.nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
   modules = [
     inputs.sops-nix.nixosModules.sops
+    inputs.authentik-nix.nixosModules.default
     ./default.nix
   ];
 }

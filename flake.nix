@@ -81,6 +81,10 @@
       url = "github:i-ilak/nix-config-helper";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    authentik-nix = {
+      url = "github:nix-community/authentik-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {

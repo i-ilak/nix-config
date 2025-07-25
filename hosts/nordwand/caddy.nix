@@ -47,7 +47,7 @@ in
         originPrivateKey = config.sops.secrets.cloudflared_ilak_ch_private_key.path;
         # trustedCaCert = config.sops.secrets.cloudflare_authenticated_origin_pull_ca.path;
 
-        autheliaPort = builtins.toString config.sharedVariables.authelia.port;
+        authentikPort = builtins.toString config.sharedVariables.authentik.port;
         homepagePort = builtins.toString config.services.homepage-dashboard.listenPort;
       in
       {
@@ -60,7 +60,7 @@ in
             #    trusted_ca_cert_file ${config.sops.templates."mtls_combined.pem".path}
             #  }
             #}
-            reverse_proxy 127.0.0.1:${autheliaPort}
+            reverse_proxy 127.0.0.1:${authentikPort}
           '';
         };
 

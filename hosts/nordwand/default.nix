@@ -19,19 +19,21 @@
     ../../modules/nixos/hardening/sudo.nix
     ../../modules/nixos/hardening/no-defaults.nix
     ../../modules/nixos/hardening/noexec.nix
-    ./sshd.nix
-    ./tailscale.nix
+    # ./sshd.nix
+    # ./tailscale.nix
     ./cloudflared.nix
     # ./security.nix
     ./caddy.nix
     # ./vaultwarden.nix
-    ./authalia.nix
-    ./homepage.nix
+    # ./authalia.nix
+    # ./authentik.nix
+    # ./homepage.nix
   ];
 
   users = {
     groups = {
       cloudflared = { };
+      authentik = { };
       origin_pull = {
         members = [
           "caddy"
@@ -45,6 +47,10 @@
       cloudflared = {
         isSystemUser = true;
         group = "cloudflared";
+      };
+      authentik = {
+        isSystemUser = true;
+        group = "authentik";
       };
     };
   };
