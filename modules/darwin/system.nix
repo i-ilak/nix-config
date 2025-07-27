@@ -19,6 +19,11 @@ in
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
       ApplePressAndHoldEnabled = false;
+      AppleICUForce24HourTime = true;
+      AppleInterfaceStyle = "Dark";
+      AppleMeasurementUnits = "Centimeters";
+      AppleShowScrollBars = "Always";
+      AppleTemperatureUnit = "Celsius";
 
       # 120, 90, 60, 30, 12, 6, 2
       KeyRepeat = 2;
@@ -38,6 +43,15 @@ in
       NSDocumentSaveNewDocumentsToCloud = false;
       NSNavPanelExpandedStateForSaveMode = true;
       PMPrintingExpandedStateForPrint = true;
+
+      # Not sure how these are related to defaults.trackpad, but better safe than sorry
+      "com.apple.trackpad.trackpadCornerClickBehavior" = 1;
+    };
+
+    trackpad = {
+      TrackpadRightClick = true;
+      TrackpadThreeFingerDrag = false;
+      Clicking = true;
     };
 
     dock = {
@@ -73,12 +87,6 @@ in
       ShowStatusBar = true;
       _FXShowPosixPathInTitle = false;
       _FXSortFoldersFirst = true;
-    };
-
-    trackpad = {
-      TrackpadRightClick = true;
-      TrackpadThreeFingerDrag = false;
-      Clicking = true;
     };
   };
 
