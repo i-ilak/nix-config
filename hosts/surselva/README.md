@@ -1,4 +1,4 @@
-# Nordwand
+# Surselva
 
 Provide isolated, secure way to server passwords.
 

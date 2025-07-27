@@ -4,7 +4,7 @@
 }:
 {
   sops = {
-    defaultSopsFile = "${inputs.nix-secrets}/secrets/nordwand.yaml";
+    defaultSopsFile = "${inputs.nix-secrets}/secrets/surselva.yaml";
     age = {
       sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
     };

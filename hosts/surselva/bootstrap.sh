@@ -25,7 +25,7 @@ sudo chown -R iilak "$temp/persist/etc/ssh/"
 
 
 nix run github:nix-community/nixos-anywhere -- \
-    --flake '.#nordwand' \
+    --flake '.#surselva' \
     --build-on local \
     --extra-files "$temp" \
     --disk-encryption-keys /tmp/secret.key /tmp/secret.key \
