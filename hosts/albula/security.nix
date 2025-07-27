@@ -8,7 +8,7 @@ let
 in
 {
   sops = {
-    defaultSopsFile = "${secretspath}/secrets/pilatus.yaml";
+    defaultSopsFile = "${secretspath}/secrets/albula.yaml";
     secrets.user-dev-password = {
       key = "user/dev/password";
       neededForUsers = true;

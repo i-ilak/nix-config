@@ -24,7 +24,7 @@
   ];
 
   networking = {
-    hostName = "eiger";
+    hostName = "maloja";
     firewall = {
       enable = true;
       allowedTCPPorts = [ 8123 ];

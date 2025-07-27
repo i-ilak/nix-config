@@ -168,10 +168,10 @@
       };
 
       nixosConfigurations = {
-        eiger = import ./hosts/eiger/nixos.nix {
+        maloja = import ./hosts/maloja/nixos.nix {
           inherit nixpkgs inputs;
         };
-        pilatus = import ./hosts/pilatus/nixos.nix {
+        albula = import ./hosts/albula/nixos.nix {
           inherit nixpkgs inputs;
         };
         surselva = import ./hosts/surselva/nixos.nix {

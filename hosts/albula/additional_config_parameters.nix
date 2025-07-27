@@ -13,7 +13,7 @@
     sharedVariables = {
       user = "dev";
       homeDir = "/home/dev";
-      hostname = "pilatus";
+      hostname = "albula";
       alacritty.settings.font.size = 13;
       i3.modifier = "Mod1";
       polybar = {
