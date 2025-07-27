@@ -21,7 +21,7 @@
    chmod 600 "$temp/etc/ssh/ssh_host_ed25519_key"
 
    nix run github:nix-community/nixos-anywhere --              \
-       --flake '.#pilatus'                                     \
+       --flake '.#albula'                                     \
        --build-on-remote                                       \
        --build-on remote                                       \
        --extra-files "$temp"                                   \
