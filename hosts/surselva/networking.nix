@@ -1,5 +1,6 @@
 _: {
   networking = {
+    hostName = "surselva";
     firewall = {
       enable = true;
       rejectPackets = false;
