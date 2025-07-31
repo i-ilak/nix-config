@@ -7,6 +7,7 @@
 }:
 let
   inherit (config.sharedVariables) user;
+  inherit (config.sharedVariables) homeDir;
 in
 {
   imports = [
@@ -34,9 +35,9 @@ in
   };
 
   programs.fish.enable = true;
-  users.users.${config.sharedVariables.user} = {
-    name = "${config.sharedVariables.user}";
-    home = "/Users/${config.sharedVariables.user}";
+  users.users.${user} = {
+    name = "${user}";
+    home = "${homeDir}";
     isHidden = false;
     shell = pkgs.fish;
   };
@@ -45,54 +46,49 @@ in
     tailscale.enable = true;
   };
 
-  nix =
-    let
-      inherit (config.sharedVariables) user;
-    in
-    {
-      package = pkgs.nix;
-      settings = {
-        trusted-users = [
-          "@admin"
-          "${user}"
-        ];
-        extra-platforms = [
-          "aarch64-darwin"
-          "aarch64-linux"
-          "x86_64-linux"
-        ];
-      };
-
-      gc = {
-        automatic = true;
-        interval = {
-          Weekday = 0;
-          Hour = 2;
-          Minute = 0;
-        };
-        options = "--delete-older-than 10d";
-      };
-
-      linux-builder = {
-        enable = true;
-        ephemeral = true;
-        maxJobs = 4;
-        config = {
-          virtualisation = {
-            darwin-builder = {
-              diskSize = 40 * 1024;
-              memorySize = 8 * 1024;
-            };
-            cores = 6;
-          };
-        };
-      };
-
-      # Turn this on to make command line easier
-      extraOptions = ''
-        experimental-features = nix-command flakes
-      '';
+  nix = {
+    package = pkgs.nix;
+    settings = {
+      trusted-users = [
+        "@admin"
+        "${user}"
+      ];
+      extra-platforms = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
+
+    gc = {
+      automatic = true;
+      interval = {
+        Weekday = 0;
+        Hour = 2;
+        Minute = 0;
+      };
+      options = "--delete-older-than 10d";
+    };
+
+    linux-builder = {
+      enable = true;
+      ephemeral = true;
+      maxJobs = 4;
+      config = {
+        virtualisation = {
+          darwin-builder = {
+            diskSize = 40 * 1024;
+            memorySize = 8 * 1024;
+          };
+          cores = 6;
+        };
+      };
+    };
+  };
 
   environment.systemPackages = import ../../modules/shared/system_packages.nix { inherit pkgs; };
   security.pam.services.sudo_local.touchIdAuth = true;

@@ -4,20 +4,20 @@
 }:
 {
   sops.secrets = {
-    cloudflared_test_tunnel_id = {
-      key = "cloudflared/test/tunnel_id";
+    cloudflared_homelab_tunnel_id = {
+      key = "cloudflared/homelab/tunnel_id";
       owner = "cloudflared";
       group = "cloudflared";
       mode = "0400";
     };
-    cloudflared_test_account_tag = {
-      key = "cloudflared/test/account_tag";
+    cloudflared_homelab_account_tag = {
+      key = "cloudflared/homelab/account_tag";
       owner = "cloudflared";
       group = "cloudflared";
       mode = "0400";
     };
-    cloudflared_test_tunnel_secret = {
-      key = "cloudflared/test/tunnel_secret";
+    cloudflared_homelab_tunnel_secret = {
+      key = "cloudflared/homelab/tunnel_secret";
       owner = "cloudflared";
       group = "cloudflared";
       mode = "0400";
@@ -26,9 +26,9 @@
   sops.templates."cloudflared_credentials.json" = {
     content = ''
       {
-        "AccountTag": "${config.sops.placeholder.cloudflared_test_account_tag}",
-        "TunnelID": "${config.sops.placeholder.cloudflared_test_tunnel_id}",
-        "TunnelSecret": "${config.sops.placeholder.cloudflared_test_tunnel_secret}",
+        "AccountTag": "${config.sops.placeholder.cloudflared_homelab_account_tag}",
+        "TunnelID": "${config.sops.placeholder.cloudflared_homelab_tunnel_id}",
+        "TunnelSecret": "${config.sops.placeholder.cloudflared_homelab_tunnel_secret}",
         "Endpoint":""
       }
     '';

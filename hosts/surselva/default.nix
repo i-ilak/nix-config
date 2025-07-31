@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  pkgs,
   ...
 }:
 {
@@ -13,21 +14,17 @@
     ./boot.nix
     ./impermanance.nix
     ./networking.nix
+    ./sshd.nix
     ./sops.nix
     ../../modules/nixos/locale.nix
     ../../modules/nixos/hardening/audit.nix
     ../../modules/nixos/hardening/sudo.nix
     ../../modules/nixos/hardening/no-defaults.nix
     ../../modules/nixos/hardening/noexec.nix
-    # ./sshd.nix
-    # ./tailscale.nix
     ./cloudflared.nix
-    # ./security.nix
     ./caddy.nix
-    # ./vaultwarden.nix
-    # ./authalia.nix
-    # ./authentik.nix
-    # ./homepage.nix
+    ./authalia.nix
+    ./homepage.nix
   ];
 
   users = {
@@ -56,6 +53,10 @@
   };
 
   nix.settings.allowed-users = [ "root" ];
+
+  environment.systemPackages = [
+    pkgs.nftables
+  ];
 
   # DO NOT CHANGE, EVER.
   # Needs to be the version of the installer that was used to install the initial version of NixOS
