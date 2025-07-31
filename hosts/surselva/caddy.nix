@@ -41,7 +41,7 @@ in
       secureConfig = ''
         forward_auth * https://auth.${domain} {
             uri /api/authz/forward-auth
-            copy_headers Remote-User Remote-Groups Remote-Name Remote-Email X-Forwarded-Proto X-Forwarded-Host X-Forwarded-URI X-Forwarded-For
+            copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
             header_up Host {upstream_hostport}
           }
       '';
