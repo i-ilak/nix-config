@@ -39,10 +39,9 @@ in
     let
       autheliaPort = builtins.toString config.sharedVariables.authelia.port;
       secureConfig = ''
-        forward_auth * https://auth.${domain} {
-            uri /api/authz/forward-auth
+        forward_auth * 127.0.0.1:${autheliaPort} {
+            uri /api/authz/forward-auth?authelia_url=https://auth.${domain}
             copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
-            header_up Host {upstream_hostport}
           }
       '';
     in
