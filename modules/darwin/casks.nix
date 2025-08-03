@@ -12,6 +12,7 @@ _: [
   "vmware-fusion"
   "obsidian"
   "firefox"
+  "teamviewer"
 
   # Development Tools
   "visual-studio-code"
