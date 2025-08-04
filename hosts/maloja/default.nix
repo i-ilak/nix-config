@@ -8,20 +8,24 @@
   imports = [
     inputs.disko.nixosModules.disko
     inputs.impermanence.nixosModules.impermanence
+    ./additional_config_parameters.nix
     ./disk-config.nix
     ./boot.nix
     ./impermanance.nix
-    # ./home-assistant.nix
     ./sops.nix
+    ./tailscale.nix
+    # Hardening
     ./locale.nix
     ./audit.nix
     ./sudo.nix
     ./no-defaults.nix
     ./noexec.nix
     ./sshd.nix
+    # Services
     ./jellyfin.nix
-    ./tailscale.nix
     ./ytdl-sub.nix
+    ./home-assistant.nix
+    ./paperless.nix
   ];
 
   networking = {
@@ -60,5 +64,5 @@
 
   # DO NOT CHANGE, EVER.
   # Needs to be the version of the installer that was used to install the initial version of NixOS
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.05";
 }

@@ -7,7 +7,7 @@ let
 in
 {
   sops = {
-    defaultSopsFile = "${secretspath}/secrets/maloja.yaml";
+    defaultSopsFile = "${secretspath}/secrets/maloja/general.yaml";
     secrets = {
       user-worker-password = {
         key = "user/worker/password";
