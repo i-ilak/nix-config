@@ -19,6 +19,7 @@ in
         set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
         set -x FZF_ALT_C_COMMAND "fd -t d . $HOME"
         set -x GID "$(id -g)"
+        set -x EDITOR "nvim"
       ''
       + (lib.optionalString (hostname == "macbook") ''
         set -x SSH_AUTH_SOCK /Users/iilak/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock

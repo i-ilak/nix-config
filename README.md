@@ -10,5 +10,5 @@ Currently configured systems are:
 
 - `macbook`: Personal laptop.
 - `mxw-dalco01`: Workstation used at my current employer.
-- `eiger`: Intel Nuc. Used to host some small services and experiment.
-- `pilatus`: VM that I use to develop things on Linux as needed.
+- `maloja`: Intel Nuc. Used to host some small services and experiment.
+- `albula`: VM that I use to develop things on Linux as needed.

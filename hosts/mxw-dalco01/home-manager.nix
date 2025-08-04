@@ -9,14 +9,13 @@ inputs.home-manager.lib.homeManagerConfiguration {
     ./additional_config_parameters.nix
     ./home.nix
   ];
-  extraSpecialArgs =
-    {
-      inherit inputs;
-    }
-    // {
-      isNixOS = false;
-      impurePaths = {
-        workingDir = "/home/${inputs.config.sharedVariables.user}/.config/nix";
-      };
+  extraSpecialArgs = {
+    inherit inputs;
+  }
+  // {
+    isNixOS = false;
+    impurePaths = {
+      workingDir = "/home/${inputs.config.sharedVariables.user}/.config/nix";
     };
+  };
 }
