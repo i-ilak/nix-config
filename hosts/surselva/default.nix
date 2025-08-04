@@ -25,7 +25,6 @@
     ./caddy.nix
     ./authalia.nix
     ./homepage.nix
-    ./home-assistant.nix
   ];
 
   users = {
