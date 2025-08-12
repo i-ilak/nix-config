@@ -28,7 +28,7 @@ in
 
     exporter = {
       enable = true;
-      directory = "/media/backup/paperless";
+      directory = config.sharedVariables.paperless.backupDir;
     };
 
     inherit (config.sharedVariables.paperless) port;

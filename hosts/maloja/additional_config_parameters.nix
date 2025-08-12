@@ -21,6 +21,7 @@
           port = 9293;
           mediaDir = "${baseDir}/media";
           dataDir = "${baseDir}/data";
+          backupDir = "/media/backup/paperless";
         };
         domain = "ilak.ch";
       };
