@@ -81,6 +81,10 @@
       url = "github:i-ilak/nix-config-helper";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    authentik-nix = {
+      url = "github:nix-community/authentik-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {
@@ -136,6 +140,12 @@
               deadnix.enable = true;
               statix.enable = true;
               trufflehog.enable = true;
+              check-added-large-files.enable = true;
+              check-executables-have-shebangs.enable = true;
+              check-shebang-scripts-are-executable.enable = true;
+              end-of-file-fixer.enable = true;
+              ripsecrets.enable = true;
+              flake-checker.enable = true;
             };
           };
         };
@@ -163,6 +173,44 @@
         };
         albula = import ./hosts/albula/nixos.nix {
           inherit nixpkgs inputs;
+        };
+        iso = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/iso-image.nix"
+
+            (
+              { pkgs, ... }:
+              {
+                boot.kernel.sysctl."fs.file-max" = "1048576";
+                security.pam.loginLimits = [
+                  {
+                    domain = "*";
+                    type = "soft";
+                    item = "nofile";
+                    value = "524288";
+                  }
+                  {
+                    domain = "*";
+                    type = "hard";
+                    item = "nofile";
+                    value = "1048576";
+                  }
+                ];
+                environment.systemPackages = with pkgs; [
+                  vim
+                  git
+                  wget
+                  htop
+                  nix-tree # A useful tool for exploring Nix derivations
+                ];
+
+                networking.hostName = "nixos-high-limit-iso";
+                services.getty.autologinUser = "nixos";
+              }
+            )
+          ];
         };
       };
     };

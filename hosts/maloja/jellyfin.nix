@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}:
+_:
 let
   jellyfinFolder = "/media/jellyfin";
 in
@@ -10,16 +7,16 @@ in
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
 
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver
-      intel-vaapi-driver
-      vaapiVdpau
-      intel-compute-runtime
-      vpl-gpu-rt
-    ];
-  };
+  # hardware.graphics = {
+  #   enable = true;
+  #   extraPackages = with pkgs; [
+  #     intel-media-driver
+  #     intel-vaapi-driver
+  #     vaapiVdpau
+  #     intel-compute-runtime
+  #     vpl-gpu-rt
+  #   ];
+  # };
 
   services.jellyfin = {
     enable = true;

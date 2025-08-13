@@ -19,7 +19,7 @@ in
     ./boot.nix
     ./networking.nix
     ./services.nix
-    ./locale.nix
+    ../../modules/nixos/locale.nix
     ./fonts.nix
     ./security.nix
   ];

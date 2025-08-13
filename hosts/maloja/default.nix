@@ -8,6 +8,7 @@
   imports = [
     inputs.disko.nixosModules.disko
     inputs.impermanence.nixosModules.impermanence
+    inputs.authentik-nix.nixosModules.default
     ./additional_config_parameters.nix
     ./disk-config.nix
     ./boot.nix
@@ -15,11 +16,11 @@
     ./sops.nix
     ./tailscale.nix
     # Hardening
-    ./locale.nix
-    ./audit.nix
-    ./sudo.nix
-    ./no-defaults.nix
-    ./noexec.nix
+    ../../modules/nixos/locale.nix
+    ../../modules/nixos/hardening/audit.nix
+    ../../modules/nixos/hardening/sudo.nix
+    ../../modules/nixos/hardening/no-defaults.nix
+    ../../modules/nixos/hardening/noexec.nix
     ./sshd.nix
     # Services
     ./jellyfin.nix
@@ -27,6 +28,7 @@
     ./home-assistant.nix
     ./paperless.nix
     ./restic.nix
+    ./authentik.nix
   ];
 
   networking = {
@@ -38,7 +40,10 @@
   };
 
   users = {
-    groups.media = { };
+    groups = {
+      media = { };
+      authentik = { };
+    };
     mutableUsers = false;
     users = {
       root.hashedPasswordFile = config.sops.secrets."user-root-password".path;
@@ -46,6 +51,10 @@
         hashedPasswordFile = config.sops.secrets."user-worker-password".path;
         isNormalUser = true;
         extraGroups = [ "media" ];
+      };
+      authentik = {
+        isSystemUser = true;
+        group = "authentik";
       };
     };
   };
