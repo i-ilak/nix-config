@@ -23,6 +23,7 @@
           dataDir = "${baseDir}/data";
           backupDir = "/media/backup/paperless";
         };
+        authelia.port = 9091;
         domain = "ilak.ch";
       };
   };
