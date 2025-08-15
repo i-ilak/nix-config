@@ -24,7 +24,9 @@
           backupDir = "/media/backup/paperless";
         };
         authelia.port = 9091;
+        home-assistant.port = 2342;
         domain = "ilak.ch";
+        ip = "192.168.198.144";
       };
   };
 }

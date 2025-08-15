@@ -1,4 +1,8 @@
-_: {
+{
+  config,
+  ...
+}:
+{
   services.home-assistant = {
     enable = true;
     extraComponents = [
@@ -13,6 +17,7 @@ _: {
       # Includes dependencies for a basic setup
       # https://www.home-assistant.io/integrations/default_config/
       default_config = { };
+      http.server_port = config.sharedVariables.home-assistant.port;
     };
   };
 }

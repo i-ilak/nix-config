@@ -15,6 +15,8 @@
     ./impermanance.nix
     ./sops.nix
     ./tailscale.nix
+    ./caddy.nix
+    ./local_network.nix
     # Hardening
     ../../modules/nixos/locale.nix
     ../../modules/nixos/hardening/audit.nix
@@ -34,10 +36,6 @@
 
   networking = {
     hostName = "maloja";
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ 8123 ];
-    };
   };
 
   users = {
