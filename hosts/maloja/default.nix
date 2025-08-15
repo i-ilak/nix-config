@@ -28,7 +28,8 @@
     ./home-assistant.nix
     ./paperless.nix
     ./restic.nix
-    ./authentik.nix
+    # ./authentik.nix
+    ./authelia.nix
   ];
 
   networking = {
