@@ -61,7 +61,7 @@ in
       ls = "eza -g";
       tree = "eza -T";
       mkdir = "mkdir -p";
-      diff = "colordiff";
+      diff = "colordiff --nobanner";
       df = "df -Tha --total";
       du = "du -h";
       ps = "procs";
