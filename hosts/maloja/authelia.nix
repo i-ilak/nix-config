@@ -38,7 +38,7 @@ in
 
   services.authelia.instances =
     let
-      inherit (config.sharedVariables) domain;
+      inherit (config.sharedVariables) baseDomain;
       autheliaPort = config.sharedVariables.authelia.port;
     in
     {
@@ -58,7 +58,7 @@ in
           log.level = "info";
           session = {
             name = "authelia_session";
-            domain = "${domain}";
+            domain = "auth.${baseDomain}";
             expiration = "1h";
             inactivity = "15m";
           };
@@ -77,16 +77,16 @@ in
             default_policy = "deny"; # Secure by default
             rules = [
               {
-                domain = "auth.${domain}"; # Your Authelia portal URL
+                domain = "auth.${baseDomain}"; # Your Authelia portal URL
                 policy = "bypass";
               }
               {
-                domain = "home.${domain}";
+                domain = "home.${baseDomain}";
                 policy = "one_factor";
                 subject = [ "group:users" ];
               }
               {
-                domain = "admin.${domain}";
+                domain = "admin.${baseDomain}";
                 policy = "two_factor";
                 subject = [ "group:admins" ];
               }

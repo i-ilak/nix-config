@@ -12,21 +12,23 @@
   config = {
     sharedVariables =
       let
-        baseDir = "/media/paperless";
-
+        baseDirPaperless = "/tmp/paperless";
+        hostname = "maloja";
       in
       {
-        paperless = {
-          inherit baseDir;
-          port = 9293;
-          mediaDir = "${baseDir}/media";
-          dataDir = "${baseDir}/data";
-          backupDir = "/media/backup/paperless";
-        };
-        authelia.port = 9091;
-        home-assistant.port = 2342;
-        domain = "ilak.ch";
+        inherit hostname;
+        baseDomain = "${hostname}.lan";
         ip = "192.168.198.144";
+
+        paperless = {
+          baseDir = baseDirPaperless;
+          port = 33033;
+          mediaDir = "${baseDirPaperless}/media";
+          dataDir = "${baseDirPaperless}/data";
+          backupDir = "/tmp/backup/paperless";
+        };
+        authelia.port = 33034;
+        home-assistant.port = 33035;
       };
   };
 }

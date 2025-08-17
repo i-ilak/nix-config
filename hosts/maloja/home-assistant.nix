@@ -7,6 +7,8 @@
     enable = true;
     extraComponents = [
       "esphome"
+      "homekit_controller"
+      "apple_tv"
       "met"
       "radio_browser"
       "google_translate"

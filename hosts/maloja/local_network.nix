@@ -3,32 +3,24 @@
   ...
 }:
 {
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [
-      80
-      443
-    ];
-  };
-
   # Enable local DNS resolution
-  services.dnsmasq = {
-    enable = true;
-    settings = {
-      interface = "lo,ens160";
-      bind-interfaces = true;
-      address = [
-        "/jellyfin.maloja.local/${config.sharedVariables.ip}"
-        "/homeassistant.maloja.local/${config.sharedVariables.ip}"
-        "/paperless.maloja.local/${config.sharedVariables.ip}"
-        "/authelia.maloja.local/${config.sharedVariables.ip}"
-      ];
-
-      domain-needed = true;
-      bogus-priv = true;
-      cache-size = 1000;
+  services.dnsmasq =
+    let
+      inherit (config.sharedVariables) baseDomain;
+    in
+    {
+      enable = true;
+      resolveLocalQueries = true;
+      settings = {
+        "expand-hosts" = true;
+        address = [
+          "/paperless.${baseDomain}/${config.sharedVariables.ip}"
+          "/home.${baseDomain}/${config.sharedVariables.ip}"
+          "/jellyfin.${baseDomain}/${config.sharedVariables.ip}"
+          "/auth.${baseDomain}/${config.sharedVariables.ip}"
+        ];
+      };
     };
-  };
 
   # Enable mDNS for easier discovery
   services.avahi = {

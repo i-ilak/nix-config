@@ -25,17 +25,29 @@
     ../../modules/nixos/hardening/noexec.nix
     ./sshd.nix
     # Services
-    ./jellyfin.nix
-    ./ytdl-sub.nix
-    ./home-assistant.nix
+    # ./jellyfin.nix
+    # ./ytdl-sub.nix
+    # ./home-assistant.nix
     ./paperless.nix
-    ./restic.nix
+    # ./restic.nix
     # ./authentik.nix
-    ./authelia.nix
+    # ./authelia.nix
   ];
 
   networking = {
-    hostName = "maloja";
+    hostName = config.sharedVariables.hostname;
+    firewall = {
+      enable = false;
+      allowedTCPPorts = [
+        80
+        443
+        53 # dnsmasq
+        config.sharedVariables.authelia.port
+        config.sharedVariables.paperless.port
+        config.sharedVariables.home-assistant.port
+      ];
+      allowedUDPPorts = [ 53 ];
+    };
   };
 
   users = {
