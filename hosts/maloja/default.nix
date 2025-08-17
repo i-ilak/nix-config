@@ -29,7 +29,7 @@
     # ./ytdl-sub.nix
     # ./home-assistant.nix
     ./paperless.nix
-    # ./restic.nix
+    ./restic.nix
     # ./authentik.nix
     # ./authelia.nix
   ];

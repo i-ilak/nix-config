@@ -12,7 +12,6 @@
   config = {
     sharedVariables =
       let
-        baseDirPaperless = "/tmp/paperless";
         hostname = "maloja";
       in
       {
@@ -21,11 +20,8 @@
         ip = "192.168.198.144";
 
         paperless = {
-          baseDir = baseDirPaperless;
           port = 33033;
-          mediaDir = "${baseDirPaperless}/media";
-          dataDir = "${baseDirPaperless}/data";
-          backupDir = "/tmp/backup/paperless";
+          backupDir = "/var/lib/paperless/backup";
         };
         authelia.port = 33034;
         home-assistant.port = 33035;
