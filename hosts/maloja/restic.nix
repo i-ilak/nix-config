@@ -8,44 +8,54 @@
       restic-password-file = {
         key = "restic/password_file";
         owner = "root";
-        group = "root";
-        mode = "0400";
+        group = "backup";
+        mode = "0440";
       };
       paperless-b2-endpoint = {
         key = "paperless/b2/endpoint";
         owner = "root";
-        group = "root";
-        mode = "0400";
+        group = "backup";
+        mode = "0440";
       };
       paperless-b2-bucket_name = {
         key = "paperless/b2/bucket_name";
         owner = "root";
-        group = "root";
-        mode = "0400";
+        group = "backup";
+        mode = "0440";
       };
       paperless-b2-account_id = {
         key = "paperless/b2/account_id";
         owner = "root";
-        group = "root";
-        mode = "0400";
+        group = "backup";
+        mode = "0440";
       };
       paperless-b2-application_key = {
         key = "paperless/b2/application_key";
         owner = "root";
-        group = "root";
-        mode = "0400";
+        group = "backup";
+        mode = "0440";
       };
     };
     templates = {
-      "repositoryFile".content = ''
-        s3:${config.sops.placeholder."paperless-b2-endpoint"}/${
-          config.sops.placeholder."paperless-b2-bucket_name"
-        }
-      '';
-      "accessFile".content = ''
-        AWS_ACCESS_KEY_ID="${config.sops.placeholder."paperless-b2-account_id"}"
-        AWS_SECRET_ACCESS_KEY="${config.sops.placeholder."paperless-b2-application_key"}"
-      '';
+      "repositoryFile" = {
+        content = ''
+          s3:${config.sops.placeholder."paperless-b2-endpoint"}/${
+            config.sops.placeholder."paperless-b2-bucket_name"
+          }
+        '';
+        owner = "root";
+        group = "backup";
+        mode = "0440";
+      };
+      "accessFile" = {
+        content = ''
+          AWS_ACCESS_KEY_ID="${config.sops.placeholder."paperless-b2-account_id"}"
+          AWS_SECRET_ACCESS_KEY="${config.sops.placeholder."paperless-b2-application_key"}"
+        '';
+        owner = "root";
+        group = "backup";
+        mode = "0440";
+      };
     };
   };
 

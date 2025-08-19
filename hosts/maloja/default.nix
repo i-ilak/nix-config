@@ -54,6 +54,7 @@
     groups = {
       media = { };
       authentik = { };
+      backup = { };
     };
     mutableUsers = false;
     users = {
@@ -66,6 +67,11 @@
       authentik = {
         isSystemUser = true;
         group = "authentik";
+      };
+      paperless = {
+        isSystemUser = true;
+        group = "paperless";
+        extraGroups = [ "backup" ];
       };
     };
   };
