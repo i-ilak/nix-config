@@ -3,11 +3,11 @@
     "aerospace-taps": {
       "flake": false,
       "locked": {
-        "lastModified": 1753091048,
-        "narHash": "sha256-qnZeUEgmwOcCIg1JCSVgQcgju7SYPUCq+4AwepvSc9I=",
+        "lastModified": 1755679139,
+        "narHash": "sha256-Evd7EZZ8aGEa2NryhTgXsVeG5MdX4qD7fgIGnngZSts=",
         "owner": "nikitabobko",
         "repo": "homebrew-tap",
-        "rev": "047928badd7ccd03705646e8095f905994654d65",
+        "rev": "a2981aae38da417d27124eb26e5b0905977ec067",
         "type": "github"
       },
       "original": {
@@ -728,10 +728,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1755466039,
-        "narHash": "sha256-XopgtFTmLoIBp7Qg33po9Y/12x0i0i5IoNrL6scAKs0=",
+        "lastModified": 1755759748,
+        "narHash": "sha256-5XVJGWh2XRZ9H1OjuwHI+kbHfTgz/ZsFuHwSwh8O5XI=",
         "ref": "main",
-        "rev": "849f74ae6ccca88016a6418732b500a0633bf979",
+        "rev": "6c027c1704fd8d03296e9eeb320becf749686fb3",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/i-ilak/nix-secrets"

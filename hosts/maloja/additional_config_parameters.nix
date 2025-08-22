@@ -13,11 +13,14 @@
     sharedVariables =
       let
         hostname = "maloja";
+        localDomainName = "lan";
       in
       {
         inherit hostname;
-        baseDomain = "${hostname}.lan";
-        ip = "192.168.198.144";
+        inherit localDomainName;
+        baseDomain = "${hostname}.${localDomainName}";
+        ip = "192.168.1.2";
+        gatewayIp = "192.168.1.1";
 
         paperless = {
           port = 33033;
@@ -25,6 +28,7 @@
         };
         authelia.port = 33034;
         home-assistant.port = 33035;
+        adguardhome.port = 3000;
       };
   };
 }

@@ -18,7 +18,6 @@ shared-packages
 
   # App and package management
   gnumake
-  cmake
   home-manager
 
   # Media and design tools

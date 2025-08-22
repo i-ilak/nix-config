@@ -14,9 +14,8 @@
     ./boot.nix
     ./impermanance.nix
     ./sops.nix
-    ./tailscale.nix
+    # ./tailscale.nix
     ./caddy.nix
-    ./local_network.nix
     # Hardening
     ../../modules/nixos/locale.nix
     ../../modules/nixos/hardening/audit.nix
@@ -25,11 +24,12 @@
     ../../modules/nixos/hardening/noexec.nix
     ./sshd.nix
     # Services
-    # ./jellyfin.nix
-    # ./ytdl-sub.nix
-    # ./home-assistant.nix
+    ./jellyfin.nix
+    ./ytdl-sub.nix
+    ./home-assistant.nix
     ./paperless.nix
     ./restic.nix
+    ./adguard_home.nix
     # ./authentik.nix
     # ./authelia.nix
   ];
@@ -41,19 +41,33 @@
       allowedTCPPorts = [
         80
         443
-        53 # dnsmasq
-        config.sharedVariables.authelia.port
-        config.sharedVariables.paperless.port
-        config.sharedVariables.home-assistant.port
+        53 # DNS (AdGuard Home)
       ];
-      allowedUDPPorts = [ 53 ];
+      allowedUDPPorts = [
+        53 # DNS (AdGuard Home)
+        67 # DHCP (AdGuard Home)
+        68 # DHCP (AdGuard Home)
+      ];
+    };
+    defaultGateway = {
+      address = "${config.sharedVariables.gatewayIp}";
+    };
+    useDHCP = false;
+    interfaces."enp89s0" = {
+      ipv4 = {
+        addresses = [
+          {
+            address = "${config.sharedVariables.ip}";
+            prefixLength = 24;
+          }
+        ];
+      };
     };
   };
 
   users = {
     groups = {
       media = { };
-      authentik = { };
       backup = { };
     };
     mutableUsers = false;
@@ -62,11 +76,13 @@
       worker = {
         hashedPasswordFile = config.sops.secrets."user-worker-password".path;
         isNormalUser = true;
-        extraGroups = [ "media" ];
-      };
-      authentik = {
-        isSystemUser = true;
-        group = "authentik";
+        extraGroups = [
+          "media"
+          "systemd-journal"
+        ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDKU+/RXjWLUzfRgMIhWnI4LD9Zh11BmCJsFaYNZNQqg"
+        ];
       };
       paperless = {
         isSystemUser = true;
@@ -87,6 +103,7 @@
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
+    nss
   ];
 
   # DO NOT CHANGE, EVER.

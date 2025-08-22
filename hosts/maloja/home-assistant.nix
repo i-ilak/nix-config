@@ -19,7 +19,11 @@
       # Includes dependencies for a basic setup
       # https://www.home-assistant.io/integrations/default_config/
       default_config = { };
-      http.server_port = config.sharedVariables.home-assistant.port;
+      http = {
+        server_port = config.sharedVariables.home-assistant.port;
+        use_x_forwarded_for = true;
+        trusted_proxies = [ "127.0.0.1" ];
+      };
     };
   };
 }

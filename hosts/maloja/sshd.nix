@@ -1,15 +1,16 @@
 _: {
   services.openssh = {
     enable = true;
-    settings.PasswordAuthentication = false;
-    settings.PermitRootLogin = "no";
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+      AllowTcpForwarding = true;
+      X11Forwarding = false;
+      AllowAgentForwarding = false;
+      AllowStreamLocalForwarding = false;
+      AllowUsers = [ "iilak" ];
+    };
     ports = [ 22023 ];
-    extraConfig = ''
-      AllowTcpForwarding yes
-      X11Forwarding no
-      AllowAgentForwarding no
-      AllowStreamLocalForwarding no
-    '';
     hostKeys = [
       {
         type = "ed25519";
