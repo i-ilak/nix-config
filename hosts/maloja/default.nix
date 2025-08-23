@@ -15,6 +15,7 @@
     ./impermanance.nix
     ./sops.nix
     # ./tailscale.nix
+    ./acme.nix
     ./caddy.nix
     # Hardening
     ../../modules/nixos/locale.nix
@@ -37,7 +38,7 @@
   networking = {
     hostName = config.sharedVariables.hostname;
     firewall = {
-      enable = false;
+      enable = true;
       allowedTCPPorts = [
         80
         443
@@ -104,6 +105,7 @@
     jellyfin-web
     jellyfin-ffmpeg
     nss
+    # inputs.ha-cli.packages.${pkgs.system}.default
   ];
 
   # DO NOT CHANGE, EVER.

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (config.sharedVariables) baseDomain;
+  inherit (config.sharedVariables) publicDomain;
   inherit (config.sharedVariables.paperless) backupDir;
 
   baseDirPaperless = "/var/lib/paperless";
@@ -25,7 +25,7 @@ in
   # sops.templates.paperless_environment_file = {
   #   content = ''
   #     PAPERLESS_APPS=allauth.socialaccount.providers.openid_connect
-  #     PAPERLESS_SOCIALACCOUNT_PROVIDERS={"openid_connect":{"SCOPE":["openid","profile","email"],"OAUTH_PKCE_ENABLED":true,"APPS":[{"provider_id":"authelia","name":"Authelia","client_id":"paperless","secret":"insecure_secret","settings":{"server_url":"https://auth.${baseDomain}","token_auth_method":"client_secret_basic"}}]}}
+  #     PAPERLESS_SOCIALACCOUNT_PROVIDERS={"openid_connect":{"SCOPE":["openid","profile","email"],"OAUTH_PKCE_ENABLED":true,"APPS":[{"provider_id":"authelia","name":"Authelia","client_id":"paperless","secret":"insecure_secret","settings":{"server_url":"https://auth.${publicDomain}","token_auth_method":"client_secret_basic"}}]}}
   #   '';
   #   owner = "paperless";
   #   group = "paperless";
@@ -34,15 +34,16 @@ in
 
   services.paperless = {
     enable = true;
-    package = inputs.nixpkgs-unstable.legacyPackages."x86_64-linux".paperless-ngx;
+    package = inputs.paperless-ngx.legacyPackages."x86_64-linux".paperless-ngx;
     address = "127.0.0.1";
     settings = {
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
-      PAPERLESS_URL = "https://paperless.${baseDomain}";
+      PAPERLESS_URL = "https://paperless.${publicDomain}";
       PAPERLESS_TRUSTED_PROXIES = "127.0.0.1";
       PAPERLESS_USE_X_FORWARD_HOST = true;
       PAPERLESS_USE_X_FORWARD_PORT = true;
       PAPERLESS_PROXY_SSL_HEADER = ''["HTTP_X_FORWARDED_PROTO", "https"]'';
+      PAPERLESS_ENABLE_NLTK = false;
     };
     passwordFile = config.sops.secrets.paperless_admin_password.path;
     exporter = {
@@ -86,7 +87,7 @@ in
       Type = "oneshot";
       User = "root";
       Group = "backup";
-      EnvironmentFile = config.sops.templates."accessFile".path;
+      EnvironmentFile = config.sops.templates."paperless-accessFile".path;
       WorkingDirectory = "${dataDir}";
     };
 
@@ -103,20 +104,20 @@ in
         echo "--- Starting Paperless-NGX restore from S3 backup ---"
 
         echo "Restoring latest backup to ${backupDir}..."
-        ${pkgs.restic}/bin/restic                                               \
-          --repository-file "${config.sops.templates."repositoryFile".path}"    \
-          --password-file "${config.sops.secrets."restic-password-file".path}"  \
+        ${pkgs.restic}/bin/restic                                                           \
+          --repository-file "${config.sops.templates."paperless-repositoryFile".path}"      \
+          --password-file "${config.sops.secrets."restic-password-file".path}"              \
           restore latest:${backupDir} --target ${backupDir}
 
         chown -R paperless:paperless "${backupDir}"
 
         echo "Importing documents into Paperless-NGX..."
-        ${pkgs.su}/bin/su -s /bin/sh paperless -c "
-          export PAPERLESS_DATA_DIR=${dataDir} 
-          export PAPERLESS_MEDIA_ROOT=${mediaDir} 
-          export PAPERLESS_CONSUMPTION_DIR=${dataDir}/consume 
-          ${pkgs.paperless-ngx}/bin/paperless-ngx migrate
-          ${pkgs.paperless-ngx}/bin/paperless-ngx document_importer '${backupDir}'
+        ${pkgs.su}/bin/su -s ${pkgs.bash}/bin/bash paperless -c "
+          export PAPERLESS_DATA_DIR=${dataDir}
+          export PAPERLESS_MEDIA_ROOT=${mediaDir}
+          export PAPERLESS_CONSUMPTION_DIR=${dataDir}/consume
+          paperless-manage migrate
+          paperless-manage document_importer '${backupDir}'
         "
 
         echo "Cleaning up temporary directory..."

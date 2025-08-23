@@ -85,6 +85,11 @@
       url = "github:nix-community/authentik-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ha-cli = {
+      url = "github:i-ilak/ha-cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    paperless-ngx.url = "github:nixos/nixpkgs/a3d36c87615581203615de892b46b55a3045c336";
   };
   outputs =
     {

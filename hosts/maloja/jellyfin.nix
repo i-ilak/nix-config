@@ -23,7 +23,7 @@ in
 
   services.jellyfin = {
     enable = true;
-    openFirewall = true;
+    openFirewall = false;
     user = "jellyfin";
     group = "jellyfin";
     logDir = "${jellyfinFolder}/log";

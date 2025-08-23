@@ -1,37 +1,43 @@
 {
   config,
   inputs,
+  pkgs,
   ...
 }:
+let
+  inherit (config.sharedVariables) publicDomain;
+in
 {
   services.caddy =
     let
-      inherit (config.sharedVariables) baseDomain;
       inherit (config.sharedVariables) hostname;
       inherit (config.sharedVariables) ip;
 
+      certloc = "/var/lib/acme/${publicDomain}";
       commonConfig = ''
         bind ${ip}
-        tls internal
+        tls ${certloc}/cert.pem ${certloc}/key.pem {
+          protocols tls1.3
+        }
       '';
     in
     {
       enable = true;
       package = inputs.nixpkgs-unstable.legacyPackages."x86_64-linux".caddy;
       virtualHosts = {
-        "jellyfin.${baseDomain}" = {
+        "jellyfin.${publicDomain}" = {
           extraConfig = ''
             ${commonConfig}
             reverse_proxy 127.0.0.1:8096
           '';
         };
-        "home.${baseDomain}" = {
+        "home.${publicDomain}" = {
           extraConfig = ''
             ${commonConfig}
             reverse_proxy 127.0.0.1:${toString config.sharedVariables."home-assistant".port}
           '';
         };
-        "paperless.${baseDomain}" = {
+        "paperless.${publicDomain}" = {
           extraConfig = ''
             ${commonConfig}
             reverse_proxy 127.0.0.1:${toString config.sharedVariables.paperless.port} {
@@ -54,7 +60,7 @@
             }
           '';
         };
-        "adguard.${baseDomain}" = {
+        "adguard.${publicDomain}" = {
           extraConfig = ''
             ${commonConfig}
             reverse_proxy 127.0.0.1:${toString config.sharedVariables.adguardhome.port}
@@ -62,4 +68,27 @@
         };
       };
     };
+
+  systemd = {
+    paths."reload-caddy-on-cert-change" = {
+      description = "Watch ACME certs and trigger caddy reload on changes";
+      wantedBy = [ "multi-user.target" ];
+      pathConfig = {
+        PathChanged = "/var/lib/acme/${publicDomain}";
+      };
+    };
+    services = {
+      caddy = {
+        after = [ "acme-${publicDomain}.service" ];
+        requires = [ "acme-${publicDomain}.service" ];
+      };
+      "reload-caddy-on-cert-change" = {
+        description = "Reload caddy when ACME certs change";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.systemd}/bin/systemctl reload caddy.service";
+        };
+      };
+    };
+  };
 }

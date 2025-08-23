@@ -8,7 +8,7 @@ _: {
       X11Forwarding = false;
       AllowAgentForwarding = false;
       AllowStreamLocalForwarding = false;
-      AllowUsers = [ "iilak" ];
+      AllowUsers = [ "worker" ];
     };
     ports = [ 22023 ];
     hostKeys = [

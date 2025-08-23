@@ -520,6 +520,26 @@
         "type": "github"
       }
     },
+    "ha-cli": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1755968840,
+        "narHash": "sha256-nNCv4wQ5b+z3UCYpfo2HBocfGfQ+9LWnvlI97LsjTVI=",
+        "owner": "i-ilak",
+        "repo": "ha-cli",
+        "rev": "4c39abaf3f6c226b1be1d0f1e80b238d7c36a3e4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "i-ilak",
+        "repo": "ha-cli",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -728,10 +748,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1755759748,
-        "narHash": "sha256-5XVJGWh2XRZ9H1OjuwHI+kbHfTgz/ZsFuHwSwh8O5XI=",
+        "lastModified": 1755956178,
+        "narHash": "sha256-s8ijZ/sHq/KZZCzkw57cMLfCnNTq/CHjzZohxXE6mYQ=",
         "ref": "main",
-        "rev": "6c027c1704fd8d03296e9eeb320becf749686fb3",
+        "rev": "a141e8daddfb9fa7160030ad0993163c20158263",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/i-ilak/nix-secrets"
@@ -943,6 +963,22 @@
         "type": "github"
       }
     },
+    "paperless-ngx": {
+      "locked": {
+        "lastModified": 1755977466,
+        "narHash": "sha256-2iHjUGycc426v2AFYznuMsWL8XNsqJ2K3ud8+Tv1DL4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a3d36c87615581203615de892b46b55a3045c336",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a3d36c87615581203615de892b46b55a3045c336",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -1068,6 +1104,7 @@
         "disko": "disko",
         "flake-utils": "flake-utils_2",
         "ghostty": "ghostty",
+        "ha-cli": "ha-cli",
         "home-manager": "home-manager",
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
@@ -1080,6 +1117,7 @@
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
+        "paperless-ngx": "paperless-ngx",
         "pre-commit-hooks": "pre-commit-hooks_3",
         "sops-nix": "sops-nix",
         "treefmt-nix": "treefmt-nix_3"

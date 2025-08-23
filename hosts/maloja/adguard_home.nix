@@ -7,7 +7,7 @@
     let
       inherit (config.sharedVariables) ip;
       inherit (config.sharedVariables) gatewayIp;
-      inherit (config.sharedVariables) baseDomain;
+      inherit (config.sharedVariables) publicDomain;
       inherit (config.sharedVariables) localDomainName;
       inherit (config.sharedVariables.adguardhome) port;
     in
@@ -48,23 +48,23 @@
           };
           rewrites = [
             {
-              domain = "auth.${baseDomain}";
+              domain = "auth.${publicDomain}";
               answer = "${ip}";
             }
             {
-              domain = "home.${baseDomain}";
+              domain = "home.${publicDomain}";
               answer = "${ip}";
             }
             {
-              domain = "adguard.${baseDomain}";
+              domain = "adguard.${publicDomain}";
               answer = "${ip}";
             }
             {
-              domain = "jellyfin.${baseDomain}";
+              domain = "jellyfin.${publicDomain}";
               answer = "${ip}";
             }
             {
-              domain = "paperless.${baseDomain}";
+              domain = "paperless.${publicDomain}";
               answer = "${ip}";
             }
           ];
