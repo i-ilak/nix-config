@@ -15,6 +15,8 @@ with pkgs;
   uv
   nixpkgs-fmt
   grc
+  nixos-anywhere
+  sshpass
 
   # Encryption and security tools
   gnupg

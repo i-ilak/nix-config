@@ -81,6 +81,15 @@
       url = "github:i-ilak/nix-config-helper";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    authentik-nix = {
+      url = "github:nix-community/authentik-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    ha-cli = {
+      url = "github:i-ilak/ha-cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    paperless-ngx.url = "github:nixos/nixpkgs/a3d36c87615581203615de892b46b55a3045c336";
   };
   outputs =
     {
@@ -136,6 +145,12 @@
               deadnix.enable = true;
               statix.enable = true;
               trufflehog.enable = true;
+              check-added-large-files.enable = true;
+              check-executables-have-shebangs.enable = true;
+              check-shebang-scripts-are-executable.enable = true;
+              end-of-file-fixer.enable = true;
+              ripsecrets.enable = true;
+              flake-checker.enable = true;
             };
           };
         };
