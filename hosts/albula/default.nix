@@ -20,6 +20,7 @@ in
     ./boot.nix
     ./networking.nix
     ./services.nix
+    ../../modules/nixos/locale.nix
     ./fonts.nix
     ./security.nix
   ];

@@ -16,6 +16,8 @@ with pkgs;
   nixpkgs-fmt
   grc
   comma
+  nixos-anywhere
+  sshpass
 
   # Encryption and security tools
   gnupg
