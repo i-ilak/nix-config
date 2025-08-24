@@ -13,6 +13,7 @@ in
     inputs.sops-nix.homeManagerModules.sops
     inputs.catppuccin.homeModules.catppuccin
     ./additional_config_parameters.nix
+    ./ssh.nix
     ../../modules/home-manager/programs/git.nix
     ../../modules/home-manager/programs/zsh.nix
     ../../modules/home-manager/programs/fzf.nix
