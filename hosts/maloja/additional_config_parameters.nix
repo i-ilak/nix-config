@@ -30,7 +30,7 @@
         authelia.port = 33034;
         home-assistant = {
           port = 33035;
-          backupDir = "/var/lib/hass/backup";
+          backupDir = "/var/lib/hass/backups";
         };
         adguardhome.port = 3000;
       };
