@@ -1,8 +1,59 @@
 {
   config,
+  pkgs,
   ...
 }:
 {
+  sops = {
+    secrets = {
+      home-assistant-b2-endpoint = {
+        key = "home-assistant/b2/endpoint";
+        owner = "root";
+        group = "backup";
+        mode = "0440";
+      };
+      home-assistant-b2-bucket_name = {
+        key = "home-assistant/b2/bucket_name";
+        owner = "root";
+        group = "backup";
+        mode = "0440";
+      };
+      home-assistant-b2-account_id = {
+        key = "home-assistant/b2/account_id";
+        owner = "root";
+        group = "backup";
+        mode = "0440";
+      };
+      home-assistant-b2-application_key = {
+        key = "home-assistant/b2/application_key";
+        owner = "root";
+        group = "backup";
+        mode = "0440";
+      };
+    };
+    templates = {
+      "home-assistant-repositoryFile" = {
+        content = ''
+          s3:${config.sops.placeholder."home-assistant-b2-endpoint"}/${
+            config.sops.placeholder."home-assistant-b2-bucket_name"
+          }
+        '';
+        owner = "root";
+        group = "backup";
+        mode = "0440";
+      };
+      "home-assistant-accessFile" = {
+        content = ''
+          AWS_ACCESS_KEY_ID="${config.sops.placeholder."home-assistant-b2-account_id"}"
+          AWS_SECRET_ACCESS_KEY="${config.sops.placeholder."home-assistant-b2-application_key"}"
+        '';
+        owner = "root";
+        group = "backup";
+        mode = "0440";
+      };
+    };
+  };
+
   services.home-assistant = {
     enable = true;
     extraComponents = [
@@ -25,6 +76,28 @@
         trusted_proxies = [ "127.0.0.1" ];
       };
     };
+  };
+
+  services.restic.backups.home-assistant = {
+    initialize = true;
+    paths = [
+      config.sharedVariables.home-assistant.backupDir
+    ];
+    pruneOpts = [
+      "--keep-daily 7"
+      "--keep-weekly 5"
+      "--keep-monthly 12"
+      "--keep-yearly 10"
+    ];
+
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+    };
+
+    environmentFile = config.sops.templates."home-assistant-accessFile".path;
+    repositoryFile = config.sops.templates."home-assistant-repositoryFile".path;
+    passwordFile = config.sops.secrets."restic-password-file".path;
   };
 
   systemd.services.home-assistant-restore-from-backup =
@@ -71,9 +144,12 @@
           echo "--- Starting Home Assistant restore from S3 backup ---"
 
           echo "Restoring latest backup to ${backupDir}..."
-          restic-home-assistant restore latest:${backupDir} --target ${backupDir}
+          ${pkgs.restic}/bin/restic                                                             \
+              --repository-file "${config.sops.templates."home-assistant-repositoryFile".path}"           \
+              --password-file "${config.sops.secrets."restic-password-file".path}"              \
+              restore latest:${backupDir} --target ${backupDir}
             
-          chown -R "${config.services.home-assistant.user}:${config.services.home-assistant.group}" "${backupDir}"
+          chown -R hass:hass "${backupDir}"
 
           NEWEST_SLUG=$(ha --config ${baseDirHomeAssistant}/configuration.yaml backups list | grep -v "SLUG" | head -1 | awk '{print $1}')
           echo "The newst slug is: $NEWEST_SLUG"
@@ -83,7 +159,7 @@
 
           echo "Creating restore completion flag file: $RESTORE_COMPLETION_FLAG."
           touch "$RESTORE_COMPLETION_FLAG"
-          chown "${config.services.home-assistant.user}:${config.services.home-assistant.group}" "$RESTORE_COMPLETION_FLAG"
+          chown hass:hass "$RESTORE_COMPLETION_FLAG"
           echo "--- Home Assistant restore complete ---"
         '';
     };

@@ -29,7 +29,6 @@
     ./ytdl-sub.nix
     ./home-assistant.nix
     ./paperless.nix
-    ./restic.nix
     ./adguard_home.nix
     # ./authentik.nix
     # ./authelia.nix
@@ -85,11 +84,11 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDKU+/RXjWLUzfRgMIhWnI4LD9Zh11BmCJsFaYNZNQqg"
         ];
       };
-      paperless = {
-        isSystemUser = true;
-        group = "paperless";
-        extraGroups = [ "backup" ];
-      };
+      # paperless = {
+      #   isSystemUser = true;
+      #   group = "paperless";
+      #   extraGroups = [ "backup" ];
+      # };
     };
   };
 

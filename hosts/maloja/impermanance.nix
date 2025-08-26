@@ -7,8 +7,6 @@ _: {
 
       "/var/lib"
       "/var/log"
-      "/var/lib/sops-nix"
-      "/var/lib/hass"
     ];
     files = [
       "/etc/machine-id"

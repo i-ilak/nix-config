@@ -69,16 +69,16 @@
             }
           ];
         };
-        # filters =
-        #   map
-        #     (url: {
-        #       enabled = true;
-        #       url = url;
-        #     })
-        #     [
-        #       "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"
-        #       "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"
-        #     ];
+        filters =
+          map
+            (url: {
+              enabled = true;
+              inherit url;
+            })
+            [
+              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"
+              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"
+            ];
         schema_version = 29;
       };
     };

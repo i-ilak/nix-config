@@ -1,6 +1,6 @@
 # Todo
 
-- [ ] Need to write a backup & restoring service for `acme-${publicDomain}.service`.
+- [x] Need to write a backup & restoring service for `acme-${publicDomain}.service`.
       The issue here is that `Lets encypt` only gives out 5 certificates per **week** for the same set of domains.
       If you are working with NixOS redeployments, which each time trigger requests for new certificates, this is problematic.
       Solution: we need to back up `/var/lib/acme` and restore it on redeployment.
@@ -8,7 +8,7 @@
 
   - Be careful to also backup the hidden folders, i.e. `.lego` and `.mimica`.
   - Permissions will be an issue, i.e. there are quite a few certificates in those directories and all of them need to have a particular set of permissions.
-  - [ ] B2 Bucket needs to be created.
+  - [x] B2 Bucket needs to be created.
 
 - [ ] Home Assistant also needs backing up.
       Here we already have a bit more ready, i.e. bucket and secrets are done.
