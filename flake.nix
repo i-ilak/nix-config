@@ -49,6 +49,7 @@
     };
     ghostty = {
       url = "github:ghostty-org/ghostty";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     catppuccin = {
       url = "github:catppuccin/nix";
@@ -161,7 +162,7 @@
     )
     // {
       darwinConfigurations = {
-        macbook = import ./hosts/macbook/nix-darwin.nix {
+        plessur = import ./hosts/plessur/nix-darwin.nix {
           inherit inputs;
         };
       };

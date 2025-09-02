@@ -50,6 +50,7 @@ in
       inherit (config.sharedVariables) user;
     in
     {
+      enable = false;
       package = pkgs.nix;
       settings = {
         trusted-users = [
@@ -64,7 +65,7 @@ in
       };
 
       gc = {
-        automatic = true;
+        automatic = false;
         interval = {
           Weekday = 0;
           Hour = 2;
