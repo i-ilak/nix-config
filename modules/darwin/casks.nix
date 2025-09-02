@@ -13,6 +13,7 @@ _: [
   "obsidian"
   "firefox"
   "teamviewer"
+  "spotify"
 
   # Development Tools
   "visual-studio-code"
