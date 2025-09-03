@@ -91,6 +91,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     paperless-ngx.url = "github:nixos/nixpkgs/a3d36c87615581203615de892b46b55a3045c336";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };
   outputs =
     {

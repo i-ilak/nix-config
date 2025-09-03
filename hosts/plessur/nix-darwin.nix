@@ -7,6 +7,7 @@ inputs.darwin.lib.darwinSystem {
   modules = [
     inputs.home-manager.darwinModules.home-manager
     inputs.nix-homebrew.darwinModules.nix-homebrew
+    inputs.determinate.darwinModules.default
     {
       nix-homebrew = {
         enable = true;
