@@ -59,7 +59,7 @@ in
         enable = true;
       };
       extraConfig = {
-        branch.sort = "-commiterdate";
+        branch.sort = "-committerdate";
         column.ui = "auto";
         commit = {
           gpgsign = true;
