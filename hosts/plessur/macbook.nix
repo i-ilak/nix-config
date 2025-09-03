@@ -100,7 +100,7 @@ in
       dock = {
         enable = true;
         entries = [
-          { path = "/Applications/Safari.app/"; }
+          { path = "/Applications/Firefox.app/"; }
         ];
         username = "${user}";
       };
