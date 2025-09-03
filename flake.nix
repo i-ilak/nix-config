@@ -124,6 +124,25 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         treefmt = treefmt-nix.lib.evalModule pkgs ./modules/shared/format.nix;
+
+        runScriptPkg = pkgs.stdenv.mkDerivation rec {
+          pname = "run-script";
+          version = "1.0.0";
+
+          src = ./apps;
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          buildInputs = with pkgs; [
+            bash
+            coreutils
+          ];
+
+          installPhase = ''
+            mkdir -p $out/bin
+            cp $src/run.sh $out/bin/run
+            chmod +x $out/bin/run
+            wrapProgram $out/bin/run --prefix PATH : ${pkgs.lib.makeBinPath buildInputs}
+          '';
+        };
       in
       {
         apps.default = {
@@ -131,11 +150,13 @@
             description = ''
               Shell script to switch to next generation, based on hostname.
             '';
-            mainProgram = "run.sh";
+            mainProgram = "run";
           };
           type = "app";
-          program = "${self}/apps/run.sh";
+          program = "${runScriptPkg}/bin/run";
         };
+
+        packages.default = runScriptPkg;
 
         checks = {
           pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
