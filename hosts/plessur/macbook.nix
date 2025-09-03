@@ -45,6 +45,14 @@ in
     tailscale.enable = true;
   };
 
+  # Use when nix installed with `determinated`
+  determinate-nix.customSettings = {
+    trusted-users = [
+      "${user}"
+    ];
+  };
+
+  # Use when nix installed without `determinated`
   nix =
     let
       inherit (config.sharedVariables) user;
