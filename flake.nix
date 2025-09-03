@@ -78,10 +78,6 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-config-helper = {
-      url = "github:i-ilak/nix-config-helper";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     authentik-nix = {
       url = "github:nix-community/authentik-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -101,7 +97,6 @@
       pre-commit-hooks,
       treefmt-nix,
       deadnix,
-      nix-config-helper,
       ...
     }@inputs:
     let
@@ -131,12 +126,15 @@
         treefmt = treefmt-nix.lib.evalModule pkgs ./modules/shared/format.nix;
       in
       {
-        packages.default = nix-config-helper.packages.${system}.default;
-
         apps.default = {
-          inherit (nix-config-helper.packages.${system}.default) meta;
+          meta = {
+            description = ''
+              Shell script to switch to next generation, based on hostname.
+            '';
+            mainProgram = "run.sh";
+          };
           type = "app";
-          program = "${nix-config-helper.apps.${system}.default.program}";
+          program = "${self}/apps/run.sh";
         };
 
         checks = {
