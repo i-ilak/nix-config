@@ -1,4 +1,42 @@
-# Todo
+# Maloja
+
+## General setup
+
+`maloja` is the homelab server.
+It hosts all internal services that don't need a huge amount of resources and in which there is more to lose than to gain by exposing them to the public internet.
+The `Let's encrypt` certificates are obtained over `acme` via the `dns-01` challenge, providing `https` for all internal sites.
+
+```
++----------------------------------------------------------------------------------------------+
+| Maloja                                                                                       |
+| ------                    +------------------|-------+                                       |
+|                           |                  |       |                                       |
+|  +------------------+    -| Jellyfin         | 33033 |\                                      |
+|  |                  |  -/ |                  |       | -\                                    |
+|  | yt-dl            | /   +------------------|-------+   \                                   |
+|  |                  |                                     \                                  |
+|  +------------------+     +------------------|-------+     -\                                |
+|                           |                  |       |       \                               |
+|                          -| Home Assistant   | 33033 |----\   -+------------------|-------+  |
+|  +------------------+  -/ |                  |       |     ----|                  |  80   |  |
+|  |                  |-/   +------------------|-------+       --| Caddy            |       |  |
+|  | Restic           |                                      -/  |                  |  443  |  |
+|  |                  |-\   +------------------|-------+  --/   -+------------------|-------+  |
+|  +------------------+  -\ |                  |       |-/     /                               |
+|                          -| Paperless        | 33033 |      /                                |
+|                           |                  |       |     /                                 |
+|                           +------------------|-------+   -/                                  |
+|                                                         /                                    |
+|                           +------------------|-------+ /                                     |
+|                           |                  |       |/                                      |
+|                           | Adguard Home     | 33033 |                                       |
+|                           |                  |       |                                       |
+|                           +------------------|-------+                                       |
+|                                                                                              |
++----------------------------------------------------------------------------------------------+
+```
+
+## Todo
 
 - [x] Need to write a backup & restoring service for `acme-${publicDomain}.service`.
       The issue here is that `Lets encypt` only gives out 5 certificates per **week** for the same set of domains.
