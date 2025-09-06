@@ -9,6 +9,7 @@
       inherit (config.sharedVariables) gatewayIp;
       inherit (config.sharedVariables) publicDomain;
       inherit (config.sharedVariables) localDomainName;
+      inherit (config.sharedVariables) unbound;
       inherit (config.sharedVariables.adguardhome) port;
     in
     {
@@ -19,11 +20,7 @@
         };
         dns = {
           upstream_dns = [
-            "1.1.1.1"
-            "1.0.0.1"
-            "8.8.8.8"
-            "9.9.9.9"
-            "149.112.112.112"
+            "127.0.0.1:${builtins.toString unbound.port}"
           ];
         };
         dhcp = {
