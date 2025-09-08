@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "aerospace-taps": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1756592205,
-        "narHash": "sha256-AB7c96r/7JgkBubPrlEFz9yaIPdsD7S8JkLVnGtlhAw=",
-        "owner": "nikitabobko",
-        "repo": "homebrew-tap",
-        "rev": "2eff00794112cf73fdefeec27cd9b30abe644408",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nikitabobko",
-        "repo": "homebrew-tap",
-        "type": "github"
-      }
-    },
     "authentik-nix": {
       "inputs": {
         "authentik-src": "authentik-src",
@@ -1125,7 +1109,6 @@
     },
     "root": {
       "inputs": {
-        "aerospace-taps": "aerospace-taps",
         "authentik-nix": "authentik-nix",
         "catppuccin": "catppuccin",
         "darwin": "darwin",
