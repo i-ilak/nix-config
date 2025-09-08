@@ -81,6 +81,11 @@
             [
               "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"
               "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"
+	      "https://badmojr.github.io/1Hosts/Pro/adblock.txt"
+	      "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus.txt"
+              "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.txt"
+              "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/spam-tlds.txt"
+	      "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/hoster.txt"
             ];
         schema_version = 29;
       };
