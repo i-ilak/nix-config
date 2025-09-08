@@ -35,6 +35,12 @@
           };
           local_domain_name = "${localDomainName}";
         };
+        users = [
+          {
+            name = "admin";
+            password = "$2y$10$Pg5LMXZPPyCaYnxu8x.W.uCw8r07pBXM7L9MQVNiOTHcRHxsWuzDK";
+          }
+        ];
         filtering = {
           protection_enabled = true;
           filtering_enabled = true;

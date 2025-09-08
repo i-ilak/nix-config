@@ -30,6 +30,7 @@
     ./home-assistant.nix
     ./paperless.nix
     ./adguard_home.nix
+    ./unbound.nix
     # ./authentik.nix
     # ./authelia.nix
   ];
