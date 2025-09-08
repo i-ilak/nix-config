@@ -20,6 +20,7 @@ in
     ../../modules/home-manager/programs/fish.nix
     ../../modules/home-manager/programs/direnv.nix
     ../../modules/home-manager/programs/alacritty.nix
+    # ../../modules/home-manager/programs/ghostty.nix
   ];
 
   sops = {

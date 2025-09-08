@@ -92,6 +92,11 @@ in
   security.pam.services.sudo_local.touchIdAuth = true;
   system = import ../../modules/darwin/system.nix { inherit config; };
 
+  fonts.packages = with pkgs; [
+    meslo-lgs-nf
+    nerd-fonts.jetbrains-mono
+  ];
+
   local =
     let
       inherit (config.sharedVariables) user;
