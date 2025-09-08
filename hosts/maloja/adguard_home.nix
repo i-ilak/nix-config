@@ -71,6 +71,9 @@
               answer = "${ip}";
             }
           ];
+	  user_rules = [
+		"@@||${localDomainName}^"
+	  ];
         };
         filters =
           map
@@ -88,7 +91,7 @@
               "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/spam-tlds.txt"
               "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/hoster.txt"
             ];
-        schema_version = 29;
+        chema_version = 29;
       };
     };
 }

@@ -34,7 +34,7 @@ in
     enableNixpkgsReleaseCheck = false;
     packages = pkgs.callPackage ./packages.nix { inherit inputs; };
     file = import ./files.nix { };
-    stateVersion = "24.05";
+    stateVersion = "25.05";
   };
 
   catppuccin = {

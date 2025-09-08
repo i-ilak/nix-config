@@ -14,7 +14,7 @@ in
     ../../modules/darwin/homebrew.nix
     ../../modules/darwin/dock
     ../../modules/darwin/desktoppr
-    ../../modules/darwin/aerospace.nix
+    #../../modules/darwin/aerospace.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
