@@ -33,6 +33,7 @@
           backupDir = "/var/lib/hass/backups";
         };
         adguardhome.port = 3000;
+        unbound.port = 5335;
       };
   };
 }
