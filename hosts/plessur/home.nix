@@ -20,6 +20,7 @@ in
     ../../modules/home-manager/programs/fish.nix
     ../../modules/home-manager/programs/direnv.nix
     ../../modules/home-manager/programs/alacritty.nix
+    # ../../modules/home-manager/programs/ghostty.nix
   ];
 
   sops = {
@@ -34,11 +35,11 @@ in
     enableNixpkgsReleaseCheck = false;
     packages = pkgs.callPackage ./packages.nix { inherit inputs; };
     file = import ./files.nix { };
-    stateVersion = "24.05";
+    stateVersion = "25.05";
   };
 
   catppuccin = {
     flavor = "mocha";
-    enable = true; # Enables it for all supported tools
+    enable = true;
   };
 }

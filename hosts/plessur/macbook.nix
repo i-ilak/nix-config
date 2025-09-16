@@ -14,7 +14,7 @@ in
     ../../modules/darwin/homebrew.nix
     ../../modules/darwin/dock
     ../../modules/darwin/desktoppr
-    ../../modules/darwin/aerospace.nix
+    #../../modules/darwin/aerospace.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
@@ -91,6 +91,11 @@ in
   environment.systemPackages = import ../../modules/shared/system_packages.nix { inherit pkgs; };
   security.pam.services.sudo_local.touchIdAuth = true;
   system = import ../../modules/darwin/system.nix { inherit config; };
+
+  fonts.packages = with pkgs; [
+    meslo-lgs-nf
+    nerd-fonts.jetbrains-mono
+  ];
 
   local =
     let

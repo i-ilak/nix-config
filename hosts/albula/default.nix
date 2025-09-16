@@ -12,14 +12,15 @@ in
 {
   imports = [
     inputs.disko.nixosModules.disko
+    inputs.sops-nix.nixosModules.sops
     ./disk-config.nix
     ./additional_config_parameters.nix
     ../../modules/shared
     ../../modules/shared/cachix
+    ../../modules/nixos/locale.nix
     ./boot.nix
     ./networking.nix
     ./services.nix
-    ../../modules/nixos/locale.nix
     ./fonts.nix
     ./security.nix
   ];
@@ -40,6 +41,23 @@ in
     fish.enable = true;
     firefox.enable = true;
   };
+
+  sops =
+    let
+      secretspath = builtins.toString inputs.nix-secrets;
+    in
+    {
+      defaultSopsFile = "${secretspath}/secrets/albula.yaml";
+      secrets = {
+        "user/dev/password" = { };
+        "ssh_git_signing_key/public" = {
+          sopsFile = "${secretspath}/secrets/shared.yaml";
+        };
+      };
+      age = {
+        sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      };
+    };
 
   users = {
     mutableUsers = false;

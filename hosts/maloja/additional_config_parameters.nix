@@ -21,6 +21,7 @@
         baseDomain = "${hostname}.${localDomainName}";
         publicDomain = "ilak.ch";
         ip = "192.168.1.2";
+        ipv6 = "fd00:ad:ad::2";
         gatewayIp = "192.168.1.1";
 
         paperless = {

@@ -17,6 +17,7 @@ let
       ollama
       # Fonts
       meslo-lgs-nf
+      nerd-fonts.jetbrains-mono
     ]
     ++ sharedPackages;
 in

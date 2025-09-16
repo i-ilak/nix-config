@@ -1,9 +1,13 @@
 {
   pkgs,
+  lib,
   ...
 }:
 let
-  output = "/media/tv";
+  output = "/media/youtube";
+
+  pathToMountUnit =
+    path: (builtins.replaceStrings [ "/" ] [ "-" ] (lib.removePrefix "/" path)) + ".mount";
 
   ytdl-packaged-patched-cache = pkgs.writeScriptBin "ytdl-sub-patched" ''
     #!${pkgs.bash}/bin/bash
@@ -118,4 +122,10 @@ in
     };
   };
   users.users.ytdl-sub.extraGroups = [ "media" ];
+
+  systemd.services."ytdl-sub-downloader" = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "${pathToMountUnit output}" ];
+    requires = [ "${pathToMountUnit output}" ];
+  };
 }

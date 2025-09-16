@@ -16,7 +16,6 @@ inputs.darwin.lib.darwinSystem {
           "homebrew/homebrew-core" = inputs.homebrew-core;
           "homebrew/homebrew-cask" = inputs.homebrew-cask;
           "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-          "nikitabobko/tap" = inputs.aerospace-taps;
         };
         mutableTaps = false;
         autoMigrate = true;

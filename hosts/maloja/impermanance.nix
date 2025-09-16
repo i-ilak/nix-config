@@ -1,4 +1,23 @@
-_: {
+{
+  inputs,
+  ...
+}:
+{
+  imports = [
+    inputs.impermanence.nixosModules.impermanence
+  ];
+
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    kernelModules = [
+      "dm_mod"
+      "dm_crypt"
+    ];
+  };
+
   environment.persistence."/persist" = {
     directories = [
       "/etc/nixos"
