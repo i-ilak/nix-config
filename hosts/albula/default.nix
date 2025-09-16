@@ -52,6 +52,7 @@ in
         "user/dev/password" = { };
         "ssh_git_signing_key/public" = {
           sopsFile = "${secretspath}/secrets/shared.yaml";
+          format = "yaml";
         };
       };
       age = {
