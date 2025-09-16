@@ -11,7 +11,10 @@
     settings = {
       server = {
         inherit (config.sharedVariables.unbound) port;
-        interface = [ "127.0.0.1" ];
+        interface = [
+          "127.0.0.1"
+          "::1"
+        ];
         access-control = [
           "0.0.0.0/0 refuse"
           "127.0.0.1 allow"

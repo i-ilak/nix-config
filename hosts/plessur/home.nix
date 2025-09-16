@@ -40,6 +40,6 @@ in
 
   catppuccin = {
     flavor = "mocha";
-    enable = true; # Enables it for all supported tools
+    enable = true;
   };
 }

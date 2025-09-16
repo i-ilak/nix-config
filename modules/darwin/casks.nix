@@ -4,11 +4,12 @@ _: [
   "scroll-reverser"
   "desktoppr"
   "gimp"
-  # "vmware-fusion"
   "obsidian"
   "firefox"
   "teamviewer"
   "spotify"
+  "brave-browser"
+  "logitech-options"
 
   # Development Tools
   "visual-studio-code"

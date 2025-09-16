@@ -1,8 +1,13 @@
 {
+  inputs,
   config,
   ...
 }:
 {
+  imports = [
+    inputs.authentik-nix.nixosModules.default
+  ];
+
   sops.secrets = {
     authentik_secret_key = {
       key = "authentik/secret_key";
