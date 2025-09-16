@@ -7,30 +7,28 @@
 {
   imports = [
     inputs.disko.nixosModules.disko
-    inputs.impermanence.nixosModules.impermanence
-    inputs.authentik-nix.nixosModules.default
-    ./additional_config_parameters.nix
     ./disk-config.nix
-    ./boot.nix
-    ./impermanance.nix
-    ./sops.nix
-    # ./tailscale.nix
-    ./acme.nix
-    ./caddy.nix
     # Hardening
+    ./impermanance.nix
     ../../modules/nixos/locale.nix
     ../../modules/nixos/hardening/audit.nix
     ../../modules/nixos/hardening/sudo.nix
     ../../modules/nixos/hardening/no-defaults.nix
     ../../modules/nixos/hardening/noexec.nix
+    # Configuration
+    ./additional_config_parameters.nix
+    ./sops.nix
+    # ./tailscale.nix
+    ./acme.nix
+    ./caddy.nix
     ./sshd.nix
     # Services
     ./jellyfin.nix
     ./ytdl-sub.nix
     ./home-assistant.nix
     ./paperless.nix
-    ./restic.nix
     ./adguard_home.nix
+    ./unbound.nix
     # ./authentik.nix
     # ./authelia.nix
   ];
@@ -42,12 +40,12 @@
       allowedTCPPorts = [
         80
         443
-        53 # DNS (AdGuard Home)
+        53 # DNS
       ];
       allowedUDPPorts = [
-        53 # DNS (AdGuard Home)
-        67 # DHCP (AdGuard Home)
-        68 # DHCP (AdGuard Home)
+        53 # DNS
+        67 # DHCP
+        68 # DHCP
       ];
     };
     defaultGateway = {
@@ -60,6 +58,14 @@
           {
             address = "${config.sharedVariables.ip}";
             prefixLength = 24;
+          }
+        ];
+      };
+      ipv6 = {
+        addresses = [
+          {
+            address = "${config.sharedVariables.ipv6}";
+            prefixLength = 64;
           }
         ];
       };
@@ -84,11 +90,6 @@
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDKU+/RXjWLUzfRgMIhWnI4LD9Zh11BmCJsFaYNZNQqg"
         ];
-      };
-      paperless = {
-        isSystemUser = true;
-        group = "paperless";
-        extraGroups = [ "backup" ];
       };
     };
   };

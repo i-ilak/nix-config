@@ -21,6 +21,7 @@
         baseDomain = "${hostname}.${localDomainName}";
         publicDomain = "ilak.ch";
         ip = "192.168.1.2";
+        ipv6 = "fd00:ad:ad::2";
         gatewayIp = "192.168.1.1";
 
         paperless = {
@@ -30,9 +31,10 @@
         authelia.port = 33034;
         home-assistant = {
           port = 33035;
-          backupDir = "/var/lib/hass/backup";
+          backupDir = "/var/lib/hass/backups";
         };
         adguardhome.port = 3000;
+        unbound.port = 5335;
       };
   };
 }

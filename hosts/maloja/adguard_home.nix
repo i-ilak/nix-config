@@ -9,6 +9,7 @@
       inherit (config.sharedVariables) gatewayIp;
       inherit (config.sharedVariables) publicDomain;
       inherit (config.sharedVariables) localDomainName;
+      inherit (config.sharedVariables) unbound;
       inherit (config.sharedVariables.adguardhome) port;
     in
     {
@@ -19,11 +20,8 @@
         };
         dns = {
           upstream_dns = [
-            "1.1.1.1"
-            "1.0.0.1"
-            "8.8.8.8"
-            "9.9.9.9"
-            "149.112.112.112"
+            "127.0.0.1:${builtins.toString unbound.port}"
+            "::1:${builtins.toString unbound.port}"
           ];
         };
         dhcp = {
@@ -38,6 +36,12 @@
           };
           local_domain_name = "${localDomainName}";
         };
+        users = [
+          {
+            name = "admin";
+            password = "$2y$10$Pg5LMXZPPyCaYnxu8x.W.uCw8r07pBXM7L9MQVNiOTHcRHxsWuzDK";
+          }
+        ];
         filtering = {
           protection_enabled = true;
           filtering_enabled = true;
@@ -68,17 +72,26 @@
               answer = "${ip}";
             }
           ];
+          user_rules = [
+            "@@||${localDomainName}^"
+          ];
         };
-        # filters =
-        #   map
-        #     (url: {
-        #       enabled = true;
-        #       url = url;
-        #     })
-        #     [
-        #       "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"
-        #       "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"
-        #     ];
+        filters =
+          map
+            (url: {
+              enabled = true;
+              inherit url;
+            })
+            [
+              "https://big.oisd.nl"
+              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"
+              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"
+              "https://badmojr.github.io/1Hosts/Pro/adblock.txt"
+              "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus.txt"
+              "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.txt"
+              "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/spam-tlds.txt"
+              "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/hoster.txt"
+            ];
         schema_version = 29;
       };
     };

@@ -1,30 +1,20 @@
 _: [
   # Utility
   "eurkey"
-  "rectangle"
   "scroll-reverser"
-  "brave-browser"
-  "zoom"
-  "chromium"
   "desktoppr"
   "gimp"
-  "nikitabobko/tap/aerospace"
-  "vmware-fusion"
   "obsidian"
   "firefox"
   "teamviewer"
+  "spotify"
+  "brave-browser"
+  "logitech-options"
 
   # Development Tools
   "visual-studio-code"
-  "iterm2"
   "ghostty"
 
-  # Communication Tools
-  "discord"
-  "zoom"
-
   # Entertainment Tools
-  "vlc"
   "calibre"
-  "qbittorrent"
 ]

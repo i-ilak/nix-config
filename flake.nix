@@ -49,14 +49,11 @@
     };
     ghostty = {
       url = "github:ghostty-org/ghostty";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     catppuccin = {
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    aerospace-taps = {
-      url = "github:nikitabobko/homebrew-tap";
-      flake = false;
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -77,10 +74,6 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-config-helper = {
-      url = "github:i-ilak/nix-config-helper";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     authentik-nix = {
       url = "github:nix-community/authentik-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -90,6 +83,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     paperless-ngx.url = "github:nixos/nixpkgs/a3d36c87615581203615de892b46b55a3045c336";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };
   outputs =
     {
@@ -99,7 +93,6 @@
       pre-commit-hooks,
       treefmt-nix,
       deadnix,
-      nix-config-helper,
       ...
     }@inputs:
     let
@@ -127,15 +120,39 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         treefmt = treefmt-nix.lib.evalModule pkgs ./modules/shared/format.nix;
+
+        runScriptPkg = pkgs.stdenv.mkDerivation rec {
+          pname = "run-script";
+          version = "1.0.0";
+
+          src = ./apps;
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          buildInputs = with pkgs; [
+            bash
+            coreutils
+          ];
+
+          installPhase = ''
+            mkdir -p $out/bin
+            cp $src/run.sh $out/bin/run
+            chmod +x $out/bin/run
+            wrapProgram $out/bin/run --prefix PATH : ${pkgs.lib.makeBinPath buildInputs}
+          '';
+        };
       in
       {
-        packages.default = nix-config-helper.packages.${system}.default;
-
         apps.default = {
-          inherit (nix-config-helper.packages.${system}.default) meta;
+          meta = {
+            description = ''
+              Shell script to switch to next generation, based on hostname.
+            '';
+            mainProgram = "run";
+          };
           type = "app";
-          program = "${nix-config-helper.apps.${system}.default.program}";
+          program = "${runScriptPkg}/bin/run";
         };
+
+        packages.default = runScriptPkg;
 
         checks = {
           pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
@@ -161,7 +178,7 @@
     )
     // {
       darwinConfigurations = {
-        macbook = import ./hosts/macbook/nix-darwin.nix {
+        plessur = import ./hosts/plessur/nix-darwin.nix {
           inherit inputs;
         };
       };

@@ -7,6 +7,7 @@ inputs.darwin.lib.darwinSystem {
   modules = [
     inputs.home-manager.darwinModules.home-manager
     inputs.nix-homebrew.darwinModules.nix-homebrew
+    inputs.determinate.darwinModules.default
     {
       nix-homebrew = {
         enable = true;
@@ -15,7 +16,6 @@ inputs.darwin.lib.darwinSystem {
           "homebrew/homebrew-core" = inputs.homebrew-core;
           "homebrew/homebrew-cask" = inputs.homebrew-cask;
           "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
-          "nikitabobko/tap" = inputs.aerospace-taps;
         };
         mutableTaps = false;
         autoMigrate = true;

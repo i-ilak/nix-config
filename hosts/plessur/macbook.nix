@@ -15,7 +15,7 @@ in
     ../../modules/darwin/homebrew.nix
     ../../modules/darwin/dock
     ../../modules/darwin/desktoppr
-    ../../modules/darwin/aerospace.nix
+    #../../modules/darwin/aerospace.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
@@ -46,22 +46,47 @@ in
     tailscale.enable = true;
   };
 
-  nix = {
-    package = pkgs.nix;
-    settings = {
-      trusted-users = [
-        "@admin"
-        "${user}"
-      ];
-      extra-platforms = [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-linux"
-      ];
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
+  # Use when nix installed with `determinated`
+  determinate-nix.customSettings = {
+    trusted-users = [
+      "${user}"
+    ];
+  };
+
+  # Use when nix installed without `determinated`
+  nix =
+    let
+      inherit (config.sharedVariables) user;
+    in
+    {
+      enable = false;
+      package = pkgs.nix;
+      settings = {
+        trusted-users = [
+          "@admin"
+          "${user}"
+        ];
+        extra-platforms = [
+          "aarch64-darwin"
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
+      };
+
+      gc = {
+        automatic = false;
+        interval = {
+          Weekday = 0;
+          Hour = 2;
+          Minute = 0;
+        };
+        options = "--delete-older-than 10d";
+      };
+
+      # Turn this on to make command line easier
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
     };
 
     gc = {
@@ -94,6 +119,11 @@ in
   security.pam.services.sudo_local.touchIdAuth = true;
   system = import ../../modules/darwin/system.nix { inherit config; };
 
+  fonts.packages = with pkgs; [
+    meslo-lgs-nf
+    nerd-fonts.jetbrains-mono
+  ];
+
   local =
     let
       inherit (config.sharedVariables) user;
@@ -102,7 +132,7 @@ in
       dock = {
         enable = true;
         entries = [
-          { path = "/Applications/Safari.app/"; }
+          { path = "/Applications/Firefox.app/"; }
         ];
         username = "${user}";
       };
