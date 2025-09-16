@@ -92,7 +92,7 @@
               "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/spam-tlds.txt"
               "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/hoster.txt"
             ];
-        chema_version = 29;
+        schema_version = 29;
       };
     };
 }
