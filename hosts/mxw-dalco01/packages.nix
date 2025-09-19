@@ -15,6 +15,7 @@ let
     colordiff
     nitrogen
     jetbrains.clion
+    gimp
   ];
 
   developmentPackages = with pkgs; [

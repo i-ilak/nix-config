@@ -61,7 +61,16 @@ in
     age = {
       keyFile = "${homeDir}/.config/sops/age/keys.txt";
     };
-    secrets."ssh_git_signing_key/work" = { };
+    secrets = {
+      "ssh_git_signing_key/work" = { };
+      ssh_config = {
+        sopsFile = "${secretspath}/secrets/mxw-dalco01/ssh_config";
+        path = "${config.sharedVariables.homeDir}/.ssh/config";
+        mode = "0600";
+        format = "binary";
+      };
+    };
+
   };
 
   catppuccin = {

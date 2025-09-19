@@ -58,6 +58,9 @@ in
       lfs = {
         enable = true;
       };
+      attributes = [
+        "flake.lock -diff"
+      ];
       extraConfig = {
         branch.sort = "-committerdate";
         column.ui = "auto";
