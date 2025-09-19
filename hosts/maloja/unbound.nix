@@ -34,6 +34,8 @@
 
         root-hints = "${pkgs.dns-root-data}/root.hints";
       };
+
+      remote-control.control-enable = true;
     };
   };
 }

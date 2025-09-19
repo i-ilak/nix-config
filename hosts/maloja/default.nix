@@ -29,6 +29,8 @@
     ./paperless.nix
     ./adguard_home.nix
     ./unbound.nix
+    ./prometheus.nix
+    ./grafana.nix
     # ./authentik.nix
     # ./authelia.nix
   ];
