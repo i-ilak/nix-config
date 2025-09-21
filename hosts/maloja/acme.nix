@@ -5,6 +5,7 @@
 }:
 let
   inherit (config.sharedVariables) publicDomain;
+  inherit (config.sharedVariables) internalDomain;
   baseDirAcme = "/var/lib/acme";
 in
 {
@@ -63,7 +64,7 @@ in
         content = ''
           CLOUDFLARE_DNS_API_TOKEN=${config.sops.placeholder."cloudflare-dns-api-token"}
         '';
-        owner = "caddy";
+        owner = "backup";
       };
     };
   };
@@ -72,15 +73,27 @@ in
     acceptTerms = true;
     defaults.email = "ivan.ilak@hotmail.com";
 
-    certs."${publicDomain}" = {
-      inherit (config.services.caddy) group;
+    certs = {
+      "${publicDomain}" = {
+        inherit (config.services.caddy) group;
 
-      domain = "${publicDomain}";
-      extraDomainNames = [ "*.${publicDomain}" ];
-      dnsProvider = "cloudflare";
-      dnsResolver = "1.1.1.1:53";
-      dnsPropagationCheck = true;
-      environmentFile = config.sops.templates."acme-cloudflare-env-file".path;
+        domain = "${publicDomain}";
+        extraDomainNames = [ "*.${publicDomain}" ];
+        dnsProvider = "cloudflare";
+        dnsResolver = "1.1.1.1:53";
+        dnsPropagationCheck = true;
+        environmentFile = config.sops.templates."acme-cloudflare-env-file".path;
+      };
+      "${internalDomain}" = {
+        inherit (config.services.nginx) group;
+
+        domain = "*.${internalDomain}";
+        extraDomainNames = [ internalDomain ];
+        dnsProvider = "cloudflare";
+        dnsResolver = "1.1.1.1:53";
+        dnsPropagationCheck = true;
+        environmentFile = config.sops.templates."acme-cloudflare-env-file".path;
+      };
     };
   };
 
@@ -116,10 +129,13 @@ in
     after = [
       "var-lib.mount"
       "network-online.target"
+      "unbound.service"
+      "adguardhome.service"
     ];
     before = [
       "var-lib-acme.mount"
       "acme-${publicDomain}.service"
+      "acme-${internalDomain}.service"
     ];
     unitConfig = {
       ConditionPathExists = "!${baseDirAcme}/.restore_service_completed";
@@ -154,7 +170,7 @@ in
         touch "$RESTORE_COMPLETION_FLAG"
         chown acme:acme "$RESTORE_COMPLETION_FLAG"
 
-        echo "--- Paperless-NGX restore complete ---"
+        echo "--- ACME certs restore complete ---"
       '';
   };
 }

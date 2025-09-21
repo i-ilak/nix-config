@@ -71,6 +71,10 @@
               domain = "paperless.${publicDomain}";
               answer = "${ip}";
             }
+            {
+              domain = "monitoring.${publicDomain}";
+              answer = "${ip}";
+            }
           ];
           user_rules = [
             "@@||${localDomainName}^"

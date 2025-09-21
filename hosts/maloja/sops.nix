@@ -23,6 +23,12 @@ in
         group = "backup";
         mode = "0440";
       };
+      monitoring_auth_password = {
+        key = "monitoring/auth_password";
+        owner = "root";
+        group = "monitoring";
+        mode = "0640";
+      };
     };
     age = {
       sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];

@@ -23,14 +23,15 @@
     ./caddy.nix
     ./sshd.nix
     # Services
-    ./jellyfin.nix
-    ./ytdl-sub.nix
-    ./home-assistant.nix
-    ./paperless.nix
+    # ./jellyfin.nix
+    # ./ytdl-sub.nix
+    # ./home-assistant.nix
+    # ./paperless.nix
     ./adguard_home.nix
     ./unbound.nix
     ./prometheus.nix
     ./grafana.nix
+    ./nginx.nix
     # ./authentik.nix
     # ./authelia.nix
   ];
@@ -78,6 +79,7 @@
     groups = {
       media = { };
       backup = { };
+      monitoring = { };
     };
     mutableUsers = false;
     users = {
@@ -93,6 +95,8 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDKU+/RXjWLUzfRgMIhWnI4LD9Zh11BmCJsFaYNZNQqg"
         ];
       };
+      prometheus.extraGroups = [ "monitoring" ];
+      grafana.extraGroups = [ "monitoring" ];
     };
   };
 

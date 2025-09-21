@@ -13,13 +13,17 @@
     sharedVariables =
       let
         hostname = "maloja";
+        publicDomain = "ilak.ch";
         localDomainName = "lan";
       in
       {
         inherit hostname;
+        inherit publicDomain;
         inherit localDomainName;
+
         baseDomain = "${hostname}.${localDomainName}";
-        publicDomain = "ilak.ch";
+        internalDomain = "${hostname}.${publicDomain}";
+
         ip = "192.168.1.2";
         ipv6 = "fd00:ad:ad::2";
         gatewayIp = "192.168.1.1";
@@ -37,6 +41,8 @@
         unbound.port = 5335;
         prometheus.port = 33040;
         grafana.port = 33041;
+
+        internalReverseProxyPort = 4443;
       };
   };
 }

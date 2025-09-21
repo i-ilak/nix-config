@@ -66,6 +66,14 @@ in
             reverse_proxy 127.0.0.1:${toString config.sharedVariables.adguardhome.port}
           '';
         };
+        "monitoring.${publicDomain}" = {
+          extraConfig = ''
+            ${commonConfig}
+            reverse_proxy 127.0.0.1:${toString config.services.grafana.settings.server.http_port} {
+              header_up X-Real-IP {remote_host}
+            }
+          '';
+        };
       };
     };
 

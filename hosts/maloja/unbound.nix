@@ -8,6 +8,8 @@
 
   services.unbound = {
     enable = true;
+    resolveLocalQueries = true;
+    package = pkgs.unbound-full;
     settings = {
       server = {
         inherit (config.sharedVariables.unbound) port;
@@ -27,6 +29,7 @@
         use-caps-for-id = false;
         prefetch = true;
         edns-buffer-size = 1232;
+        extended-statistics = true;
 
         # Custom settings
         hide-identity = true;
@@ -35,7 +38,10 @@
         root-hints = "${pkgs.dns-root-data}/root.hints";
       };
 
-      remote-control.control-enable = true;
+      remote-control = {
+        control-enable = true;
+        control-interface = "/var/run/unbound/unbound.sock";
+      };
     };
   };
 }
