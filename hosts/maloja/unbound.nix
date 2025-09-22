@@ -8,6 +8,8 @@
 
   services.unbound = {
     enable = true;
+    resolveLocalQueries = false;
+    package = pkgs.unbound-full;
     settings = {
       server = {
         inherit (config.sharedVariables.unbound) port;
@@ -17,10 +19,12 @@
         ];
         access-control = [
           "0.0.0.0/0 refuse"
-          "127.0.0.1 allow"
+          "127.0.0.1/32 allow"
           "::0/0 refuse"
-          "::1 allow"
+          "::1/128 allow"
         ];
+
+        do-not-query-localhost = false;
 
         harden-glue = true;
         harden-dnssec-stripped = true;
