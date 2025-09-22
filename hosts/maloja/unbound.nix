@@ -8,8 +8,6 @@
 
   services.unbound = {
     enable = true;
-    resolveLocalQueries = true;
-    package = pkgs.unbound-full;
     settings = {
       server = {
         inherit (config.sharedVariables.unbound) port;

@@ -31,7 +31,6 @@
     ./unbound.nix
     ./prometheus.nix
     ./grafana.nix
-    ./nginx.nix
     # ./authentik.nix
     # ./authelia.nix
   ];
@@ -95,7 +94,10 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDKU+/RXjWLUzfRgMIhWnI4LD9Zh11BmCJsFaYNZNQqg"
         ];
       };
-      prometheus.extraGroups = [ "monitoring" ];
+      prometheus.extraGroups = [
+        "monitoring"
+        "unbound"
+      ];
       grafana.extraGroups = [ "monitoring" ];
     };
   };

@@ -5,7 +5,6 @@
 }:
 let
   inherit (config.sharedVariables) publicDomain;
-  inherit (config.sharedVariables) internalDomain;
   baseDirAcme = "/var/lib/acme";
 in
 {
@@ -64,7 +63,7 @@ in
         content = ''
           CLOUDFLARE_DNS_API_TOKEN=${config.sops.placeholder."cloudflare-dns-api-token"}
         '';
-        owner = "backup";
+        owner = "caddy";
       };
     };
   };
@@ -79,16 +78,6 @@ in
 
         domain = "${publicDomain}";
         extraDomainNames = [ "*.${publicDomain}" ];
-        dnsProvider = "cloudflare";
-        dnsResolver = "1.1.1.1:53";
-        dnsPropagationCheck = true;
-        environmentFile = config.sops.templates."acme-cloudflare-env-file".path;
-      };
-      "${internalDomain}" = {
-        inherit (config.services.nginx) group;
-
-        domain = "*.${internalDomain}";
-        extraDomainNames = [ internalDomain ];
         dnsProvider = "cloudflare";
         dnsResolver = "1.1.1.1:53";
         dnsPropagationCheck = true;
@@ -135,7 +124,6 @@ in
     before = [
       "var-lib-acme.mount"
       "acme-${publicDomain}.service"
-      "acme-${internalDomain}.service"
     ];
     unitConfig = {
       ConditionPathExists = "!${baseDirAcme}/.restore_service_completed";

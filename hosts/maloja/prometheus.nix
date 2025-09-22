@@ -2,9 +2,6 @@
   config,
   ...
 }:
-let
-  inherit (config.sharedVariables) internalDomain;
-in
 {
   services.prometheus = {
     enable = true;
@@ -13,7 +10,8 @@ in
     exporters = {
       unbound = {
         enable = true;
-        inherit (config.sharedVariables.unbound) port;
+        port = 9167;
+        listenAddress = "127.0.0.1";
         unbound = {
           host = "unix:///${config.services.unbound.settings.remote-control.control-interface}";
           ca = null;
@@ -21,34 +19,61 @@ in
           key = null;
         };
         group = "unbound";
-        listenAddress = "127.0.0.1";
       };
       node = {
         enable = true;
+        port = 9100;
         listenAddress = "127.0.0.1";
         openFirewall = false;
-        port = 9100;
-        extraFlags = [ "--collector.netdev.address-info" ];
+        extraFlags = [
+          "--collector.netdev.address-info"
+          "--collector.filesystem.mount-points-exclude=^/(dev|proc|sys|run/user)($|/)"
+        ];
+      };
+      systemd = {
+        enable = true;
+        port = 9558;
+        listenAddress = "127.0.0.1";
       };
     };
     scrapeConfigs = [
       {
-        job_name = "monitoring-maloja";
-        basic_auth = {
-          username = "prometheus_server";
-          password_file = config.sops.secrets.monitoring_auth_password.path;
-        };
-        scheme = "https";
-        scrape_interval = "30s";
+        job_name = "prometheus";
         static_configs = [
           {
-            targets = [
-              "node-exporter.${internalDomain}:${builtins.toString config.sharedVariables.internalReverseProxyPort}"
-              "unbound-exporter.${internalDomain}:${builtins.toString config.sharedVariables.internalReverseProxyPort}"
-            ];
+            targets = [ "127.0.0.1:${builtins.toString config.sharedVariables.prometheus.port}" ];
+          }
+        ];
+      }
+      {
+        job_name = "node";
+        static_configs = [
+          {
+            targets = [ "127.0.0.1:9100" ];
+          }
+        ];
+      }
+      {
+        job_name = "unbound";
+        static_configs = [
+          {
+            targets = [ "127.0.0.1:9167" ];
+          }
+        ];
+      }
+      {
+        job_name = "systemd";
+        static_configs = [
+          {
+            targets = [ "127.0.0.1:9558" ];
           }
         ];
       }
     ];
+    globalConfig = {
+      scrape_interval = "15s";
+      evaluation_interval = "15s";
+    };
+    retentionTime = "30d";
   };
 }
