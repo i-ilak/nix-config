@@ -72,15 +72,17 @@ in
     acceptTerms = true;
     defaults.email = "ivan.ilak@hotmail.com";
 
-    certs."${publicDomain}" = {
-      inherit (config.services.caddy) group;
+    certs = {
+      "${publicDomain}" = {
+        inherit (config.services.caddy) group;
 
-      domain = "${publicDomain}";
-      extraDomainNames = [ "*.${publicDomain}" ];
-      dnsProvider = "cloudflare";
-      dnsResolver = "1.1.1.1:53";
-      dnsPropagationCheck = true;
-      environmentFile = config.sops.templates."acme-cloudflare-env-file".path;
+        domain = "${publicDomain}";
+        extraDomainNames = [ "*.${publicDomain}" ];
+        dnsProvider = "cloudflare";
+        dnsResolver = "1.1.1.1:53";
+        dnsPropagationCheck = true;
+        environmentFile = config.sops.templates."acme-cloudflare-env-file".path;
+      };
     };
   };
 
@@ -116,6 +118,8 @@ in
     after = [
       "var-lib.mount"
       "network-online.target"
+      "unbound.service"
+      "adguardhome.service"
     ];
     before = [
       "var-lib-acme.mount"
@@ -154,7 +158,7 @@ in
         touch "$RESTORE_COMPLETION_FLAG"
         chown acme:acme "$RESTORE_COMPLETION_FLAG"
 
-        echo "--- Paperless-NGX restore complete ---"
+        echo "--- ACME certs restore complete ---"
       '';
   };
 }

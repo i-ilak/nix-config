@@ -115,6 +115,8 @@
       ];
       after = [
         "network-online.target"
+        "unbound.service"
+        "adguardhome.service"
       ];
       before = [
         "home-assistant.service"

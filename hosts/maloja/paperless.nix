@@ -139,6 +139,8 @@ in
     ];
     after = [
       "network-online.target"
+      "unbound.service"
+      "adguardhome.service"
     ];
     before = [
       "paperless-web.service"
