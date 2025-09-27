@@ -21,7 +21,6 @@
         dns = {
           upstream_dns = [
             "127.0.0.1:${builtins.toString unbound.port}"
-            "::1:${builtins.toString unbound.port}"
           ];
         };
         dhcp = {

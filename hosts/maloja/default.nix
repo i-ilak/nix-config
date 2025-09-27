@@ -63,14 +63,6 @@
           }
         ];
       };
-      ipv6 = {
-        addresses = [
-          {
-            address = "${config.sharedVariables.ipv6}";
-            prefixLength = 64;
-          }
-        ];
-      };
     };
   };
 
