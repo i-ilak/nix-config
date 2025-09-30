@@ -6,6 +6,7 @@ let
   sharedFiles = import ../../modules/shared/files.nix { };
   file = {
     "${xdg_configHome}/ccache/ccache.conf".source = ../../dotfiles/linux/ccache/ccache.conf;
-  } // sharedFiles;
+  }
+  // sharedFiles;
 in
 file

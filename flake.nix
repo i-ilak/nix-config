@@ -90,9 +90,7 @@
       self,
       nixpkgs,
       flake-utils,
-      pre-commit-hooks,
       treefmt-nix,
-      deadnix,
       ...
     }@inputs:
     let
