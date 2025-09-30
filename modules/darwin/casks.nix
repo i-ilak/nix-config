@@ -10,6 +10,7 @@ _: [
   "spotify"
   "brave-browser"
   "logitech-options"
+  "expressvpn"
 
   # Development Tools
   "visual-studio-code"

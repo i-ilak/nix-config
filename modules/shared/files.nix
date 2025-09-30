@@ -4,5 +4,5 @@ let
   xdg_configHome = "${home}/.config";
 in
 {
-  "${xdg_configHome}/wallpapers".source = ../../dotfiles/wallpapers;
+  # "${xdg_configHome}/wallpapers".source = ../../dotfiles/wallpapers;
 }
