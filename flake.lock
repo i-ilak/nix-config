@@ -551,26 +551,6 @@
         "type": "github"
       }
     },
-    "ha-cli": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1755968840,
-        "narHash": "sha256-nNCv4wQ5b+z3UCYpfo2HBocfGfQ+9LWnvlI97LsjTVI=",
-        "owner": "i-ilak",
-        "repo": "ha-cli",
-        "rev": "4c39abaf3f6c226b1be1d0f1e80b238d7c36a3e4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "i-ilak",
-        "repo": "ha-cli",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -1117,7 +1097,6 @@
         "disko": "disko",
         "flake-utils": "flake-utils_2",
         "ghostty": "ghostty",
-        "ha-cli": "ha-cli",
         "home-manager": "home-manager",
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
@@ -1132,7 +1111,8 @@
         "paperless-ngx": "paperless-ngx",
         "pre-commit-hooks": "pre-commit-hooks_2",
         "sops-nix": "sops-nix",
-        "treefmt-nix": "treefmt-nix_2"
+        "treefmt-nix": "treefmt-nix_2",
+        "unifi-controller": "unifi-controller"
       }
     },
     "sops-nix": {
@@ -1298,6 +1278,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "unifi-controller": {
+      "locked": {
+        "lastModified": 1748026580,
+        "narHash": "sha256-rWtXrcIzU5wm/C8F9LWvUfBGu5U5E7cFzPYT1pHIJaQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "11cb3517b3af6af300dd6c055aeda73c9bf52c48",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "11cb3517b3af6af300dd6c055aeda73c9bf52c48",
         "type": "github"
       }
     },

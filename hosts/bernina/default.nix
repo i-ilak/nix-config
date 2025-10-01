@@ -2,7 +2,6 @@
   inputs,
   pkgs,
   config,
-  lib,
   ...
 }:
 {
@@ -19,18 +18,10 @@
     # Configuration
     ./additional_config_parameters.nix
     ./sops.nix
-    # ./tailscale.nix
-    ./acme.nix
-    ./caddy.nix
     ./sshd.nix
     # Services
-    ./jellyfin.nix
-    ./ytdl-sub.nix
-    ./home-assistant.nix
-    ./paperless.nix
-    # ./authentik.nix
-    # ./authelia.nix
-    ./unifi.nix
+    ./adguard_home.nix
+    ./unbound.nix
   ];
 
   networking = {
@@ -40,6 +31,12 @@
       allowedTCPPorts = [
         80
         443
+        53 # DNS
+      ];
+      allowedUDPPorts = [
+        53 # DNS
+        67 # DHCP
+        68 # DHCP
       ];
     };
     defaultGateway = {
@@ -60,7 +57,6 @@
 
   users = {
     groups = {
-      media = { };
       backup = { };
     };
     mutableUsers = false;
@@ -70,7 +66,6 @@
         hashedPasswordFile = config.sops.secrets."user-worker-password".path;
         isNormalUser = true;
         extraGroups = [
-          "media"
           "systemd-journal"
         ];
         openssh.authorizedKeys.keys = [
@@ -84,13 +79,8 @@
 
   environment.systemPackages = with pkgs; [
     neovim
-    rsync
-    tree
-    vim
-    git
-    jellyfin
-    jellyfin-web
-    jellyfin-ffmpeg
+    libraspberrypi
+    raspberrypi-eeprom
   ];
 
   # DO NOT CHANGE, EVER.

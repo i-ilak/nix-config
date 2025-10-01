@@ -8,7 +8,6 @@
       inherit (config.sharedVariables) ip;
       inherit (config.sharedVariables) gatewayIp;
       inherit (config.sharedVariables) publicDomain;
-      inherit (config.sharedVariables) localDomainName;
       inherit (config.sharedVariables) unbound;
       inherit (config.sharedVariables.adguardhome) port;
     in
@@ -33,7 +32,6 @@
             range_end = "192.168.1.200";
             lease_duration = 86400; # 1 day in sec
           };
-          local_domain_name = "${localDomainName}";
         };
         users = [
           {
@@ -72,7 +70,8 @@
             }
           ];
           user_rules = [
-            "@@||${localDomainName}^"
+            "@@||chaoticgood.management^$important"
+            "@@||blog.nommy.moe^$important"
           ];
         };
         filters =
