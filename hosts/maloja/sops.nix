@@ -10,10 +10,12 @@ in
     defaultSopsFile = "${secretspath}/secrets/maloja/general.yaml";
     secrets = {
       user-worker-password = {
+        sopsFile = "${secretspath}/secrets/shared.yaml";
         key = "user/worker/password";
         neededForUsers = true;
       };
       user-root-password = {
+        sopsFile = "${secretspath}/secrets/shared.yaml";
         key = "user/root/password";
         neededForUsers = true;
       };
