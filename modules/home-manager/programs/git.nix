@@ -80,6 +80,9 @@ in
           colorMoved = "plain";
           mnemonicPrefix = true;
           renames = true;
+          "sopsdiffer" = {
+            textconv = "sops decrypt";
+          };
         };
         fetch = {
           prune = true;
