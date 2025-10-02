@@ -16,6 +16,7 @@ let
     bandwhich # Show network utilization
     grex # Create regex expression from provided examples
     delta # Better `diff` and `git diff` view
+    comma # Run easily things from nixpkgs without first creating a shell
   ];
 
   developer_tools = with pkgs; [
