@@ -66,6 +66,12 @@ in
             reverse_proxy 127.0.0.1:${toString config.sharedVariables.adguardhome.port}
           '';
         };
+        "cache.nixos.${publicDomain}" = {
+          extraConfig = ''
+            ${commonConfig}
+            reverse_proxy 127.0.0.1:${toString config.sharedVariables.atticd.port}
+          '';
+        };
       };
     };
 

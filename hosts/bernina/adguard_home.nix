@@ -68,6 +68,10 @@
               domain = "paperless.${publicDomain}";
               answer = "${ip}";
             }
+            {
+              domain = "cache.nix.${publicDomain}";
+              answer = "${ip}";
+            }
           ];
           user_rules = [
             "@@||chaoticgood.management^$important"

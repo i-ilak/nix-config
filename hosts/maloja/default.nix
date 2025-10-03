@@ -27,6 +27,7 @@
     ./ytdl-sub.nix
     ./home-assistant.nix
     ./paperless.nix
+    ./atticd.nix
     # ./authentik.nix
     # ./authelia.nix
     ./unifi.nix
@@ -61,6 +62,7 @@
     groups = {
       media = { };
       backup = { };
+      atticd = { };
     };
     mutableUsers = false;
     users = {
@@ -76,10 +78,19 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDKU+/RXjWLUzfRgMIhWnI4LD9Zh11BmCJsFaYNZNQqg"
         ];
       };
+      atticd = {
+        isSystemUser = true;
+        group = "atticd";
+      };
     };
   };
 
-  nix.settings.allowed-users = [ "root" ];
+  nix.settings = {
+    substituters = [
+      "https://cache.nix.${config.sharedVariables.publicDomain}"
+    ];
+    allowed-users = [ "root" ];
+  };
 
   environment.systemPackages = with pkgs; [
     neovim

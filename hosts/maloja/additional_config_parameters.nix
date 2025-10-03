@@ -27,6 +27,7 @@
       };
       adguardhome.port = 3000;
       unbound.port = 5335;
+      atticd.port = 33080;
     };
   };
 }
