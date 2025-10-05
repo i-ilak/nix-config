@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   ...
 }:
 {
@@ -25,6 +24,7 @@
     ./adguard_home.nix
     ./unbound.nix
     ./unifi.nix
+    ./caddy.nix
   ];
 
   nix.settings.allowed-users = [ "root" ];
