@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  config,
   ...
 }:
 {
@@ -19,6 +18,8 @@
     ../../modules/shared/networking.nix
     ./additional_config_parameters.nix
     ./sops.nix
+    ./networking.nix
+    ./user_setup.nix
     # ./tailscale.nix
     ./acme.nix
     ./caddy.nix
@@ -31,53 +32,6 @@
     # ./authentik.nix
     # ./authelia.nix
   ];
-
-  networking = {
-    inherit (config.sharedVariables) hostName;
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [
-        80
-        443
-      ];
-    };
-    defaultGateway = {
-      address = "${config.networkLevelVariables.gatewayIp}";
-    };
-    useDHCP = false;
-    interfaces."enp89s0" = {
-      ipv4 = {
-        addresses = [
-          {
-            address = "${config.networkLevelVariables.ipMap.${config.networking.hostName}}";
-            prefixLength = 24;
-          }
-        ];
-      };
-    };
-  };
-
-  users = {
-    groups = {
-      media = { };
-      backup = { };
-    };
-    mutableUsers = false;
-    users = {
-      root.hashedPasswordFile = config.sops.secrets."user-root-password".path;
-      worker = {
-        hashedPasswordFile = config.sops.secrets."user-worker-password".path;
-        isNormalUser = true;
-        extraGroups = [
-          "media"
-          "systemd-journal"
-        ];
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDKU+/RXjWLUzfRgMIhWnI4LD9Zh11BmCJsFaYNZNQqg"
-        ];
-      };
-    };
-  };
 
   nix.settings.allowed-users = [ "root" ];
 

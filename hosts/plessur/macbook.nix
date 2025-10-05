@@ -50,6 +50,7 @@ in
     trusted-users = [
       "${user}"
     ];
+    eval-cores = 2;
   };
 
   # Use when nix installed without `determinated`
@@ -73,7 +74,7 @@ in
       };
 
       linux-builder = {
-        enable = true;
+        enable = false;
         ephemeral = true;
         maxJobs = 4;
         config = {

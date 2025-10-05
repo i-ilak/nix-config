@@ -9,13 +9,13 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.sops-nix.nixosModules.sops
     ./default.nix
 
-    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-
-    {
-      sdImage = {
-        compressImage = true;
-        expandOnBoot = true;
-      };
-    }
+    # "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+    #
+    # {
+    #   sdImage = {
+    #     compressImage = true;
+    #     expandOnBoot = true;
+    #   };
+    # }
   ];
 }
