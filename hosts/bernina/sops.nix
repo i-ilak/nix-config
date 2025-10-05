@@ -14,12 +14,12 @@
     {
       secrets = {
         "user-root-password" = {
-          sopsFile = "${secretsPath}/secrets/shared.yaml";
+          sopsFile = "${secretsPath}/secrets/private_shared.yaml";
           key = "user/root/password";
           neededForUsers = true;
         };
         "user-worker-password" = {
-          sopsFile = "${secretsPath}/secrets/shared.yaml";
+          sopsFile = "${secretsPath}/secrets/private_shared.yaml";
           key = "user/worker/password";
           neededForUsers = true;
         };

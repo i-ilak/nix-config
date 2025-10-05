@@ -16,6 +16,7 @@
     ../../modules/nixos/hardening/no-defaults.nix
     ../../modules/nixos/hardening/noexec.nix
     # Configuration
+    ../../modules/shared/networking.nix
     ./additional_config_parameters.nix
     ./sops.nix
     # ./tailscale.nix
@@ -29,11 +30,10 @@
     ./paperless.nix
     # ./authentik.nix
     # ./authelia.nix
-    ./unifi.nix
   ];
 
   networking = {
-    hostName = config.sharedVariables.hostname;
+    inherit (config.sharedVariables) hostName;
     firewall = {
       enable = true;
       allowedTCPPorts = [
@@ -42,14 +42,14 @@
       ];
     };
     defaultGateway = {
-      address = "${config.sharedVariables.gatewayIp}";
+      address = "${config.networkLevelVariables.gatewayIp}";
     };
     useDHCP = false;
     interfaces."enp89s0" = {
       ipv4 = {
         addresses = [
           {
-            address = "${config.sharedVariables.ip}";
+            address = "${config.networkLevelVariables.ipMap.${config.networking.hostName}}";
             prefixLength = 24;
           }
         ];

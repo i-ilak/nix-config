@@ -11,10 +11,7 @@
 
   config = {
     sharedVariables = {
-      hostname = "bernina";
-      publicDomain = "ilak.ch";
-      ip = "192.168.1.2";
-      gatewayIp = "192.168.1.1";
+      hostName = "bernina";
 
       adguardhome.port = 3000;
       unbound.port = 5335;
