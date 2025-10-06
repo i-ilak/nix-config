@@ -1,16 +1,40 @@
 {
   config,
+  lib,
   ...
 }:
 {
   services.adguardhome =
     let
-      inherit (config.sharedVariables) ip;
-      inherit (config.sharedVariables) gatewayIp;
-      inherit (config.sharedVariables) publicDomain;
-      inherit (config.sharedVariables) localDomainName;
+      inherit (config.networkLevelVariables) gatewayIp;
+      inherit (config.networkLevelVariables) publicDomain;
       inherit (config.sharedVariables) unbound;
       inherit (config.sharedVariables.adguardhome) port;
+
+      rewrites =
+        let
+          hosts = {
+            maloja = [
+              "paperless"
+              "jellyfin"
+              "home"
+            ];
+            bernina = [
+              "adguard"
+              "network"
+            ];
+          };
+
+          makeRewrite = hostname: subdomain: {
+            domain = "${subdomain}.${publicDomain}";
+            answer = config.networkLevelVariables.ipMap.${hostname};
+          };
+
+          makeHostRewrites = hostname: subdomains: map (subdomain: makeRewrite hostname subdomain) subdomains;
+
+          allRewrites = lib.mapAttrsToList makeHostRewrites hosts;
+        in
+        lib.flatten allRewrites;
     in
     {
       enable = true;
@@ -33,7 +57,6 @@
             range_end = "192.168.1.200";
             lease_duration = 86400; # 1 day in sec
           };
-          local_domain_name = "${localDomainName}";
         };
         users = [
           {
@@ -49,30 +72,10 @@
           safe_search = {
             enabled = false;
           };
-          rewrites = [
-            {
-              domain = "auth.${publicDomain}";
-              answer = "${ip}";
-            }
-            {
-              domain = "home.${publicDomain}";
-              answer = "${ip}";
-            }
-            {
-              domain = "adguard.${publicDomain}";
-              answer = "${ip}";
-            }
-            {
-              domain = "jellyfin.${publicDomain}";
-              answer = "${ip}";
-            }
-            {
-              domain = "paperless.${publicDomain}";
-              answer = "${ip}";
-            }
-          ];
+          inherit rewrites;
           user_rules = [
-            "@@||${localDomainName}^"
+            "@@||chaoticgood.management^$important"
+            "@@||blog.nommy.moe^$important"
           ];
         };
         filters =
@@ -94,4 +97,5 @@
         schema_version = 29;
       };
     };
+  systemd.services.adguardhome.requires = [ "unbound.service" ];
 }

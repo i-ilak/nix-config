@@ -39,4 +39,7 @@
       };
     };
   };
+  systemd.services.unbound.requires = [
+    "network-online.target"
+  ];
 }

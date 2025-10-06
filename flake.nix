@@ -78,11 +78,8 @@
       url = "github:nix-community/authentik-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ha-cli = {
-      url = "github:i-ilak/ha-cli";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     paperless-ngx.url = "github:nixos/nixpkgs/a3d36c87615581203615de892b46b55a3045c336";
+    unifi-controller.url = "github:nixos/nixpkgs/11cb3517b3af6af300dd6c055aeda73c9bf52c48";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };
   outputs =
@@ -192,6 +189,9 @@
           inherit nixpkgs inputs;
         };
         albula = import ./hosts/albula/nixos.nix {
+          inherit nixpkgs inputs;
+        };
+        bernina = import ./hosts/bernina/nixos.nix {
           inherit nixpkgs inputs;
         };
       };

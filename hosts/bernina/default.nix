@@ -1,49 +1,40 @@
 {
-  inputs,
   pkgs,
   ...
 }:
 {
   imports = [
-    inputs.disko.nixosModules.disko
-    ./disk-config.nix
+    # inputs.disko.nixosModules.disko
+    # ./disko-config.nix
+    ./hardware-configuration.nix
     # Hardening
-    ./impermanance.nix
     ../../modules/nixos/locale.nix
     ../../modules/nixos/hardening/audit.nix
     ../../modules/nixos/hardening/sudo.nix
     ../../modules/nixos/hardening/no-defaults.nix
-    ../../modules/nixos/hardening/noexec.nix
     # Configuration
     ../../modules/shared/networking.nix
     ./additional_config_parameters.nix
     ./sops.nix
-    ./networking.nix
     ./user_setup.nix
-    # ./tailscale.nix
-    ./acme.nix
-    ./caddy.nix
+    ./networking.nix
     ./sshd.nix
+    ./acme_certs_sync.nix
     # Services
-    ./jellyfin.nix
-    ./ytdl-sub.nix
-    ./home-assistant.nix
-    ./paperless.nix
-    # ./authentik.nix
-    # ./authelia.nix
+    ./adguard_home.nix
+    ./unbound.nix
+    ./unifi.nix
+    ./caddy.nix
   ];
 
   nix.settings.allowed-users = [ "root" ];
 
   environment.systemPackages = with pkgs; [
-    neovim
-    rsync
-    tree
-    vim
     git
-    jellyfin
-    jellyfin-web
-    jellyfin-ffmpeg
+    neovim
+    restic
+    jq
+    rsync
   ];
 
   # DO NOT CHANGE, EVER.
