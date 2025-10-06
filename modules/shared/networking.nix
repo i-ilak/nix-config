@@ -13,7 +13,7 @@
     networkLevelVariables = {
       publicDomain = "ilak.ch";
       ipMap = {
-        bernina = "192.168.1.4";
+        bernina = "192.168.1.2";
         maloja = "192.168.1.3";
       };
       gatewayIp = "192.168.1.1";

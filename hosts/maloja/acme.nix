@@ -91,7 +91,7 @@ in
       User = "root";
       Group = "backup";
       EnvironmentFile = config.sops.templates."acme-accessFile".path;
-      WorkingDirectory = "${baseDirAcme}";
+      WorkingDirectory = "/var/lib";
     };
 
     script =

@@ -6,6 +6,9 @@
 
   networking = {
     inherit (config.sharedVariables) hostName;
+    nameservers = [
+      config.networkLevelVariables.ipMap.bernina
+    ];
     firewall = {
       enable = true;
       allowedTCPPorts = [
