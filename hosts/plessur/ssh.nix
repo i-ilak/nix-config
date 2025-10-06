@@ -18,9 +18,9 @@
       };
       "bernina" = {
         hostname = "${config.networkLevelVariables.ipMap.bernina}";
-        user = "worker";
+        user = "root";
         port = 22023;
-        identityFile = "/Users/iilak/.ssh/maloja_access";
+        identityFile = "/Users/iilak/.ssh/bernina_root_access";
         identitiesOnly = true;
         extraOptions = {
           SetEnv = "TERM=xterm-256color";

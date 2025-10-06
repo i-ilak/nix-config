@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   config,
+  lib,
   ...
 }:
 let
@@ -76,6 +77,7 @@ in
     flavor = "mocha";
     enable = true; # Enables it for all supported tools
     rofi.enable = false;
+    vivid = lib.mkForce { };
   };
 
   nixpkgs.config.allowUnfree = true;

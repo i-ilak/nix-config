@@ -127,7 +127,6 @@ in
     let
       restorePaperlessFromBackupServiceName = "paperless-restore-from-backup";
       waitFor = [
-        "var-lib-paperless.mount"
         "${restorePaperlessFromBackupServiceName}.service"
       ];
     in
@@ -135,6 +134,7 @@ in
       paperless-scheduler.after = waitFor;
       paperless-consumer.after = waitFor;
       paperless-web.after = waitFor;
+      paperless-task-queue.after = waitFor;
 
       "${restorePaperlessFromBackupServiceName}" = {
         description = "Restore Paperless-NGX from S3 backup if not already done";
@@ -142,7 +142,6 @@ in
         wantedBy = [ "multi-user.target" ];
         requires = [
           "network-online.target"
-          "var-lib-paperless.mount"
         ];
         before = [
           "paperless-web.service"

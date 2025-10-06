@@ -111,7 +111,6 @@
       wantedBy = [ "multi-user.target" ];
       wants = [
         "network-online.target"
-        "var-lib-hass.mount"
       ];
       after = [
         "network-online.target"

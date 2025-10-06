@@ -79,7 +79,6 @@ in
       "network-online.target"
     ];
     before = [
-      "var-lib-acme.mount"
       "acme-${publicDomain}.service"
     ];
     unitConfig = {
