@@ -26,7 +26,11 @@ in
         "network.${publicDomain}" = {
           extraConfig = ''
             ${commonConfig}
-            reverse_proxy 127.0.0.1:8443
+            reverse_proxy https://127.0.0.1:8443 {
+              transport http {
+                tls_insecure_skip_verify
+              }
+            }
           '';
         };
         "adguard.${publicDomain}" = {
