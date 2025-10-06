@@ -30,6 +30,7 @@
   nix.settings.allowed-users = [ "root" ];
 
   environment.systemPackages = with pkgs; [
+    git
     neovim
     restic
     jq
