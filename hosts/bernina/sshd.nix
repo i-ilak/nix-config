@@ -3,7 +3,7 @@ _: {
     enable = true;
     settings = {
       PasswordAuthentication = false;
-      PermitRootLogin = "nopwd";
+      PermitRootLogin = "prohibit-password";
       AllowTcpForwarding = true;
       X11Forwarding = false;
       AllowAgentForwarding = false;
