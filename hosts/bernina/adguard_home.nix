@@ -49,7 +49,7 @@
         };
         dhcp = {
           enabled = true;
-          interface_name = "enp89s0";
+          interface_name = "end0";
           dhcpv4 = {
             gateway_ip = "${gatewayIp}";
             subnet_mask = "255.255.255.0";
