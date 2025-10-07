@@ -194,6 +194,9 @@
         bernina = import ./hosts/bernina/nixos.nix {
           inherit nixpkgs inputs;
         };
+        moesa = import ./hosts/moesa/nixos.nix {
+          inherit nixpkgs inputs;
+        };
       };
     };
 }
