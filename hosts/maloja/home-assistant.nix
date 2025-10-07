@@ -111,12 +111,9 @@
       wantedBy = [ "multi-user.target" ];
       wants = [
         "network-online.target"
-        "var-lib-hass.mount"
       ];
       after = [
         "network-online.target"
-        "unbound.service"
-        "adguardhome.service"
       ];
       before = [
         "home-assistant.service"

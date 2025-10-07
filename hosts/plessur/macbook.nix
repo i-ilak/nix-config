@@ -50,6 +50,7 @@ in
     trusted-users = [
       "${user}"
     ];
+    eval-cores = 2;
   };
 
   # Use when nix installed without `determinated`
@@ -70,6 +71,21 @@ in
           "aarch64-linux"
           "x86_64-linux"
         ];
+      };
+
+      linux-builder = {
+        enable = false;
+        ephemeral = true;
+        maxJobs = 4;
+        config = {
+          virtualisation = {
+            darwin-builder = {
+              diskSize = 40 * 1024;
+              memorySize = 8 * 1024;
+            };
+            cores = 6;
+          };
+        };
       };
 
       gc = {

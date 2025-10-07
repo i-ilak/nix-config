@@ -4,10 +4,14 @@
   ...
 }:
 let
-  inherit (config.sharedVariables) publicDomain;
+  inherit (config.networkLevelVariables) publicDomain;
   baseDirAcme = "/var/lib/acme";
 in
 {
+  imports = [
+    ../../modules/shared/sops/acme.nix
+  ];
+
   sops = {
     secrets = {
       "cloudflare-dns-api-token" = {
@@ -16,49 +20,8 @@ in
         group = "caddy";
         mode = "0400";
       };
-      acme-b2-endpoint = {
-        key = "acme/b2/endpoint";
-        owner = "root";
-        group = "backup";
-        mode = "0440";
-      };
-      acme-b2-bucket_name = {
-        key = "acme/b2/bucket_name";
-        owner = "root";
-        group = "backup";
-        mode = "0440";
-      };
-      acme-b2-account_id = {
-        key = "acme/b2/account_id";
-        owner = "root";
-        group = "backup";
-        mode = "0440";
-      };
-      acme-b2-application_key = {
-        key = "acme/b2/application_key";
-        owner = "root";
-        group = "backup";
-        mode = "0440";
-      };
     };
     templates = {
-      "acme-repositoryFile" = {
-        content = ''
-          s3:${config.sops.placeholder."acme-b2-endpoint"}/${config.sops.placeholder."acme-b2-bucket_name"}
-        '';
-        owner = "root";
-        group = "backup";
-        mode = "0440";
-      };
-      "acme-accessFile" = {
-        content = ''
-          AWS_ACCESS_KEY_ID="${config.sops.placeholder."acme-b2-account_id"}"
-          AWS_SECRET_ACCESS_KEY="${config.sops.placeholder."acme-b2-application_key"}"
-        '';
-        owner = "root";
-        group = "backup";
-        mode = "0440";
-      };
       "acme-cloudflare-env-file" = {
         content = ''
           CLOUDFLARE_DNS_API_TOKEN=${config.sops.placeholder."cloudflare-dns-api-token"}
@@ -112,17 +75,10 @@ in
     description = "Restore ACME/Lets Encrypt certificates from S3 backup if not already done";
 
     wantedBy = [ "multi-user.target" ];
-    wants = [
+    requires = [
       "network-online.target"
-    ];
-    after = [
-      "var-lib.mount"
-      "network-online.target"
-      "unbound.service"
-      "adguardhome.service"
     ];
     before = [
-      "var-lib-acme.mount"
       "acme-${publicDomain}.service"
     ];
     unitConfig = {
@@ -134,7 +90,7 @@ in
       User = "root";
       Group = "backup";
       EnvironmentFile = config.sops.templates."acme-accessFile".path;
-      WorkingDirectory = "${baseDirAcme}";
+      WorkingDirectory = "/var/lib";
     };
 
     script =

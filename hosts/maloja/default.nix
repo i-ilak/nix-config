@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  config,
   ...
 }:
 {
@@ -16,8 +15,11 @@
     ../../modules/nixos/hardening/no-defaults.nix
     ../../modules/nixos/hardening/noexec.nix
     # Configuration
+    ../../modules/shared/networking.nix
     ./additional_config_parameters.nix
     ./sops.nix
+    ./networking.nix
+    ./user_setup.nix
     # ./tailscale.nix
     ./acme.nix
     ./caddy.nix
@@ -30,67 +32,9 @@
     ./atticd.nix
     # ./authentik.nix
     # ./authelia.nix
-    ./unifi.nix
   ];
 
-  networking = {
-    hostName = config.sharedVariables.hostname;
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [
-        80
-        443
-      ];
-    };
-    defaultGateway = {
-      address = "${config.sharedVariables.gatewayIp}";
-    };
-    useDHCP = false;
-    interfaces."enp89s0" = {
-      ipv4 = {
-        addresses = [
-          {
-            address = "${config.sharedVariables.ip}";
-            prefixLength = 24;
-          }
-        ];
-      };
-    };
-  };
-
-  users = {
-    groups = {
-      media = { };
-      backup = { };
-      atticd = { };
-    };
-    mutableUsers = false;
-    users = {
-      root.hashedPasswordFile = config.sops.secrets."user-root-password".path;
-      worker = {
-        hashedPasswordFile = config.sops.secrets."user-worker-password".path;
-        isNormalUser = true;
-        extraGroups = [
-          "media"
-          "systemd-journal"
-        ];
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDKU+/RXjWLUzfRgMIhWnI4LD9Zh11BmCJsFaYNZNQqg"
-        ];
-      };
-      atticd = {
-        isSystemUser = true;
-        group = "atticd";
-      };
-    };
-  };
-
-  nix.settings = {
-    substituters = [
-      "https://cache.nix.${config.sharedVariables.publicDomain}"
-    ];
-    allowed-users = [ "root" ];
-  };
+  nix.settings.allowed-users = [ "root" ];
 
   environment.systemPackages = with pkgs; [
     neovim

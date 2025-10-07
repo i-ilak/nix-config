@@ -3,12 +3,15 @@ _: {
     enable = true;
     settings = {
       PasswordAuthentication = false;
-      PermitRootLogin = "no";
+      PermitRootLogin = "prohibit-password";
       AllowTcpForwarding = true;
       X11Forwarding = false;
       AllowAgentForwarding = false;
       AllowStreamLocalForwarding = false;
-      AllowUsers = [ "worker" ];
+      AllowUsers = [
+        "worker"
+        "root"
+      ];
     };
     ports = [ 22023 ];
     hostKeys = [

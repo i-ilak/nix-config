@@ -11,10 +11,7 @@
 
   config = {
     sharedVariables = {
-      hostname = "maloja";
-      publicDomain = "ilak.ch";
-      ip = "192.168.1.3";
-      gatewayIp = "192.168.1.1";
+      hostName = "maloja";
 
       paperless = {
         port = 33033;

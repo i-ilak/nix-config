@@ -5,17 +5,16 @@
   ...
 }:
 let
-  inherit (config.sharedVariables) publicDomain;
+  inherit (config.networkLevelVariables) publicDomain;
 in
 {
   services.caddy =
     let
-      inherit (config.sharedVariables) hostname;
-      inherit (config.sharedVariables) ip;
+      inherit (config.sharedVariables) hostName;
 
       certloc = "/var/lib/acme/${publicDomain}";
       commonConfig = ''
-        bind ${ip}
+        bind ${config.networkLevelVariables.ipMap.${hostName}}
         tls ${certloc}/cert.pem ${certloc}/key.pem {
           protocols tls1.3
         }
@@ -53,17 +52,11 @@ in
           '';
           logFormat = ''
             format console
-            output file /var/log/caddy/access-${hostname}.log {
+            output file /var/log/caddy/access-${hostName}.log {
               roll_size 10mb
               roll_keep 20
               roll_keep_for 7d
             }
-          '';
-        };
-        "adguard.${publicDomain}" = {
-          extraConfig = ''
-            ${commonConfig}
-            reverse_proxy 127.0.0.1:${toString config.sharedVariables.adguardhome.port}
           '';
         };
         "cache.nixos.${publicDomain}" = {
