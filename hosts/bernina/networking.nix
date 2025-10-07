@@ -2,6 +2,9 @@
   config,
   ...
 }:
+let
+  inherit (config.sharedVariables) interface;
+in
 {
   networking = {
     inherit (config.sharedVariables) hostName;
@@ -22,7 +25,7 @@
       address = "${config.networkLevelVariables.gatewayIp}";
     };
     useDHCP = false;
-    interfaces."end0" = {
+    interfaces.${interface} = {
       ipv4 = {
         addresses = [
           {

@@ -3,7 +3,6 @@
   ...
 }:
 {
-
   networking = {
     inherit (config.sharedVariables) hostName;
     nameservers = [
@@ -31,5 +30,4 @@
       };
     };
   };
-
 }

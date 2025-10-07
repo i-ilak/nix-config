@@ -12,6 +12,7 @@
   config = {
     sharedVariables = {
       hostName = "bernina";
+      interface = "end0";
 
       adguardhome.port = 3000;
       unbound.port = 5335;

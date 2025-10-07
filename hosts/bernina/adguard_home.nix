@@ -47,17 +47,21 @@
             "127.0.0.1:${builtins.toString unbound.port}"
           ];
         };
-        dhcp = {
-          enabled = true;
-          interface_name = "enp89s0";
-          dhcpv4 = {
-            gateway_ip = "${gatewayIp}";
-            subnet_mask = "255.255.255.0";
-            range_start = "192.168.1.100";
-            range_end = "192.168.1.200";
-            lease_duration = 86400; # 1 day in sec
+        dhcp =
+          let
+            inherit (config.sharedVariables) interface;
+          in
+          {
+            enabled = true;
+            interface_name = interface;
+            dhcpv4 = {
+              gateway_ip = "${gatewayIp}";
+              subnet_mask = "255.255.255.0";
+              range_start = "192.168.1.100";
+              range_end = "192.168.1.200";
+              lease_duration = 86400; # 1 day in sec
+            };
           };
-        };
         users = [
           {
             name = "admin";
