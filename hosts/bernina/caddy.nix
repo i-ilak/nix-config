@@ -21,6 +21,7 @@ in
     in
     {
       enable = true;
+      package = inputs.nixpkgs-unstable.legacyPackages."aarch64-linux".caddy;
       virtualHosts = {
         "network.${publicDomain}" = {
           extraConfig = ''

@@ -32,6 +32,7 @@
     };
     nixvim = {
       url = "github:i-ilak/nixvim-config";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
@@ -49,7 +50,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     catppuccin = {
-      url = "github:catppuccin/nix/release-25.05";
+      url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {

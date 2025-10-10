@@ -22,6 +22,7 @@ in
     in
     {
       enable = true;
+      package = inputs.nixpkgs-unstable.legacyPackages."x86_64-linux".caddy;
       virtualHosts = {
         "jellyfin.${publicDomain}" = {
           extraConfig = ''
