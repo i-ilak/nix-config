@@ -186,9 +186,9 @@
         maloja = import ./hosts/maloja/nixos.nix {
           inherit nixpkgs inputs;
         };
-        albula = import ./hosts/albula/nixos.nix {
-          inherit nixpkgs inputs;
-        };
+        # albula = import ./hosts/albula/nixos.nix {
+        #   inherit nixpkgs inputs;
+        # };
         bernina = import ./hosts/bernina/nixos.nix {
           inherit nixpkgs inputs;
         };

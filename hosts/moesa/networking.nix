@@ -19,7 +19,7 @@
       address = "${config.networkLevelVariables.gatewayIp}";
     };
     useDHCP = false;
-    interfaces."enp*s0" = {
+    interfaces."enp3s0" = {
       ipv4 = {
         addresses = [
           {

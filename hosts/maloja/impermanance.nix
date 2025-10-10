@@ -36,16 +36,17 @@
       "/etc/ssh/ssh_host_rsa_key.pub"
     ];
   };
-
-  fileSystems."/persist".neededForBoot = true;
-
-  fileSystems."/" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-    options = [
-      "defaults"
-      "size=2G"
-      "mode=755"
-    ];
+  fileSystems = {
+    "/etc/nixos".options = [ "noexec" ];
+    "/persist".neededForBoot = true;
+    "/" = {
+      device = "tmpfs";
+      fsType = "tmpfs";
+      options = [
+        "defaults"
+        "size=2G"
+        "mode=755"
+      ];
+    };
   };
 }

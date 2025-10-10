@@ -1,33 +1,25 @@
 {
   inputs,
-  pkgs,
   ...
 }:
 {
   imports = [
     inputs.disko.nixosModules.disko
     ./disk-config.nix
-    ./boot.nix
     # Hardening
+    ./system.nix
     ../../modules/nixos/locale.nix
     ../../modules/nixos/hardening/audit.nix
     ../../modules/nixos/hardening/sudo.nix
     ../../modules/nixos/hardening/no-defaults.nix
     ../../modules/nixos/hardening/noexec.nix
+    ../../modules/nixos/hardening/usbguard.nix
     # Configuration
     ../../modules/shared/networking.nix
     ./additional_config_parameters.nix
     ./networking.nix
     ./sshd.nix
     ./share.nix
-  ];
-
-  nix.settings.allowed-users = [ "root" ];
-
-  environment.systemPackages = with pkgs; [
-    vim
-    rsync
-    tree
   ];
 
   # DO NOT CHANGE, EVER.
