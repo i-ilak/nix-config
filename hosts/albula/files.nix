@@ -1,6 +1,6 @@
 _:
 let
-  sharedFiles = import ../../modules/shared/files.nix { };
+  sharedFiles = { };
   additionalFiles = { };
   file = sharedFiles // additionalFiles;
 in
