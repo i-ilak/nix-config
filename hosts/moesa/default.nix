@@ -7,6 +7,7 @@
   imports = [
     inputs.disko.nixosModules.disko
     ./disk-config.nix
+    ./boot.nix
     # Hardening
     ../../modules/nixos/locale.nix
     ../../modules/nixos/hardening/audit.nix
@@ -20,11 +21,6 @@
     ./sshd.nix
     ./share.nix
   ];
-
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
-  };
 
   nix.settings.allowed-users = [ "root" ];
 
