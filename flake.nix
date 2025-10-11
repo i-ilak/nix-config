@@ -50,7 +50,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     catppuccin = {
-      url = "github:catppuccin/nix";
+      url = "github:catppuccin/nix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
