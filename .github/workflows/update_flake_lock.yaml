@@ -1,0 +1,50 @@
+name: "Flake.lock: update Nix dependencies"
+
+on:
+  workflow_dispatch:
+  pull_request:
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  nix-flake-update:
+    permissions:
+      contents: write
+      id-token: write
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Determinate Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@main
+        with:
+          pr-title: "Github Action: Update Nix flake inputs"
+          pr-assignees: i-ilak
+          pr-reviewers: i-ilak
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
+          inputs: |
+            nixpkgs
+            nixpkgs-unstable
+            home-manager
+            darwin
+            nix-homebrew
+            homebrew-bundle
+            homebrew-core
+            homebrew-cask
+            disko
+            nixvim
+            pre-commit-hooks
+            flake-utils
+            nixgl
+            ghostty
+            catppuccin
+            sops-nix
+            impermanance
+            deadnix
+            treefmt-nix
+            authentik-nix
+            determinate
