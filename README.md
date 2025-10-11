@@ -1,6 +1,7 @@
 # `nix` Configuration
 
 [![Statix Lint](https://github.com/i-ilak/nix-config/actions/workflows/lint.yml/badge.svg)](https://github.com/i-ilak/nix-config/actions/workflows/lint.yml)
+[![Flake.lock: Updated](https://github.com/i-ilak/nix-config/actions/workflows/update_flake_lock.yaml/badge.svg)](https://github.com/i-ilak/nix-config/actions/workflows/update_flake_lock.yaml)
 
 The configurations I use for all my systems.
 It is based on [Dustin Lyons `nix-config`](https://github.com/dustinlyons/nixos-config), but his split for host machines didn't really work for me, so I gave it a twist.
