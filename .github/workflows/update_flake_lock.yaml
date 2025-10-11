@@ -24,11 +24,9 @@ jobs:
         with:
           pr-title: "Github Action: Update Nix flake inputs"
           pr-assignees: i-ilak
-          pr-reviewers: i-ilak
           token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
           inputs: |
             nixpkgs
-            nixpkgs-unstable
             home-manager
             darwin
             nix-homebrew
