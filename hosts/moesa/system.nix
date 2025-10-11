@@ -14,7 +14,7 @@
       # make it harder to influence slab cache layout
       "slab_nomerge"
       # enables zeroing of memory during allocation and free time
-      # helps mitigate use-after-free vulnerabilaties
+      # helps mitigate use-after-free vulnerabilities
       "init_on_alloc=1"
       "init_on_free=1"
       # randomizes page allocator freelist, improving security by
@@ -101,7 +101,7 @@
       maxretry = 5;
       bantime = "1h";
       ignoreIP = [
-        "192.168.0.0/16"
+        config.networkLevelVariables.usableIpRange
       ];
 
       bantime-increment = {
