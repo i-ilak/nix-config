@@ -592,11 +592,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1760198681,
-        "narHash": "sha256-nZjXzLvHHce5toDNbjb7EBnLaaCZ7bdy+cBbm0a7rcY=",
+        "lastModified": 1760201413,
+        "narHash": "sha256-dmzW/m01w/CQKzDUeB83s4McvBMNYZZ4wzTLvlTJNaY=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "69dc68e0638e575e3dceaa72d4341fcd992960fa",
+        "rev": "692c4c28c7ec5b44ec938477ee630f69cbcf72c4",
         "type": "github"
       },
       "original": {
@@ -608,11 +608,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1760198746,
-        "narHash": "sha256-/zxQm9+obzLF7dxIBkeCA99uyGHYbdS8A9rwDMIdank=",
+        "lastModified": 1760201686,
+        "narHash": "sha256-MYecR27mqDcfYE/jJoTq/0CDuSOLThbaX28sQI6DTpo=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "f8257dfaff94a1516b4474bfd03223a9c8a4b2ca",
+        "rev": "8dc32d35ff0c9082fb603ee43cea7157bac07b24",
         "type": "github"
       },
       "original": {
@@ -830,6 +830,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-nixvim": {
+      "locked": {
+        "lastModified": 1752785489,
+        "narHash": "sha256-GlWNrCaxH0BDDrJBlG+2xvHUhd+o5VfX2EEi52WBjr8=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e139aa6a2b5f1f42d682a1fbc60abd355d2b4771",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e139aa6a2b5f1f42d682a1fbc60abd355d2b4771",
+        "type": "github"
+      }
+    },
     "nixpkgs-regression": {
       "locked": {
         "lastModified": 1643052045,
@@ -909,7 +925,7 @@
       "inputs": {
         "flake-parts": "flake-parts_3",
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs-nixvim"
         ],
         "nixvim": "nixvim_2",
         "pre-commit-hooks": "pre-commit-hooks",
@@ -926,6 +942,7 @@
       "original": {
         "owner": "i-ilak",
         "repo": "nixvim-config",
+        "rev": "434b5064b91d88bef61e6c0948d3160f081c10e2",
         "type": "github"
       }
     },
@@ -1107,6 +1124,7 @@
         "nix-secrets": "nix-secrets",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs_4",
+        "nixpkgs-nixvim": "nixpkgs-nixvim",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "paperless-ngx": "paperless-ngx",

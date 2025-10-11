@@ -30,9 +30,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Nixvim started breaking so for now, pin it and dont touch it... Pinned to commit from 17.07.25
+    nixpkgs-nixvim.url = "github:nixos/nixpkgs/e139aa6a2b5f1f42d682a1fbc60abd355d2b4771";
     nixvim = {
-      url = "github:i-ilak/nixvim-config";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:i-ilak/nixvim-config/434b5064b91d88bef61e6c0948d3160f081c10e2";
+      inputs.nixpkgs.follows = "nixpkgs-nixvim";
     };
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
