@@ -15,7 +15,7 @@
     ../../modules/nixos/hardening/no-defaults.nix
     ../../modules/nixos/hardening/noexec.nix
     # Configuration
-    ../../modules/shared/networking.nix
+    ../../modules/shared/global_variables
     ./additional_config_parameters.nix
     ./sops.nix
     ./networking.nix

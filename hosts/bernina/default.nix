@@ -13,7 +13,7 @@
     ../../modules/nixos/hardening/sudo.nix
     ../../modules/nixos/hardening/no-defaults.nix
     # Configuration
-    ../../modules/shared/networking.nix
+    ../../modules/shared/global_variables
     ./additional_config_parameters.nix
     ./sops.nix
     ./user_setup.nix

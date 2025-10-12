@@ -56,15 +56,24 @@
     };
   };
 
-  system.autoUpgrade = {
-    enable = true;
-    flake = inputs.self.outPath;
-    flags = [
-      "-L"
-    ];
-    dates = "02:00";
-    randomizedDelaySec = "45min";
-  };
+  system.autoUpgrade =
+    let
+      inputsToUpdate = [
+        "nixpkgs"
+        "sops-nix"
+        "disko"
+      ];
+    in
+    {
+      enable = true;
+      flake = inputs.self.outPath;
+      flags = [
+        "-L"
+      ]
+      ++ map (input: "--update-input ${input}") inputsToUpdate;
+      dates = "02:00";
+      randomizedDelaySec = "45min";
+    };
 
   environment.systemPackages = with pkgs; [
     vim

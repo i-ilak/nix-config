@@ -15,8 +15,9 @@
     ../../modules/nixos/hardening/noexec.nix
     ../../modules/nixos/hardening/usbguard.nix
     # Configuration
-    ../../modules/shared/networking.nix
+    ../../modules/shared/global_variables
     ./additional_config_parameters.nix
+    ./sops.nix
     ./networking.nix
     ./sshd.nix
     ./share.nix

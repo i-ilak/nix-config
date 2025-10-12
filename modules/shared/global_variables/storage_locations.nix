@@ -12,13 +12,15 @@
   config = {
     storageVariables =
       let
-        shareDirectory = "/share";
+        inernalShareDirectory = "/share";
+        externalShareDirectory = "/share/external";
       in
       {
-        inherit shareDirectory;
+        inherit inernalShareDirectory;
+        inherit externalShareDirectory;
         jellyfin =
           let
-            base = "${shareDirectory}/jellyfin";
+            base = "${inernalShareDirectory}/jellyfin";
           in
           {
             config = "${base}/config";

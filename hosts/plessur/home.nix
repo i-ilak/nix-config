@@ -21,7 +21,7 @@ in
     ../../modules/home-manager/programs/direnv.nix
     ../../modules/home-manager/programs/helix
     # ../../modules/home-manager/programs/alacritty.nix
-    ../../modules/shared/networking.nix
+    ../../modules/shared/global_variables
     # ../../modules/home-manager/programs/ghostty.nix
   ];
 
