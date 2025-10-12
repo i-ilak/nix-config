@@ -27,6 +27,7 @@ let
     rustc
     cargo
     nixvim.packages.${pkgs.system}.default
+    llvmPackages_20.clang-unwrapped
   ];
 
   shared_packages = cli_tools ++ developer_tools;
