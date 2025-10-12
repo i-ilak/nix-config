@@ -3,44 +3,13 @@
   ...
 }:
 {
+  imports = [
+    ./editor.nix
+    ./languages
+  ];
+
   programs.helix = {
     enable = true;
-    settings = {
-      editor = {
-        line-number = "relative";
-        bufferline = "multiple";
-        cursor-shape = {
-          normal = "block";
-          insert = "bar";
-          select = "underline";
-        };
-        indent-guides = {
-          character = "╎";
-          render = true;
-        };
-        statusline = {
-          left = [
-            "mode"
-            "spinner"
-            "version-control"
-            "file-name"
-          ];
-        };
-      };
-      keys = {
-        normal = {
-          "s" = ":w";
-          "tab" = "goto_next_buffer";
-          "S-tab" = "goto_previous_buffer";
-          "A-x" = "extend_to_line_bounds";
-          "X" = "select_line_above";
-        };
-        select = {
-          "A-x" = "extend_to_line_bounds";
-          "X" = "select_line_above";
-        };
-      };
-    };
     languages = {
       language = [
         {
