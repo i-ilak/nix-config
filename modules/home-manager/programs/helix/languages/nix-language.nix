@@ -3,42 +3,25 @@
   lib,
   ...
 }:
-let
-  isNixOS = pkgs.stdenv.isLinux && builtins.pathExists "/etc/nixos";
-in
 {
   programs.helix = {
-    extraPackages = with pkgs; [ nixd ];
+    extraPackages = with pkgs; [ nil ];
     languages = {
       language = [
         {
           name = "nix";
           auto-format = true;
           formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
-          language-servers = [ "nixd" ];
+          language-servers = [ "nil" ];
         }
       ];
 
-      language-server.nixd = {
-        command = "nixd";
-        args = [ "--semantic-tokens=true" ];
-        config.nixd = {
+      language-server.nil = {
+        command = "${pkgs.nil}/bin/nil";
+        config.nil = {
+          nix.flake.autoArchive = true;
           formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
-        }
-        // lib.optionalAttrs isNixOS (
-          let
-            myFlake = builtins.getFlake "/etc/nixos";
-            nixosHost = myFlake.nixosConfigurations.${builtins.getEnv "HOSTNAME"};
-            nixosOpts = nixosHost.options;
-          in
-          {
-            nixpkgs.expr = "import ${myFlake}.inputs.nixpkgs { }";
-            options = {
-              nixos.expr = nixosOpts;
-              home-manager.expr = "${nixosOpts}.home-manager.users.type.getSubOptions []";
-            };
-          }
-        );
+        };
       };
     };
   };
