@@ -25,6 +25,7 @@ in
     ../../modules/home-manager/programs/polybar.nix
     ../../modules/home-manager/programs/dunst.nix
     ../../modules/home-manager/programs/ghostty.nix
+    ../../modules/home-manager/programs/helix
   ];
 
   nixGL = {
