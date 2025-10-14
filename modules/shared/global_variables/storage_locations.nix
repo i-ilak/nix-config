@@ -1,5 +1,6 @@
 {
   lib,
+  config,
   ...
 }:
 {
@@ -16,15 +17,53 @@
         externalShareDirectory = "/share/external";
       in
       {
-        inherit inernalShareDirectory;
-        inherit externalShareDirectory;
-        jellyfin =
-          let
-            base = "${inernalShareDirectory}/jellyfin";
-          in
-          {
-            config = "${base}/config";
-          };
+        general = {
+          inherit inernalShareDirectory;
+          inherit externalShareDirectory;
+        };
+        services = {
+          jellyfin =
+            let
+              base = "${inernalShareDirectory}/jellyfin";
+            in
+            {
+              inherit base;
+              config = "${base}/config";
+              allowedIpRange = [
+                config.networkLevelVariables.ipMap.maloja
+              ];
+            };
+          paperless =
+            let
+              base = "${inernalShareDirectory}/paperless";
+            in
+            {
+              inherit base;
+              allowedIpRange = [
+                config.networkLevelVariables.ipMap.maloja
+              ];
+            };
+          navidrome =
+            let
+              base = "${externalShareDirectory}/navidrome";
+            in
+            {
+              inherit base;
+              allowedIpRange = [
+                config.networkLevelVariables.ipMap.maloja
+              ];
+            };
+          immich =
+            let
+              base = "${externalShareDirectory}/immich";
+            in
+            {
+              inherit base;
+              allowedIpRange = [
+                config.networkLevelVariables.ipMap.maloja
+              ];
+            };
+        };
       };
   };
 }

@@ -1,10 +1,28 @@
-_: {
+{
+  config,
+  lib,
+  ...
+}:
+let
+  inherit (config.nfsUtils) serviceToUserMap;
+  inherit (config.storageVariables) services;
+
+  mkNfsExport =
+    service: serviceData:
+    let
+      serviceConfig = serviceToUserMap.${service};
+      opts = "rw,fsid=${toString serviceConfig.uid},anonuid=${toString serviceConfig.uid},anongid=${toString serviceConfig.gid},no_subtree_check";
+      exportEntries = map (ip: "${ip}(${opts})") serviceData.allowedIpRange;
+    in
+    "${serviceData.base} ${lib.concatStringsSep " " exportEntries}";
+  exports = lib.concatStringsSep "\n" (lib.mapAttrsToList mkNfsExport services);
+in
+{
   boot = {
     kernelModules = [ "btrfs" ];
     initrd.luks.devices."cryptdata" = {
       device = "/dev/disk/by-uuid/YOUR-NEW-HDD-UUID-HERE";
       name = "cryptdata";
-      askPassword = true;
       allowDiscards = false;
     };
   };
@@ -38,4 +56,9 @@ _: {
   #    $ sudo btrfs balance start -mconvert=single -dconvert=single /mnt
   #    $ sudo umount /mnt
   # 6. Apply NixOS config and reboot. The system will prompt for the LUKS password.
+
+  services.nfs.server = {
+    inherit exports;
+    enable = true;
+  };
 }
