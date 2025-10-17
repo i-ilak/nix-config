@@ -4,18 +4,13 @@
   ...
 }:
 let
+  inherit (config) mkNfsExport;
   inherit (config.nfsUtils) serviceToUserMap;
   inherit (config.storageVariables) services;
 
-  mkNfsExport =
-    service: serviceData:
-    let
-      serviceConfig = serviceToUserMap.${service};
-      opts = "rw,fsid=${toString serviceConfig.uid},anonuid=${toString serviceConfig.uid},anongid=${toString serviceConfig.gid},no_subtree_check";
-      exportEntries = map (ip: "${ip}(${opts})") serviceData.allowedIpRange;
-    in
-    "${serviceData.base} ${lib.concatStringsSep " " exportEntries}";
-  exports = lib.concatStringsSep "\n" (lib.mapAttrsToList mkNfsExport services);
+  wrappedMkNfsExport = service: serviceData: mkNfsExport service serviceData serviceToUserMap;
+
+  exports = lib.concatStringsSep "\n" (lib.mapAttrsToList wrappedMkNfsExport services);
 in
 {
   boot = {

@@ -11,10 +11,12 @@ let
     immich = 100;
     navidrome = 101;
   };
+
   services = lib.mapAttrs (_: offset: {
     uid = baseId + offset;
     gid = baseId + offset;
   }) serviceOffsets;
+
   mkServiceConfig =
     name:
     { uid, gid }:
