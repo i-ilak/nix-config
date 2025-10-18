@@ -48,6 +48,7 @@ in
   # Use when nix installed with `determinated`
   determinate-nix.customSettings = {
     trusted-users = [
+      "@admin"
       "${user}"
     ];
     eval-cores = 2;
