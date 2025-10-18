@@ -6,11 +6,11 @@
 }:
 let
   inherit (config.networkLevelVariables) publicDomain;
-  inherit (config.sharedVariables.paperless) backupDir;
 
-  baseDirPaperless = "/var/lib/paperless";
-  mediaDir = "${baseDirPaperless}/media";
-  dataDir = "${baseDirPaperless}/data";
+  baseDirPaperlessOnDevice = "/var/lib/paperless";
+  inherit (config.storageVariables.services) paperless;
+  inherit (paperless) backupDir;
+  dataDir = "${baseDirPaperlessOnDevice}/data";
 in
 {
   sops = {
@@ -95,9 +95,9 @@ in
     passwordFile = config.sops.secrets.paperless_admin_password.path;
     exporter = {
       enable = true;
-      directory = config.sharedVariables.paperless.backupDir;
+      directory = backupDir;
     };
-    inherit mediaDir;
+    inherit (paperless) mediaDir;
     inherit dataDir;
     inherit (config.sharedVariables.paperless) port;
   };
@@ -151,7 +151,7 @@ in
           "paperless-task-queue.service"
         ];
         unitConfig = {
-          ConditionPathExists = "!${baseDirPaperless}/.restore_service_completed";
+          ConditionPathExists = "!${baseDirPaperlessOnDevice}/.restore_service_completed";
         };
 
         serviceConfig = {
@@ -165,7 +165,7 @@ in
         script =
           # bash
           ''
-            RESTORE_COMPLETION_FLAG="${baseDirPaperless}/.restore_service_completed"
+            RESTORE_COMPLETION_FLAG="${baseDirPaperlessOnDevice}/.restore_service_completed"
 
             if [ -f "$RESTORE_COMPLETION_FLAG" ]; then
               echo "Restore completion flag found ($RESTORE_COMPLETION_FLAG). Skipping restore."
@@ -185,7 +185,7 @@ in
             echo "Importing documents into Paperless-NGX..."
             ${pkgs.su}/bin/su -s ${pkgs.bash}/bin/bash paperless -c "
               export PAPERLESS_DATA_DIR=${dataDir}
-              export PAPERLESS_MEDIA_ROOT=${mediaDir}
+              export PAPERLESS_MEDIA_ROOT=${paperless.mediaDir}
               export PAPERLESS_CONSUMPTION_DIR=${dataDir}/consume
               paperless-manage migrate
               paperless-manage document_importer '${backupDir}'

@@ -14,9 +14,9 @@
       let
         serviceConfig = serviceToUserMap.${service};
         opts = "rw,fsid=${toString serviceConfig.uid},anonuid=${toString serviceConfig.uid},anongid=${toString serviceConfig.gid},no_subtree_check";
-        exportEntries = map (ip: "${ip}(${opts})") serviceData.allowedIpRange;
+        fullExports = map (ip: "${serviceData.base} ${ip}(${opts})") serviceData.allowedIpRange;
       in
-      "${serviceData.base} ${lib.concatStringsSep " " exportEntries}";
+      (lib.concatStringsSep "\n" fullExports) + "\n";
   };
 
 }

@@ -28,7 +28,7 @@
             in
             {
               inherit base;
-              config = "${base}/config";
+              dataDir = "${base}/data";
               allowedIpRange = [
                 config.networkLevelVariables.ipMap.maloja
               ];
@@ -39,6 +39,8 @@
             in
             {
               inherit base;
+              backupDir = "${base}/backup";
+              mediaDir = "${base}/media";
               allowedIpRange = [
                 config.networkLevelVariables.ipMap.maloja
               ];

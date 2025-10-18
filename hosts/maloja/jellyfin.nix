@@ -1,9 +1,14 @@
 {
   pkgs,
+  config,
   ...
 }:
 let
-  jellyfinFolder = "/media/jellyfin";
+  inherit (config.storageVariables.services) jellyfin;
+  baseOnDevice = "/var/lib/jellyfin";
+  logDir = "${baseOnDevice}/log";
+  cacheDir = "${baseOnDevice}/cache";
+  configDir = "${baseOnDevice}/config";
 in
 {
   nixpkgs.config.packageOverrides = pkgs: {
@@ -26,10 +31,10 @@ in
     openFirewall = false;
     user = "jellyfin";
     group = "jellyfin";
-    logDir = "${jellyfinFolder}/log";
-    cacheDir = "${jellyfinFolder}/cache";
-    dataDir = "${jellyfinFolder}/data";
-    configDir = "${jellyfinFolder}/config";
+    inherit (jellyfin) dataDir;
+    inherit configDir;
+    inherit logDir;
+    inherit cacheDir;
   };
   users.users.jellyfin.extraGroups = [ "media" ];
 }
